@@ -31,6 +31,16 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region Public methods
 
+    public void Connect() {
+        throw new System.NotImplementedException();
+    }
 
+    public void Cancel() {
+        throw new System.NotImplementedException();
+    }
+
+    public void Exit() {
+        throw new System.NotImplementedException();
+    }
     #endregion
 }
