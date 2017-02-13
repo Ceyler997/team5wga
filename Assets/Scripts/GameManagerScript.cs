@@ -4,13 +4,12 @@ using UnityEngine;
 
 public class GameManagerScript : MonoBehaviour {
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+    #region Public Fields
+
+    [Tooltip("Panel for input")]
+    public GameObject controlPanel;
+
+    [Tooltip("Panel for output")]
+    public GameObject progressPanel;
+    #endregion
 }
