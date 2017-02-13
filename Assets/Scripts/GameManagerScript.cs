@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GameManagerScript : MonoBehaviour {
+public class GameManagerScript : Photon.PunBehaviour {
 
     #region Public Fields
 
@@ -11,5 +11,26 @@ public class GameManagerScript : MonoBehaviour {
 
     [Tooltip("Panel for output")]
     public GameObject progressPanel;
+
+    [Tooltip("Log level for Photon")]
+    public PhotonLogLevel logLevel;
+
+    [Tooltip("Game version")]
+    public string gameVersion = "1";
+    #endregion
+
+    #region MonoBehaviour Methods
+
+
+    #endregion
+
+    #region PunBehaviour methods
+
+
+    #endregion
+
+    #region Public methods
+
+
     #endregion
 }
