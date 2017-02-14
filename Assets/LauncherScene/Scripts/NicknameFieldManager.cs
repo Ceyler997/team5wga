@@ -7,10 +7,30 @@ using UnityEngine.UI;
 public class NicknameFieldManager : MonoBehaviour {
 
     #region Public Fields
-    public static string StandartName = "Too lazy person";
+    public string defaultName = "Too lazy person";
+    #endregion
+
+    #region Private Fields
+    private static string playerNamePrefKey = "PlayerName";
+    #endregion
+
+    #region MonoBehaviour Methods
+
+    private void Start() {
+        InputField nicknameField = GetComponent<InputField>();
+        if(nicknameField != null) {
+            if (PlayerPrefs.HasKey(playerNamePrefKey)) {
+                defaultName = PlayerPrefs.GetString(playerNamePrefKey);
+                nicknameField.text = defaultName;
+            }
+        } else {
+            Debug.LogError("No input field for nickname");
+        }
+    }
     #endregion
 
     #region Public methods
+
     public void setNickname(string newNickname) {
         throw new System.NotImplementedException();
     }
