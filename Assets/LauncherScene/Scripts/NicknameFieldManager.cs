@@ -32,7 +32,13 @@ public class NicknameFieldManager : MonoBehaviour {
     #region Public methods
 
     public void setNickname(string newNickname) {
-        throw new System.NotImplementedException();
+        if(newNickname.Length > 0) {
+            PlayerPrefs.SetString(playerNamePrefKey, newNickname);
+        } else {
+            newNickname = defaultName;
+        }
+
+        PhotonNetwork.playerName = newNickname;
     }
     #endregion
 }
