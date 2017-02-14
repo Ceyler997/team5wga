@@ -19,6 +19,10 @@ public class GameManagerScript : Photon.PunBehaviour {
     public string gameVersion = "1";
     #endregion
 
+    #region Private Fields
+    private bool isConnecting = false; //TODO: check, will it be working in Awake()
+    #endregion
+
     #region MonoBehaviour Methods
 
 
@@ -32,7 +36,19 @@ public class GameManagerScript : Photon.PunBehaviour {
     #region Public methods
 
     public void Connect() {
-        throw new System.NotImplementedException();
+        isConnecting = true;
+        controlPanel.SetActive(false);
+        progressPanel.SetActive(true);
+
+        if (PhotonNetwork.connected) {
+            Debug.Log("Connected to PUN, start joining random room");
+            PhotonNetwork.JoinRandomRoom();
+        } else {
+            Debug.Log("Not connected, starting connection with settings (game version)");
+            PhotonNetwork.ConnectUsingSettings(gameVersion);
+            //somewhere between Awake and this string Photon changing his loglevel to set in properties, we need to change it back
+            PhotonNetwork.logLevel = logLevel;
+        }
     }
 
     public void CancelConnection() {
