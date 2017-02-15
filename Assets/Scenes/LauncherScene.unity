@@ -658,8 +658,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlPanel: {fileID: 782603354}
   progressPanel: {fileID: 1502133993}
-  logLevel: 0
+  logLevel: 2
   gameVersion: 1
+  battleSceneName: BattlegroundScene
 --- !u!1 &821504152
 GameObject:
   m_ObjectHideFlags: 0
@@ -1087,6 +1088,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d5a189480df8884f920f6c06618a6b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  defaultName: Too lazy person
 --- !u!1 &1447449411
 GameObject:
   m_ObjectHideFlags: 0

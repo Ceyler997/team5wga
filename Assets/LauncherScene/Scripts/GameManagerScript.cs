@@ -32,9 +32,10 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     private void Awake() {
         PhotonNetwork.logLevel = logLevel;//Setting log level
+        PhotonNetwork.autoJoinLobby = true;//joining to lobby on connecting
         PhotonNetwork.automaticallySyncScene = true;//All players in the room will be loading same scene as master
 
-        messageText = progressPanel.GetComponentInChildren<Text>();//Should I use it?
+        messageText = progressPanel.GetComponentInChildren<Text>();//TODO: check, should I use it
         Debug.Log("GameManager is awoken");
     }
 
@@ -87,25 +88,21 @@ public class GameManagerScript : Photon.PunBehaviour {
     }
 
     public override void OnPhotonCreateRoomFailed(object [] codeAndMsg) {
-        Debug.LogError("Failed to create room:");
-        for(int errorCount = 0; errorCount < codeAndMsg.Length; ++errorCount) {
-            Debug.Log("Room fail: " + codeAndMsg [errorCount].ToString());
-        }
+        Debug.LogError("Failed to create room:\n" +
+            codeAndMsg [0].ToString() + " " + codeAndMsg [1].ToString());
 
         messageText.text = "Failed to create room";//TODO: check localisation
     }
 
     public override void OnPhotonRandomJoinFailed(object [] codeAndMsg) {
-        Debug.LogError("Failed to join room:");
-        for (int errorCount = 0; errorCount < codeAndMsg.Length; ++errorCount) {
-            Debug.Log("Room fail: " + codeAndMsg [errorCount].ToString());
-        }
+        Debug.Log("Failed to join room:\n" +
+            codeAndMsg [0].ToString() + " " + codeAndMsg [1].ToString());
 
         messageText.text = "Failed to join room, creating new one";//TODO: check localisation
 
         PhotonNetwork.CreateRoom(
             "",//Name will be generated automatically
-            new RoomOptions() { MaxPlayers = 2 },//ATTENTION hardcoded value
+            new RoomOptions() { MaxPlayers = 2 },//ATTENTION: hardcoded value
             null);//lobby for room, null for current lobby
     }
 
@@ -145,6 +142,7 @@ public class GameManagerScript : Photon.PunBehaviour {
         isConnecting = true;
         controlPanel.SetActive(false);
         progressPanel.SetActive(true);
+        messageText.text = "Connecting...";
 
         if (PhotonNetwork.connected) {
             Debug.Log("Already connected to PUN, start joining random room");
@@ -158,8 +156,10 @@ public class GameManagerScript : Photon.PunBehaviour {
     }
 
     public void CancelConnection() {
+        Debug.Log("Canceling connection");
         isConnecting = false;
-        PhotonNetwork.Disconnect();
+        if (PhotonNetwork.connected)
+            PhotonNetwork.Disconnect();
 
         controlPanel.SetActive(true);
         progressPanel.SetActive(false);
