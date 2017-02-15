@@ -17,7 +17,10 @@ public class GameManagerScript : Photon.PunBehaviour {
     public PhotonLogLevel logLevel;
 
     [Tooltip("Game version")]
-    public string gameVersion = "1";
+    public string gameVersion = "0";
+
+    [Tooltip("Name of scene for load to battle")]
+    public string battleSceneName = "BattlegroundScene";
     #endregion
 
     #region Private Fields
@@ -45,55 +48,74 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     public override void OnJoinedLobby() {//called after connection to Photon
         Debug.Log("Connected and joined to lobby");
+
+        if (PhotonNetwork.isMasterClient) {//if we are first in room
+            messageText.text = "Waiting for sencond player";//TODO: check localisation
+        }
     }
 
     public override void OnLeftLobby() {
-        throw new System.NotImplementedException();
+        Debug.Log("Left lobby");
     }
 
     public override void OnFailedToConnectToPhoton(DisconnectCause cause) {
-        base.OnFailedToConnectToPhoton(cause);
+        Debug.LogError("Failed to connect due to " + cause.ToString());
+
+        messageText.text = "Failed to connect due to " + cause.ToString();//TODO: check localisation
     }
 
     public override void OnDisconnectedFromPhoton() {
-        throw new System.NotImplementedException();
+        Debug.Log("Disconnected from PUN");
     }
 
     public override void OnJoinedRoom() {
-        throw new System.NotImplementedException();
+        Debug.Log("Joined to room");
+
+        messageText.text = "Ready to play!";//TODO: check localisation
     }
 
     public override void OnPhotonCreateRoomFailed(object [] codeAndMsg) {
-        throw new System.NotImplementedException();
+        Debug.LogError("Failed to create room:");
+        for(int errorCount = 0; errorCount < codeAndMsg.Length; ++errorCount) {
+            Debug.Log("Room fail: " + codeAndMsg [errorCount].ToString());
+        }
+
+        messageText.text = "Failed to create room";//TODO: check localisation
     }
 
     public override void OnPhotonRandomJoinFailed(object [] codeAndMsg) {
-        throw new System.NotImplementedException();
+        Debug.LogError("Failed to join room:");
+        for (int errorCount = 0; errorCount < codeAndMsg.Length; ++errorCount) {
+            Debug.Log("Room fail: " + codeAndMsg [errorCount].ToString());
+        }
+
+        messageText.text = "Failed to join room, creating new one";//TODO: check localisation
+
+        PhotonNetwork.CreateRoom(
+            "",//Name will be generated automatically
+            new RoomOptions() { MaxPlayers = 2 },//ATTENTION hardcoded value
+            null);//lobby for room, null for current lobby
     }
 
     public override void OnLeftRoom() {
-        throw new System.NotImplementedException();
+        Debug.Log("Room left");
     }
 
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer) {//new player entered the room
-        throw new System.NotImplementedException();
+        Debug.Log("Second player connected");
+        PhotonNetwork.LoadLevel(battleSceneName);//TODO: create this scene
     }
 
     public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {//player left the room
-        throw new System.NotImplementedException();
+        Debug.Log("Second player disconnected");
+        PhotonNetwork.LoadLevel(0);//restarting game in case of disconnection while loading level
     }
 
-    public override void OnPhotonMaxCccuReached() {//too many peoples connected to server for this subscribe plan
-        throw new System.NotImplementedException();
-    }
+    public override void OnPhotonMaxCccuReached() {//too many peoples connected to server for this subscribe 
+        Debug.Log("Server is overloaded");
 
-    /* USEFULL FUNCTIONS OF PhotonNetwork
-     * ReconnectAndRejoin()
-     * Disconnect()
-     * CreateRoom(name, options, typedLobby)
-     * JoinRandomRoom()
-     * LoadLevel(levelName)
-     */
+        messageText.text = "Please, wait. Server is overloaded.";//TODO: check localisation
+    }
     #endregion
 
     #region Public methods
