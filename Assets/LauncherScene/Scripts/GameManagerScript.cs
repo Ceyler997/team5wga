@@ -21,6 +21,8 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region Private Fields
     private bool isConnecting = false; //TODO: check, will it be working in Awake()
+    private bool isInLobby = false;
+    private bool isInRoom = false;
     #endregion
 
     #region MonoBehaviour Methods
@@ -30,7 +32,59 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region PunBehaviour methods
 
+    public override void OnJoinedLobby() {//called after connection to Photon
+        throw new System.NotImplementedException();
+    }
 
+    public override void OnLeftLobby() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnFailedToConnectToPhoton(DisconnectCause cause) {
+        base.OnFailedToConnectToPhoton(cause);
+    }
+
+    public override void OnDisconnectedFromPhoton() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnJoinedRoom() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnPhotonCreateRoomFailed(object [] codeAndMsg) {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnPhotonRandomJoinFailed(object [] codeAndMsg) {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnLeftRoom() {
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer) {//new player entered the room
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {//player left the room
+        throw new System.NotImplementedException();
+    }
+
+    public override void OnPhotonMaxCccuReached() {//too many peoples connected to server for this subscribe plan
+        throw new System.NotImplementedException();
+    }
+
+    /* USEFULL FUNCTIONS OF PhotonNetwork
+     * ReconnectAndRejoin()
+     * Disconnect()
+     * CreateRoom(name, options, typedLobby)
+     * JoinRandomRoom()
+     * LeaveLobby()
+     * LeaveRoom()
+     * LoadLevel(levelName)
+     */
     #endregion
 
     #region Public methods
@@ -41,7 +95,7 @@ public class GameManagerScript : Photon.PunBehaviour {
         progressPanel.SetActive(true);
 
         if (PhotonNetwork.connected) {
-            Debug.Log("Connected to PUN, start joining random room");
+            Debug.Log("Already connected to PUN, start joining random room");
             PhotonNetwork.JoinRandomRoom();
         } else {
             Debug.Log("Not connected, starting connection with settings (game version)");
