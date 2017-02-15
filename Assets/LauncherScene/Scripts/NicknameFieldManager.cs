@@ -18,9 +18,10 @@ public class NicknameFieldManager : MonoBehaviour {
 
     private void Start() {
         InputField nicknameField = GetComponent<InputField>();
+
         if(nicknameField != null) {
-            if (PlayerPrefs.HasKey(playerNamePrefKey)) {
-                defaultName = PlayerPrefs.GetString(playerNamePrefKey);
+            if (PlayerPrefs.HasKey(playerNamePrefKey)) {//checking, if we have saved nickname
+                defaultName = PlayerPrefs.GetString(playerNamePrefKey);//setting it in field, if we have
                 nicknameField.text = defaultName;
             }
         } else {
@@ -32,13 +33,13 @@ public class NicknameFieldManager : MonoBehaviour {
     #region Public methods
 
     public void setNickname(string newNickname) {
-        if(newNickname.Length > 0) {
-            PlayerPrefs.SetString(playerNamePrefKey, newNickname);
+        if(newNickname.Length > 0) {//if we got something
+            PlayerPrefs.SetString(playerNamePrefKey, newNickname);//saving new player nickname
         } else {
-            newNickname = defaultName;
+            newNickname = defaultName;//setting default name, if we got nothing
         }
 
-        PhotonNetwork.playerName = newNickname;
+        PhotonNetwork.playerName = newNickname;//setting this player name in PUN
     }
     #endregion
 }
