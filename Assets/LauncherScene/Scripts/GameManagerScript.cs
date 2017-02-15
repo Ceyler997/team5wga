@@ -46,17 +46,22 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region PunBehaviour methods
 
+    #region Lobby messages
+
     public override void OnJoinedLobby() {//called after connection to Photon
         Debug.Log("Connected and joined to lobby");
 
-        if (PhotonNetwork.isMasterClient) {//if we are first in room
-            messageText.text = "Waiting for sencond player";//TODO: check localisation
+        if (isConnecting) {
+            PhotonNetwork.JoinRandomRoom();
         }
     }
 
     public override void OnLeftLobby() {
         Debug.Log("Left lobby");
     }
+    #endregion
+
+    #region Connection messages
 
     public override void OnFailedToConnectToPhoton(DisconnectCause cause) {
         Debug.LogError("Failed to connect due to " + cause.ToString());
@@ -67,11 +72,18 @@ public class GameManagerScript : Photon.PunBehaviour {
     public override void OnDisconnectedFromPhoton() {
         Debug.Log("Disconnected from PUN");
     }
+    #endregion
+
+    #region Room messages
 
     public override void OnJoinedRoom() {
         Debug.Log("Joined to room");
 
-        messageText.text = "Ready to play!";//TODO: check localisation
+        if (PhotonNetwork.isMasterClient) {//if we are first in room
+            messageText.text = "Waiting for sencond player";//TODO: check localisation
+        } else {//if not, master will load level
+            messageText.text = "Ready to play!";//TODO: check localisation
+        }
     }
 
     public override void OnPhotonCreateRoomFailed(object [] codeAndMsg) {
@@ -100,9 +112,14 @@ public class GameManagerScript : Photon.PunBehaviour {
     public override void OnLeftRoom() {
         Debug.Log("Room left");
     }
+    #endregion
+
+    #region Players messages
 
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer) {//new player entered the room
         Debug.Log("Second player connected");
+
+        messageText.text = "Ready to play!";//TODO: check localisation
         PhotonNetwork.LoadLevel(battleSceneName);//TODO: create this scene
     }
 
@@ -110,12 +127,16 @@ public class GameManagerScript : Photon.PunBehaviour {
         Debug.Log("Second player disconnected");
         PhotonNetwork.LoadLevel(0);//restarting game in case of disconnection while loading level
     }
+    #endregion
+
+    #region Server messages
 
     public override void OnPhotonMaxCccuReached() {//too many peoples connected to server for this subscribe 
         Debug.Log("Server is overloaded");
 
         messageText.text = "Please, wait. Server is overloaded.";//TODO: check localisation
     }
+    #endregion
     #endregion
 
     #region Public methods
