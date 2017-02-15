@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManagerScript : Photon.PunBehaviour {
 
@@ -21,17 +22,29 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region Private Fields
     private bool isConnecting = false; //TODO: check, will it be working in Awake()
+    private Text messageText;
     #endregion
 
     #region MonoBehaviour Methods
 
+    private void Awake() {
+        PhotonNetwork.logLevel = logLevel;//Setting log level
+        PhotonNetwork.automaticallySyncScene = true;//All players in the room will be loading same scene as master
 
+        messageText = progressPanel.GetComponentInChildren<Text>();//Should I use it?
+        Debug.Log("GameManager is awoken");
+    }
+
+    private void Start() {
+        controlPanel.SetActive(true);
+        progressPanel.SetActive(false);
+    }
     #endregion
 
     #region PunBehaviour methods
 
     public override void OnJoinedLobby() {//called after connection to Photon
-        throw new System.NotImplementedException();
+        Debug.Log("Connected and joined to lobby");
     }
 
     public override void OnLeftLobby() {
@@ -104,6 +117,9 @@ public class GameManagerScript : Photon.PunBehaviour {
     public void CancelConnection() {
         isConnecting = false;
         PhotonNetwork.Disconnect();
+
+        controlPanel.SetActive(true);
+        progressPanel.SetActive(false);
     }
 
     public void Exit() {
