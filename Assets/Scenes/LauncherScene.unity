@@ -658,7 +658,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   controlPanel: {fileID: 782603354}
   progressPanel: {fileID: 1502133993}
-  logLevel: 2
+  logLevel: 0
   gameVersion: 1
   battleSceneName: BattlegroundScene
 --- !u!1 &821504152
