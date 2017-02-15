@@ -21,8 +21,6 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region Private Fields
     private bool isConnecting = false; //TODO: check, will it be working in Awake()
-    private bool isInLobby = false;
-    private bool isInRoom = false;
     #endregion
 
     #region MonoBehaviour Methods
@@ -81,8 +79,6 @@ public class GameManagerScript : Photon.PunBehaviour {
      * Disconnect()
      * CreateRoom(name, options, typedLobby)
      * JoinRandomRoom()
-     * LeaveLobby()
-     * LeaveRoom()
      * LoadLevel(levelName)
      */
     #endregion
@@ -106,7 +102,8 @@ public class GameManagerScript : Photon.PunBehaviour {
     }
 
     public void CancelConnection() {
-        throw new System.NotImplementedException();
+        isConnecting = false;
+        PhotonNetwork.Disconnect();
     }
 
     public void Exit() {
