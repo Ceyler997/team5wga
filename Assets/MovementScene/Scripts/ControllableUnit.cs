@@ -52,6 +52,14 @@ public class ControllableUnit : BaseUnit {
             UnitState = UnitStates.IDLE;
 
         }
+
+        if (!CompareTag("Unit"))
+        {
+            foreach(Renderer rend in mRenderers)
+            {
+                rend.enabled = false;
+            }
+        }
     }
 
     public void SelectUnit()
