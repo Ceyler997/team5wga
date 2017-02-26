@@ -1,8 +1,15 @@
 # =============== #
 # Unity generated #
 # =============== #
-Temp/
-Library/
+/[Ll]ibrary/
+/[Tt]emp/
+/[Oo]bj/
+/[Bb]uild/
+/[Bb]uilds/
+/Assets/AssetStoreTools*
+/.vscode/
+/.vs/
+/Assets/Plugins/
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
@@ -10,14 +17,17 @@ Library/
 ExportedObj/
 obj/
 *.svd
+*.tmp
 *.userprefs
 /*.csproj
 *.pidb
+*.pidb.meta
 *.suo
 /*.sln
 *.user
 *.unityproj
 *.booproj
+sysinfo.txt
 
 # ============ #
 # OS generated #
@@ -29,3 +39,7 @@ obj/
 .Trashes
 ehthumbs.db
 Thumbs.db
+
+# Builds
+*.apk
+*.unitypackage
