@@ -8,10 +8,13 @@ public class GameManagerScript : Photon.PunBehaviour {
     #region Public Fields
 
     [Tooltip("Panel for input")]
-    public GameObject controlPanel;
+    public CanvasGroup controlPanel;
 
-    [Tooltip("Panel for output")]
-    public GameObject progressPanel;
+    [Tooltip("Panel for output progress")]
+    public CanvasGroup progressPanel;
+
+    [Tooltip("Panel for pop-up")]
+    public CanvasGroup popUp;
 
     [Tooltip("Log level for Photon")]
     public PhotonLogLevel logLevel;
@@ -25,7 +28,8 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region Private Fields
     private bool isConnecting;
-    private Text messageText;
+    private Text progressMessage;
+    private Text popUpMessage;
     #endregion
 
     #region MonoBehaviour Methods
@@ -37,13 +41,15 @@ public class GameManagerScript : Photon.PunBehaviour {
         //Joined lobby message called if we switched from another scene, so we need to check, is player pressed button
         isConnecting = false;
 
-        messageText = progressPanel.transform.FindChild("MessagesLabel").GetComponent<Text>();
+        progressMessage = progressPanel.transform.FindChild("MessagesLabel").GetComponent<Text>();
+        popUpMessage = popUp.transform.FindChild("MessagesLabel").GetComponent<Text>();
         Debug.Log("GameManager is awoken");
     }
 
     private void Start() {
-        controlPanel.SetActive(true);
-        progressPanel.SetActive(false);
+        GUIManager.showCanvasGroup(controlPanel);
+        GUIManager.hideCanvasGroup(progressPanel);
+        GUIManager.hideCanvasGroup(popUp);
     }
     #endregion
 
@@ -69,13 +75,13 @@ public class GameManagerScript : Photon.PunBehaviour {
     public override void OnFailedToConnectToPhoton(DisconnectCause cause) {//TODO: pop-up
         Debug.LogError("Failed to connect due to " + cause.ToString());
 
-        messageText.text = "Failed to connect due to " + cause.ToString();//TODO: check localisation
+        progressMessage.text = "Failed to connect due to " + cause.ToString();//TODO: check localisation
     }
 
     public override void OnDisconnectedFromPhoton() {
         Debug.Log("Disconnected from PUN");
 
-        messageText.text = "Diconnected";//TODO: check localisation
+        progressMessage.text = "Diconnected";//TODO: check localisation
     }
     #endregion
 
@@ -85,9 +91,9 @@ public class GameManagerScript : Photon.PunBehaviour {
         Debug.Log("Joined to room");
 
         if (PhotonNetwork.isMasterClient) {//if we are first in room
-            messageText.text = "Waiting for sencond player";//TODO: check localisation
+            progressMessage.text = "Waiting for sencond player";//TODO: check localisation
         } else {//if not, master will load level
-            messageText.text = "Ready to play!";//TODO: check localisation
+            progressMessage.text = "Ready to play!";//TODO: check localisation
         }
     }
     
@@ -95,14 +101,14 @@ public class GameManagerScript : Photon.PunBehaviour {
         Debug.LogError("Failed to create room:\n" +
             codeAndMsg [0].ToString() + " " + codeAndMsg [1].ToString());
 
-        messageText.text = "Failed to create room";//TODO: check localisation
+        progressMessage.text = "Failed to create room";//TODO: check localisation
     }
 
     public override void OnPhotonRandomJoinFailed(object [] codeAndMsg) {
         Debug.Log("Failed to join room:\n" +
             codeAndMsg [0].ToString() + " " + codeAndMsg [1].ToString());
 
-        messageText.text = "Failed to join room, creating new one";//TODO: check localisation
+        progressMessage.text = "Failed to join room, creating new one";//TODO: check localisation
 
         PhotonNetwork.CreateRoom(
             "",//Name will be generated automatically
@@ -120,7 +126,7 @@ public class GameManagerScript : Photon.PunBehaviour {
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer) {//new player entered the room
         Debug.Log("Player " + newPlayer.NickName + " connected");
 
-        messageText.text = "Ready to play!";//TODO: check localisation
+        progressMessage.text = "Ready to play!";//TODO: check localisation
         PhotonNetwork.LoadLevel(battleSceneName);//TODO: create this scene
     }
 
@@ -136,7 +142,7 @@ public class GameManagerScript : Photon.PunBehaviour {
     public override void OnPhotonMaxCccuReached() {//too many peoples connected to server for this subscribe plan
         Debug.Log("Server is overloaded");
 
-        messageText.text = "Please, wait. Server is overloaded.";//TODO: check localisation
+        progressMessage.text = "Please, wait. Server is overloaded.";//TODO: check localisation
     }
     #endregion
     #endregion
@@ -145,9 +151,9 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     public void Connect() {
         isConnecting = true;
-        controlPanel.SetActive(false);
-        progressPanel.SetActive(true);
-        messageText.text = "Connecting...";
+        GUIManager.hideCanvasGroup(controlPanel);
+        GUIManager.showCanvasGroup(progressPanel);
+        progressMessage.text = "Connecting...";
 
         if (PhotonNetwork.connected) {
             Debug.Log("Already connected to PUN, start joining random room");
@@ -167,8 +173,8 @@ public class GameManagerScript : Photon.PunBehaviour {
             PhotonNetwork.Disconnect();
         }
 
-        controlPanel.SetActive(true);
-        progressPanel.SetActive(false);
+        GUIManager.showCanvasGroup(controlPanel);
+        GUIManager.hideCanvasGroup(progressPanel);
     }
 
     public void Exit() {
