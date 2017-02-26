@@ -37,7 +37,7 @@ public class GameManagerScript : Photon.PunBehaviour {
         //Joined lobby message called if we switched from another scene, so we need to check, is player pressed button
         isConnecting = false;
 
-        messageText = progressPanel.GetComponentInChildren<Text>();//TODO: check, should I use it
+        messageText = progressPanel.transform.FindChild("MessagesLabel").GetComponent<Text>();
         Debug.Log("GameManager is awoken");
     }
 
