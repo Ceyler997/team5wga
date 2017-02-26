@@ -28,6 +28,7 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region Private Fields
     private bool isConnecting;
+    private CanvasGroup activeCanvas;
     private Text progressMessage;
     private Text popUpMessage;
     #endregion
@@ -50,6 +51,7 @@ public class GameManagerScript : Photon.PunBehaviour {
         GUIManager.showCanvasGroup(controlPanel);
         GUIManager.hideCanvasGroup(progressPanel);
         GUIManager.hideCanvasGroup(popUp);
+        activeCanvas = controlPanel;
     }
     #endregion
 
@@ -72,10 +74,13 @@ public class GameManagerScript : Photon.PunBehaviour {
 
     #region Connection messages
 
-    public override void OnFailedToConnectToPhoton(DisconnectCause cause) {//TODO: pop-up
+    public override void OnFailedToConnectToPhoton(DisconnectCause cause) {
         Debug.LogError("Failed to connect due to " + cause.ToString());
 
-        progressMessage.text = "Failed to connect due to " + cause.ToString();//TODO: check localisation
+        GUIManager.setCanvasGroupInactive(activeCanvas);
+
+        popUpMessage.text = "Failed to connect due to " + cause.ToString();//TODO: check localisation
+        GUIManager.showCanvasGroup(popUp);
     }
 
     public override void OnDisconnectedFromPhoton() {
@@ -97,11 +102,14 @@ public class GameManagerScript : Photon.PunBehaviour {
         }
     }
     
-    public override void OnPhotonCreateRoomFailed(object [] codeAndMsg) {//TODO: pop-up
+    public override void OnPhotonCreateRoomFailed(object [] codeAndMsg) {
         Debug.LogError("Failed to create room:\n" +
             codeAndMsg [0].ToString() + " " + codeAndMsg [1].ToString());
 
-        progressMessage.text = "Failed to create room";//TODO: check localisation
+        GUIManager.setCanvasGroupInactive(activeCanvas);
+
+        popUpMessage.text = "Failed to create room";//TODO: check localisation
+        GUIManager.showCanvasGroup(popUp);
     }
 
     public override void OnPhotonRandomJoinFailed(object [] codeAndMsg) {
@@ -153,6 +161,8 @@ public class GameManagerScript : Photon.PunBehaviour {
         isConnecting = true;
         GUIManager.hideCanvasGroup(controlPanel);
         GUIManager.showCanvasGroup(progressPanel);
+        activeCanvas = progressPanel;
+
         progressMessage.text = "Connecting...";
 
         if (PhotonNetwork.connected) {
@@ -175,6 +185,12 @@ public class GameManagerScript : Photon.PunBehaviour {
 
         GUIManager.showCanvasGroup(controlPanel);
         GUIManager.hideCanvasGroup(progressPanel);
+        activeCanvas = controlPanel;
+    }
+
+    public void ClosePopUp() {
+        GUIManager.hideCanvasGroup(popUp);
+        GUIManager.showCanvasGroup(activeCanvas);
     }
 
     public void Exit() {

@@ -16,4 +16,10 @@ public static class GUIManager {
         group.interactable = false;
         group.blocksRaycasts = false;
     }
+
+    static public void setCanvasGroupInactive(CanvasGroup group) {
+        group.alpha = 0.5f;
+        group.interactable = false;
+        group.blocksRaycasts = false;
+    }
 }
