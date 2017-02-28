@@ -1,6 +1,24 @@
 {
   "items": [
-    {"key" : "title", "value": "who knows"},
-    {"key": "creatures", "value": "mages"}
+    {
+      "key": "PlayButton",
+      "value": "Play"
+    },
+    {
+      "key": "ExitButton",
+      "value": "Exit"
+    },
+    {
+      "key": "OkButton",
+      "value": "OK"
+    },
+    {
+      "key": "CancelButton",
+      "value": "Cancel"
+    },
+    {
+      "key": "NicknamePlaceholder",
+      "value": "Enter Nickname..."
+    }
   ]
 }
