@@ -128,6 +128,28 @@ def redact_key(args):
     print()
 
 
+def rename_key(args):
+    print("You are going to rename keys", args)
+    print("Are you sure")
+    if get_confirmation():
+        for key in args:
+            if key in locDict[exsDict]:
+                print("Enter new name for key", key)
+                new_key = input(">")
+
+                while new_key in locDict[exsDict]:
+                    print("Key", new_key, "is already exists")
+                    print("Please, enter another name")
+                    new_key = input(">")
+
+                for localization in locDict:
+                    locDict[localization][new_key] = locDict[localization].pop(key)
+            else:
+                print("There is no key '" + key + "'")
+                print("Use 'addkey' to add new key")
+            print()
+
+
 def show_all(args):
     if len(args) is 0:
         for key in locDict[exsDict]:
@@ -217,6 +239,10 @@ while True:
     elif userRespond[0] == 'showall':
         userRespond.remove('showall')
         show_all(userRespond)
+
+    elif userRespond[0] == 'renamekey':
+        userRespond.remove('renamekey')
+        rename_key(userRespond)
 
     elif userRespond[0] == 'save':
         save()
