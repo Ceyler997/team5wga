@@ -23,8 +23,13 @@ public class RTSCamera : MonoBehaviour {
 	}
 
     void Update() {
-        float y = 0, z = 0;
+        float x = 0, y = 0, z = 0;
         float speed = ScrollSpeed * Time.deltaTime;
+
+        if (Input.mousePosition.x < ScrollZone)
+            x -= speed;
+        else if (Input.mousePosition.x > Screen.height - ScrollZone)
+            x += speed;
 
         if (Input.mousePosition.y < ScrollZone)
             z -= speed;
@@ -42,7 +47,7 @@ public class RTSCamera : MonoBehaviour {
                 z -= 3;
         }
 
-        Vector3 moveDelta = new Vector3(0, y, z);
+        Vector3 moveDelta = new Vector3(x, y, z);
         Vector3 move = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up) * moveDelta + desiredPosition;
         move.x = Mathf.Clamp(move.x, xMin, xMax);
         move.z = Mathf.Clamp(move.z, zMin, zMax);
@@ -50,7 +55,7 @@ public class RTSCamera : MonoBehaviour {
         desiredPosition = move;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, 0.2f);
 
-        if (Input.GetMouseButton(1)) {
+        if (Input.GetMouseButton(2)) {
             float rotateSpeed = 3F;
             transform.Rotate(Vector3.up, rotateSpeed * Input.GetAxis("Mouse X"), Space.World);
         }
