@@ -41,7 +41,6 @@ public class RTSCamera : MonoBehaviour {
             if (transform.position.y > ZoomMin + 5)
                 z += 3;
         } else if (Input.mouseScrollDelta.y < 0) {
-            //print(y);
             y += 5;
             if (transform.position.y < ZoomMax - 5)
                 z -= 3;
