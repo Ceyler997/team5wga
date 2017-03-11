@@ -17,13 +17,15 @@ public class RTSCamera : MonoBehaviour {
     public float ZoomMax;
 
     private Vector3 desiredPosition;
+    private Transform cameraTransform;
 
-	void Start () {
+    void Start () {
         desiredPosition = transform.position;
+        cameraTransform = transform.GetChild(0).GetComponent<Transform>();
 	}
 
     void Update() {
-        float x = 0, y = 0, z = 0;
+        float x = 0, z = 0;
         float speed = ScrollSpeed * Time.deltaTime;
 
         if (Input.mousePosition.x < ScrollZone)
@@ -36,21 +38,19 @@ public class RTSCamera : MonoBehaviour {
         else if (Input.mousePosition.y > Screen.height - ScrollZone)
             z += speed;
 
+        Vector3 localCameraPosition = cameraTransform.localPosition;
         if (Input.mouseScrollDelta.y > 0) {
-            y -= 5;
-            if (transform.position.y > ZoomMin + 5)
-                z += 3;
+            localCameraPosition.z -= 5;
         } else if (Input.mouseScrollDelta.y < 0) {
-            y += 5;
-            if (transform.position.y < ZoomMax - 5)
-                z -= 3;
+            localCameraPosition.z += 5;
         }
+        localCameraPosition.z = Mathf.Clamp(localCameraPosition.z, ZoomMin, ZoomMax);
+        cameraTransform.localPosition = localCameraPosition;
 
-        Vector3 moveDelta = new Vector3(x, y, z);
+        Vector3 moveDelta = new Vector3(x, 0, z);
         Vector3 move = Quaternion.AngleAxis(transform.eulerAngles.y, Vector3.up) * moveDelta + desiredPosition;
         move.x = Mathf.Clamp(move.x, xMin, xMax);
         move.z = Mathf.Clamp(move.z, zMin, zMax);
-        move.y = Mathf.Clamp(move.y, ZoomMin, ZoomMax);
         desiredPosition = move;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, 0.2f);
 
