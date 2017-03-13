@@ -28,9 +28,15 @@ public class RTSCamera : MonoBehaviour {
         float x = 0, z = 0;
         float speed = ScrollSpeed * Time.deltaTime;
 
+        if (Input.GetMouseButton(2)) {
+            float rotateSpeed = 3F;
+            transform.Rotate(Vector3.up, rotateSpeed * Input.GetAxis("Mouse X"), Space.World);
+            return;
+        }
+
         if (Input.mousePosition.x < ScrollZone)
             x -= speed;
-        else if (Input.mousePosition.x > Screen.height - ScrollZone)
+        else if (Input.mousePosition.x > Screen.width - ScrollZone)
             x += speed;
 
         if (Input.mousePosition.y < ScrollZone)
@@ -54,9 +60,5 @@ public class RTSCamera : MonoBehaviour {
         desiredPosition = move;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, 0.2f);
 
-        if (Input.GetMouseButton(2)) {
-            float rotateSpeed = 3F;
-            transform.Rotate(Vector3.up, rotateSpeed * Input.GetAxis("Mouse X"), Space.World);
-        }
     }
 }
