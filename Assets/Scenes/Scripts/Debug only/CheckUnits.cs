@@ -12,7 +12,7 @@ public class CheckUnits : MonoBehaviour {
 	void Start () {
 	}
 	
-	// Update is called once per frame
+/* 	// Update is called once per frame
 	void Update () {
 		if(selectUnit!=null)
 			Moving();
@@ -20,8 +20,9 @@ public class CheckUnits : MonoBehaviour {
 		/*if (Input.GetKeyDown ("space")) {
             Debug.Log("Press Key");
             Destroy(selectUnit.gameObject);
-        }*/
+        }
 	//	MouseSelect();
+	
 		 if(Input.GetMouseButtonDown(0)) {
 			RaycastHit hitInfo = new RaycastHit();
 			bool hit = Physics.Raycast( mainCamera.ScreenPointToRay(Input.mousePosition),out hitInfo);
@@ -34,7 +35,7 @@ public class CheckUnits : MonoBehaviour {
 		 }
 	
 	}
-
+	
 	void Moving() {
 		float h = Input.GetAxis("Horizontal")*selectUnit.movementSpeed;
 		float v = Input.GetAxis("Vertical")*selectUnit.movementSpeed;
@@ -43,7 +44,7 @@ public class CheckUnits : MonoBehaviour {
 		move *= Time.deltaTime;
 		selectUnit.transform.Translate(move);
 	}
-
+*/
 	void MouseSelect() {
 	}
 }
