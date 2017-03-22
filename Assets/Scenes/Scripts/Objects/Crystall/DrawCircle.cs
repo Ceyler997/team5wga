@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DrawCircle : MonoBehaviour {
 
-	private int lengthOfLineRenderer = 20;
+//	private int lengthOfLineRenderer = 20;
 	private float ThetaScale = 0.01f;
 	int size;
 	LineRenderer line1;

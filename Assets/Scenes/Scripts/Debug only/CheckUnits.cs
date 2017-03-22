@@ -7,7 +7,7 @@ using UnityEngine;
 public class CheckUnits : MonoBehaviour {
 
 	public BaseCharacter selectUnit = null;
-	public Camera camera; 
+	private Camera mainCamera; 
 	// Use this for initialization
 	void Start () {
 	}
@@ -24,7 +24,7 @@ public class CheckUnits : MonoBehaviour {
 	//	MouseSelect();
 		 if(Input.GetMouseButtonDown(0)) {
 			RaycastHit hitInfo = new RaycastHit();
-			bool hit = Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition),out hitInfo);
+			bool hit = Physics.Raycast( mainCamera.ScreenPointToRay(Input.mousePosition),out hitInfo);
 			if(hit) {
 				Suprime unit = hitInfo.transform.gameObject.GetComponent<Suprime>();
 				if(unit) {

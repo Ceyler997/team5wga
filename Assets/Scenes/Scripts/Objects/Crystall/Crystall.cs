@@ -34,7 +34,7 @@ public class Crystall : GameObjectEntity {
 	public float curentTimeToCapture; //текущее время захвата
 	public  List<Collider> unitsList = new List<Collider>();//Массив юнитов, которые пересекли радиус A
 	public bool bStartCapture = false; //Если захват начался, то true
-	private Renderer renderer;
+	private Renderer texture;
 	//public List<Suprime> suprimeList = new List<Suprime>(); //Список ВС, которые в радиусе действия Кристалла, необходим для передачи энергии
 	public List<Material> materials = new List<Material>();
 
@@ -43,7 +43,7 @@ public class Crystall : GameObjectEntity {
 		radius = gameObject.AddComponent<SphereCollider>();
 		radius.radius = radiusSecond; 	
 		radius.isTrigger = true;
-		renderer  = GetComponent<Renderer>();
+		texture  = GetComponent<Renderer>();
 	}
 	//Персонаж входит в Кристалл
 	void OnTriggerEnter(Collider other) {
@@ -167,7 +167,7 @@ public class Crystall : GameObjectEntity {
 			this.belongPlayer = captureSuprime.belogPlayer;
 			ChangeState();//изменяем состояние
 			StopCapture();
-			renderer.sharedMaterial = materials[(int)belongPlayer];
+			texture.sharedMaterial = materials[(int)belongPlayer];
 		//	AddListSuprime();
 		}
 	}

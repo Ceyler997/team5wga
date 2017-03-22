@@ -2,7 +2,8 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharactersController : MonoBehaviour {
+public class CharactersController : MonoBehaviour
+{
 
     public static CharactersController Instance;
 
@@ -12,12 +13,14 @@ public class CharactersController : MonoBehaviour {
 
 
     // Use this for initialization
-    void Awake() {
+    void Awake()
+    {
         Instance = this;
     }
 
     // Update is called once per frame
-    void Update() {
+    void Update()
+    {
 
 
         if (Input.GetMouseButtonDown(0))
@@ -28,12 +31,15 @@ public class CharactersController : MonoBehaviour {
             if (Physics.Raycast(ray, out hit) && hit.transform.CompareTag("Unit"))
             {
                 ControllableUnit unit = hit.transform.GetComponent<ControllableUnit>();
-                unit.SelectUnit();
-                SelectedUnit = unit;
+                if (unit != null)
+                {
+                    unit.SelectUnit();
+                    SelectedUnit = unit;
+                }
             }
             else
             {
-                if(SelectedUnit != null)
+                if (SelectedUnit != null)
                 {
                     SelectedUnit.DeselectUnit();
                     SelectedUnit = null;
