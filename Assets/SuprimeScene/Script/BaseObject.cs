@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BaseObject {
+public class BaseObject:MonoBehaviour {
     private Player player;
 	public Vector3 getPosition() {
         return player.transform.position;

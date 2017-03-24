@@ -438,6 +438,22 @@ GameObject:
   m_PrefabParentObject: {fileID: 1153048791717186, guid: fee7dd62c2be9944186b716e6bd29f46,
     type: 2}
   m_PrefabInternal: {fileID: 432848562}
+--- !u!114 &1980024644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1980024643}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6ce7c461342ba334a93da0c099b02762, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  distanceOfCapture: 10
+  energy: 0
+  maxEnergy: 50
+  crystalls: []
+  curentCrystall: {fileID: 0}
 --- !u!114 &1980024652
 MonoBehaviour:
   m_ObjectHideFlags: 0
