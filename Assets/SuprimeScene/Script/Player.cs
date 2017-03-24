@@ -36,6 +36,7 @@ public class Player : MonoBehaviour {
         crystalls.Add(crystall);
     }
 
+    public GameManager getManager { get { return manager; } }
     // Update is called once per frame
     void Update () {
 		
