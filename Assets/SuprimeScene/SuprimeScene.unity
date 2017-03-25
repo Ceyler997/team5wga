@@ -452,7 +452,6 @@ MonoBehaviour:
   distanceOfCapture: 10
   energy: 0
   maxEnergy: 50
-  crystalls: []
   curentCrystall: {fileID: 0}
 --- !u!114 &1980024652
 MonoBehaviour:

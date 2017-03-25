@@ -10,8 +10,19 @@ public class Suprime : BaseObject {
     public Crystall curentCrystall = null; //текущий кристалл, в радиусе которого находится ВС
     public Health health; //здоровье ВС
     void Start() {
-        health = new Health( getPlayer.getManager.MaxSuprimeHealth, 
-                             getPlayer.getManager.MaxSuprimeEnergy, 
-                             getPlayer.getManager.SuprimeRegenPerSecond);
+        //Жизя
+        health = getHealt();
     }
+
+    private Health getHealt() {
+        return new Health(getPlayer.getManager.MaxSuprimeHealth,
+                                     getPlayer.getManager.MaxSuprimeHealth,
+                                     getPlayer.getManager.SuprimeRegenPerSecond);
+    }
+
+    //Вызывается кристаллом, при пересечении ВС радиуса кристалла
+    public void setCurentCrystall(Crystall crystall) {
+        curentCrystall = crystall;
+    }
+
 }

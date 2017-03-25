@@ -15,7 +15,7 @@ public class GameManager : MonoBehaviour {
     private const float suprimeRegenPerSecond = 1f; //Скорость восстановления жизни ВС
 
 
-    GameManager() {
+    public GameManager() {
         players = new List<Player>();
     }
     public Player GetPlayer(int id) {
@@ -24,7 +24,7 @@ public class GameManager : MonoBehaviour {
         }
         return null;
     }
-    public int MaxSuprimeAmount { get { return MaxSuprimeAmount;} }
+    public int MaxSuprimeAmount { get { return maxSuprimeAmount;} }
     public float MinEnergySpeed { get {return minEnergySpeed;} }
     public float MaxEnergySpeed { get{return maxEnergySpeed;} }
 

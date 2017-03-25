@@ -7,7 +7,8 @@ public class Player : MonoBehaviour {
     private Suprime[] suprimes; //ВС, которыми владеет игрок
     private List<Crystall> crystalls; //Кристалы, которыми владеет игрок
     private GameManager manager;
-    Player(string name) {
+    public Player(string name) {
+        manager = new GameManager();
         this.PlayerName = name;
         suprimes = new Suprime[manager.MaxSuprimeAmount];
         crystalls = new List<Crystall>();
