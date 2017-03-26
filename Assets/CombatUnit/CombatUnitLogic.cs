@@ -4,13 +4,19 @@ using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
+[RequireComponent(typeof(CombatSystem))]
 public class CombatUnitLogic : BaseObject {
 
     #region private fields
 
     Movement movementAgent;
     Health health;
-    private Suprime master; // TODO TEMP public
+    CombatSystem combatSystem;
+    AIBehaviour behaviour;
+    Suprime master;
+    #endregion
+
+    #region getters and setters
 
     public Suprime Master {
         get {
@@ -21,12 +27,15 @@ public class CombatUnitLogic : BaseObject {
             master = value;
         }
     }
-    #endregion
 
-    #region getters and setters
+    AIBehaviour Behaviour {
+        get {
+            return behaviour;
+        }
 
-    public void setMaster(Suprime newMaster) {
-        master = newMaster;
+        set {
+            behaviour = value;
+        }
     }
     #endregion
 
@@ -35,6 +44,7 @@ public class CombatUnitLogic : BaseObject {
     void Start () {
         movementAgent = GetComponent<Movement>();
         health = GetComponent<Health>();
+        combatSystem = GetComponent<CombatSystem>();
 	}
 
     private void Update() {
