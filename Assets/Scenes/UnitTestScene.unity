@@ -371,13 +371,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ScrollZone: 30
-  ScrollSpeed: 5
+  ScrollSpeed: 30
   xMax: 50
   xMin: -50
   zMax: 50
   zMin: -50
-  ZoomMin: 30
-  ZoomMax: 100
+  ZoomMin: -50
+  ZoomMax: -10
 --- !u!4 &2036043536
 Transform:
   m_ObjectHideFlags: 0
