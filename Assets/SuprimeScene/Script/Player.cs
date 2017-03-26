@@ -7,18 +7,15 @@ public class Player : MonoBehaviour {
     private Suprime[] suprimes; //ВС, которыми владеет игрок
     private List<Crystall> crystalls; //Кристалы, которыми владеет игрок
     private GameManager manager;
-    public Player(string name) {
-        manager = new GameManager();
+	// Use this for initialization
+    void Start () {
+		manager = new GameManager();
         this.PlayerName = name;
         suprimes = new Suprime[manager.MaxSuprimeAmount];
         crystalls = new List<Crystall>();
-    }
-	// Use this for initialization
-    void Start () {
-		
 	}
 	//возвращает имя игрока
-    public string Name { get; }
+    public string GetName { get {return name; } }
 	//Возвращает массив кристаллов принадлежавших игроку
 	public Suprime[] GetSuprimes { get { return suprimes; } }
     //Возвращает массив юнитов принадлежавших игроку
@@ -38,6 +35,7 @@ public class Player : MonoBehaviour {
     }
 
     public GameManager getManager { get { return manager; } }
+
     // Update is called once per frame
     void Update () {
 		
