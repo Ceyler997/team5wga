@@ -2,19 +2,34 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(Health))]
 public class CombatUnitLogic : MonoBehaviour {
 
-    #region Private Fields
-    private 
+    #region Private fields
+
+    Movement movementAgent;
+    Health health;
+    public Suprime master; // TODO TEMP public
     #endregion
 
-    // Use this for initialization
+    #region Getters and setters
+
+    public void setMaster(Suprime newMaster) {
+        master = newMaster;
+    }
+    #endregion
+
+    #region MonoBehaviour methods
+
     void Start () {
-		
+        movementAgent = GetComponent<Movement>();
+        health = GetComponent<Health>();
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private void Update() {
+        movementAgent.moveTo(master.transform.position); // TODO TEMP
+    }
+    #endregion
+
 }
