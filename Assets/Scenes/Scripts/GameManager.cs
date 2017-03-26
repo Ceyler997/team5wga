@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour {
     private const float maxSuprimeHealth = 100f; //Максимальное здоровье у ВС
     private const float maxSuprimeEnergy = 100f; //Максимальное кол-во энергии у ВС
     private const float suprimeRegenPerSecond = 1f; //Скорость восстановления жизни ВС
+    private const int suprimeStartLevel = 1; //Начальный уровень ВС
+    private const int suprimeMaxLevel = 5; //Максимальный уровень ВС
 
 
     public GameManager() {
@@ -31,6 +33,8 @@ public class GameManager : MonoBehaviour {
     public float MaxSuprimeHealth {get { return maxSuprimeHealth; } }
     public float MaxSuprimeEnergy {get { return maxSuprimeEnergy; } }
     public float SuprimeRegenPerSecond {get { return suprimeRegenPerSecond; } }
+    public int SuprimeMaxLevel {get { return suprimeMaxLevel; } }
+    public int SuprimeStartLevel {get { return suprimeStartLevel; } }
     
 
 }
