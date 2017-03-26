@@ -39,7 +39,7 @@ public class LocalizationManager: MonoBehaviour {//TODO: move to static whole cl
                     loadedData.items [dataCount].value);
             }
 
-            Debug.Log("Locilized data loaded from " + fileName + ", " + localizedText.Count.ToString() + " entries");
+            Debug.Log("Localized data loaded from " + fileName + ", " + localizedText.Count.ToString() + " entries");
         } else {
             Debug.LogError("No such localization!");
         }
