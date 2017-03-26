@@ -1,25 +1,38 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Suprime : BaseObject {
+[RequireComponent (typeof (Player))]
+[RequireComponent (typeof (Health))]
+[RequireComponent (typeof (Energy))]
+public class Suprime : BaseObject, IFightable {
     [HeaderAttribute("Suprime Property")]
     public float distanceOfCapture = 10f; //Дистанция, при которой возможен захват
-    public float energy = 0f; //Текущее кол-во энергии
-    public float maxEnergy = 50f; //Максимальное кол-во энергии у ВС
     public Crystall curentCrystall = null; //текущий кристалл, в радиусе которого находится ВС
     public Health health; //здоровье ВС
+    public Energy energy;//энергия ВС
     public Player controllPlayer;
     void Start() {
         controllPlayer = GetComponent<Player>();
         health = GetComponent<Health>();
-        setHealt();
+        energy = GetComponent<Energy>();
+        setEnergy();
+        setHealth();
     }
 
-    private void setHealt() {
-          health.setHealth(controllPlayer.getManager.MaxSuprimeHealth,
-                           controllPlayer.getManager.MaxSuprimeHealth,
-                           controllPlayer.getManager.SuprimeRegenPerSecond);
+    void Update() {
+        
+    }
+
+    void setEnergy() {
+        energy.setEnergy(controllPlayer.getManager.MaxSuprimeEnergy,
+                        controllPlayer.getManager.MaxSuprimeEnergy);
+    }
+    void setHealth() {
+        health.setHealth(controllPlayer.getManager.MaxSuprimeHealth,
+                         controllPlayer.getManager.MaxSuprimeHealth,
+                         controllPlayer.getManager.SuprimeRegenPerSecond, this);
     }
 
     //Вызывается кристаллом, при пересечении ВС радиуса кристалла
@@ -27,4 +40,7 @@ public class Suprime : BaseObject {
         curentCrystall = crystall;
     }
 
+    void IFightable.die() {
+        Destroy(gameObject);
+    }
 }

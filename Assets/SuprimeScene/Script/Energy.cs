@@ -5,17 +5,11 @@ using UnityEngine;
 public class Energy : MonoBehaviour {
     private float energy; //Текущее кол-во энергии
     private float maxEnergy; //Максимальное кол-во энергии
-
-    // Use this for initialization
-    void Start () {
-		
-	}
-	public void restoreEnergy(float energy) {
-        energy += energy;
+	public void changeEnergy(float deltaEnergy) {
+        energy += deltaEnergy;
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+	public void setEnergy(float maxEnergy, float curentEnergy) {
+        this.maxEnergy = maxEnergy;
+        this.energy = curentEnergy;
+    }
 }
