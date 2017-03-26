@@ -7,11 +7,10 @@ using UnityEngine.AI;
 public class Movement : MonoBehaviour {
     //movement speed can be changed in the Nav Mesh Agent
 
-    #region Private fields
+    #region private fields
 
     NavMeshAgent navigationAgent;
     #endregion
-
 
     #region MonoBehaviour methods
 
@@ -20,7 +19,7 @@ public class Movement : MonoBehaviour {
     }
     #endregion
 
-    #region Public methods
+    #region public methods
 
     public void moveTo(Vector3 targetPosition) {
         navigationAgent.SetDestination(targetPosition);

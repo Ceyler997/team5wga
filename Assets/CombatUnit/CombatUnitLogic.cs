@@ -4,16 +4,26 @@ using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
-public class CombatUnitLogic : MonoBehaviour {
+public class CombatUnitLogic : BaseObject {
 
-    #region Private fields
+    #region private fields
 
     Movement movementAgent;
     Health health;
-    public Suprime master; // TODO TEMP public
+    private Suprime master; // TODO TEMP public
+
+    public Suprime Master {
+        get {
+            return master;
+        }
+
+        set {
+            master = value;
+        }
+    }
     #endregion
 
-    #region Getters and setters
+    #region getters and setters
 
     public void setMaster(Suprime newMaster) {
         master = newMaster;
