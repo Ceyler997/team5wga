@@ -37,10 +37,10 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4368958484408910}
-  - component: {fileID: 114235947933053564}
   - component: {fileID: 195881172294289626}
-  - component: {fileID: 114078834681527026}
   - component: {fileID: 114519442420605764}
+  - component: {fileID: 114235947933053564}
+  - component: {fileID: 114078834681527026}
   - component: {fileID: 114174204551504764}
   m_Layer: 0
   m_Name: CombatUnit
@@ -160,7 +160,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a38a3b8e678880a439fa50f4a90b5639, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  master: {fileID: 0}
 --- !u!136 &136370336212373790
 CapsuleCollider:
   m_ObjectHideFlags: 1
