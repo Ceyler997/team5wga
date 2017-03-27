@@ -16,7 +16,8 @@ public class Health : MonoBehaviour {
     //Получение урона
     public void getDamage(float damage) {
         health -= damage;
-        if(health <= 0) die();
+        if (health <= 0)
+            die();
     }
     //Смерть юнита
     void die() {
@@ -29,5 +30,9 @@ public class Health : MonoBehaviour {
     //Изменение значения скорости регенерации
     void setRegenSpeed(float regenSpeed) {
         this.regenSpeed = regenSpeed;
+    }
+
+    public void Update() {
+        regen();
     }
 }
