@@ -57,7 +57,13 @@ public class CombatUnit : BaseObject {
         movementAgent = GetComponent<Movement>();
         health = GetComponent<Health>();
         combatSystem = GetComponent<CombatSystem>();
+        behaviour = new ProtectBehaviour();
+        behaviour.Subject = this;
 	}
+
+    private void Update() {
+        behaviour.UpdateState();
+    }
     #endregion
 
 }

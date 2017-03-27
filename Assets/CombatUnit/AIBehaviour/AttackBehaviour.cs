@@ -1,17 +1,16 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
 
 public class AttackBehaviour : AIBehaviour {
 
-    public override BaseObject Subject {
+    new CombatUnit subject;
+
+    new public CombatUnit Subject {
         get {
-            throw new NotImplementedException();
+            return subject;
         }
 
         set {
-            throw new NotImplementedException();
+            subject = value;
         }
     }
 

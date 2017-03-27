@@ -1,8 +1,7 @@
-﻿using UnityEngine;
-using System;
+﻿abstract public class AIBehaviour {
+    protected BaseObject subject;
 
-abstract public class AIBehaviour {
-    abstract public BaseObject Subject {get;set;}
+    public BaseObject Subject {get;set;}
 
     abstract public void UpdateState();
 }
