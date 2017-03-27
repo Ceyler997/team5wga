@@ -5,7 +5,8 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CombatSystem))]
-public class CombatUnitLogic : BaseObject {
+
+public class CombatUnit : BaseObject {
 
     #region private fields
 
@@ -46,10 +47,6 @@ public class CombatUnitLogic : BaseObject {
         health = GetComponent<Health>();
         combatSystem = GetComponent<CombatSystem>();
 	}
-
-    private void Update() {
-        movementAgent.moveTo(master.transform.position); // TODO TEMP
-    }
     #endregion
 
 }

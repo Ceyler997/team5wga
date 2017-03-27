@@ -43,7 +43,7 @@ GameObject:
   - component: {fileID: 114078834681527026}
   - component: {fileID: 114174204551504764}
   m_Layer: 0
-  m_Name: CombatUnit
+  m_Name: CombatUnitPrefab
   m_TagString: Unit
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
