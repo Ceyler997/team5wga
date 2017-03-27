@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CombatSystem))]
 
-public class CombatUnit : BaseObject {
+public class Unit : BaseObject {
 
     #region private fields
 

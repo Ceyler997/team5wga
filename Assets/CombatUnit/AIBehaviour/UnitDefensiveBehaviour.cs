@@ -1,10 +1,10 @@
 ﻿using System;
 
-public class AttackBehaviour : AIBehaviour {
+public class UnitDefensiveBehaviour : AIBehaviour {
 
-    new CombatUnit subject;
+    new Unit subject;
 
-    new public CombatUnit Subject {
+    new public Unit Subject {
         get {
             return subject;
         }
