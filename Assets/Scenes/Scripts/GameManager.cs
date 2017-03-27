@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Класс с глобальными переменными и основными настройками игры
 public class GameManager : MonoBehaviour {
-    private List<Player> players; //Все игроки подключенные к игре
+    public List<Player> players; //Все игроки подключенные к игре
     private const float minEnergySpeed = 1f; //Минимальное скорость передачи энергии одному ВС от кристалла с энергией == 0 
     private const float maxEnergySpeed = 5f; //Максимальная скорость передачи энергии одному ВС от кристалла с энергией > 0
 
@@ -15,10 +15,11 @@ public class GameManager : MonoBehaviour {
     private const float suprimeRegenPerSecond = 1f; //Скорость восстановления жизни ВС
     private const int suprimeStartLevel = 1; //Начальный уровень ВС
     private const int suprimeMaxLevel = 5; //Максимальный уровень ВС
-
-
-    public GameManager() {
-        players = new List<Player>();
+    public const float distanceOfCapture = 10f; //Дистанция, при которой возможен захват
+    void Start() {
+       foreach(Player player in players) {
+            player.setManager(this);
+        } 
     }
     public Player GetPlayer(int id) {
         if(id >= 0 && id < players.Count) {
@@ -35,6 +36,7 @@ public class GameManager : MonoBehaviour {
     public float SuprimeRegenPerSecond {get { return suprimeRegenPerSecond; } }
     public int SuprimeMaxLevel {get { return suprimeMaxLevel; } }
     public int SuprimeStartLevel {get { return suprimeStartLevel; } }
-    
+    public float DistanceOfCapture { get { return distanceOfCapture; } }
+
 
 }
