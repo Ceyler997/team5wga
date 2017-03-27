@@ -15,6 +15,7 @@ public class CombatUnit : BaseObject {
     CombatSystem combatSystem;
     AIBehaviour behaviour;
     Suprime master;
+    bool isUnderAttack;
     #endregion
 
     #region getters and setters
@@ -36,6 +37,16 @@ public class CombatUnit : BaseObject {
 
         set {
             behaviour = value;
+        }
+    }
+
+    public bool IsUnderAttack {
+        get {
+            return isUnderAttack;
+        }
+
+        set {
+            isUnderAttack = value;
         }
     }
     #endregion
