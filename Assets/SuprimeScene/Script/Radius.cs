@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Radius : MonoBehaviour {
-    SphereCollider radius;
+    public SphereCollider radius;
     List<BaseCharacter> enemyList;
     // Use this for initialization
     public void Initialization (float radiusSize) {
@@ -22,8 +22,4 @@ public class Radius : MonoBehaviour {
     	
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
 }

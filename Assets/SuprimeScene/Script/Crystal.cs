@@ -14,11 +14,25 @@ public class Crystal : BaseObject, ILeveable {
     private Level level; //Уровень кристалла
     private GameManager manager; //Игровой менеджер
     private Radius radius; //Дальний радису кристалла, отслеживает всех кто в него заходит
+
+    public Radius Radius
+    {
+        get
+        {
+            return radius;
+        }
+
+        set
+        {
+            radius = value;
+        }
+    }
+
     public void Initialization (GameManager manager) {
         this.manager = manager;
         energy = GetComponent<Energy>();
         level = GetComponent<Level>();
-        radius = GetComponent<Radius>();
+        Radius = GetComponent<Radius>();
         setEnergy();
         setupLevel();
         setupRadius();
@@ -39,7 +53,7 @@ public class Crystal : BaseObject, ILeveable {
         regenSpeed = manager.GetCrystallRegenEnergySpeed(level.curentLevel);
     }
     void setupRadius() {
-        radius.Initialization(manager.CrystallGetSecondRadius);
+        Radius.Initialization(manager.CrystallGetSecondRadius);
     }
     void ILeveable.levelUp() {
         level.levelUp();
