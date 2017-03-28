@@ -10,7 +10,6 @@
 /.vscode/
 /.vs/
 /Assets/Plugins/
-*.mat
 
 # ===================================== #
 # Visual Studio / MonoDevelop generated #
