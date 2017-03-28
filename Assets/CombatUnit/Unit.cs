@@ -6,7 +6,7 @@ using UnityEngine;
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CombatSystem))]
 
-public class Unit : BaseObject {
+public class Unit : BaseObject, IFightable {
 
     #region private fields
 
@@ -15,7 +15,6 @@ public class Unit : BaseObject {
     CombatSystem combatSystem;
     AIBehaviour behaviour;
     Suprime master;
-    bool isUnderAttack;
     #endregion
 
     #region getters and setters
@@ -39,16 +38,6 @@ public class Unit : BaseObject {
             behaviour = value;
         }
     }
-
-    public bool IsUnderAttack {
-        get {
-            return isUnderAttack;
-        }
-
-        set {
-            isUnderAttack = value;
-        }
-    }
     #endregion
 
     #region MonoBehaviour methods
@@ -57,8 +46,7 @@ public class Unit : BaseObject {
         movementAgent = GetComponent<Movement>();
         health = GetComponent<Health>();
         combatSystem = GetComponent<CombatSystem>();
-        behaviour = new ProtectBehaviour();
-        behaviour.Subject = this;
+        behaviour = new UnitAgressiveBehaviour(this); // TODO make defensive in the end
 	}
 
     private void Update() {

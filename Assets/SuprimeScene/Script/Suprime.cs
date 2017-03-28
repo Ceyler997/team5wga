@@ -10,6 +10,9 @@ public class Suprime : BaseObject {
     public Crystall curentCrystall = null; //текущий кристалл, в радиусе которого находится ВС
     public Health health; //здоровье ВС
     public Player controllPlayer;
+    public BaseCharacter [] inside; // should be redone with radius object
+    public Unit [] units;
+
     void Start() {
         controllPlayer = GetComponent<Player>();
         health = GetComponent<Health>();
