@@ -42,7 +42,6 @@ GameObject:
   - component: {fileID: 114061005073006350}
   - component: {fileID: 208990174151844652}
   - component: {fileID: 136020617972294936}
-  - component: {fileID: 114307330895475414}
   m_Layer: 0
   m_Name: Unit
   m_TagString: Unit
@@ -334,7 +333,7 @@ MeshRenderer:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1153048791717186}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_MotionVectors: 1
@@ -554,30 +553,6 @@ MonoBehaviour:
   mAgent: {fileID: 0}
   mObstacle: {fileID: 0}
   isCameraLockedOn: 0
---- !u!114 &114307330895475414
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1153048791717186}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0a57f30a0a18cf94b854e98876f4b39a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  viewRadius: 13.69
-  viewAngle: 360
-  TargetMask:
-    serializedVersion: 2
-    m_Bits: 512
-  ObstacleMask:
-    serializedVersion: 2
-    m_Bits: 256
-  VisibleTargets: []
-  MeshResolution: 0.5
-  EdgeResolveIteration: 4
-  EdgeDistanceThreshold: 0.5
-  viewMestFilter: {fileID: 33953908272203398}
 --- !u!135 &135030299078603370
 SphereCollider:
   m_ObjectHideFlags: 1
