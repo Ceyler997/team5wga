@@ -1,11 +1,6 @@
-﻿using System;
+﻿using UnityEngine;
 
 public class UnitAgressiveBehaviour : UnitAIBehaviour {
-
-    #region private fields
-    
-    bool isUnderAttack = false;
-    #endregion
 
     #region constructors
 
@@ -16,10 +11,10 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
     public override void UpdateState() {
         CombatSystem cs = Subject.getCombatSystem();
-        bool isTargetClosest = isUnderAttack; // for defining, are we get the closest unit in this iteration
+        bool isTargetClosest = cs.IsUnderAttack; // for defining, are we get the closest unit in this iteration
 
         if (cs.Target == null) {
-            if(Subject.inside.Length == 0) {
+            if(Subject.Inside.Length == 0) {
                 Subject.follow(Subject.Master);
                 return;
             }
@@ -34,6 +29,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
         }
 
         if (cs.attack()) {
+            Subject.MovementAgent.stop();
             cs.Target.getCombatSystem().attacked(Subject);
         } else {
             Subject.MovementAgent.moveTo(cs.Target.getPosition());
