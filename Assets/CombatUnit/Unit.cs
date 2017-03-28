@@ -6,7 +6,6 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CombatSystem))]
-
 public class Unit : BaseObject, IFightable {
 
     #region private fields
@@ -15,8 +14,8 @@ public class Unit : BaseObject, IFightable {
     Health health;
     CombatSystem combatSystem;
     UnitAIBehaviour behaviour;
-    public Suprime master; // TODO make private
-    public BaseObject [] inside; // should be redone with radius object in BaseObject
+    Suprime master;
+    BaseObject [] inside; // TODO should be redone with radius object in BaseObject
     #endregion
 
     #region getters and setters
@@ -54,6 +53,12 @@ public class Unit : BaseObject, IFightable {
 
         set {master = value;}
     }
+
+    public BaseObject [] Inside {
+        get {return inside;}
+
+        set {inside = value;}
+    }
     #endregion
 
     #region MonoBehaviour methods
@@ -66,12 +71,18 @@ public class Unit : BaseObject, IFightable {
 	}
 
     private void Update() {
-        Behaviour.UpdateState();
+        // Проверяем, есть ли мастер у юнита
+        if(Master == null) {
+            throw new UnitHaveNoMasterException();
+        }
+        
+        Behaviour.UpdateState(); // Получаем команды от ИИ
     }
     #endregion
 
     internal void follow(Suprime master) {
-        throw new NotImplementedException();
+        // TODO implement
+        MovementAgent.moveTo(master.getPosition());
     }
 
 }
