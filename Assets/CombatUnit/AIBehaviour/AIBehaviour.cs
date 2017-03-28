@@ -3,5 +3,7 @@
 
     public BaseObject Subject {get;set;}
 
+    public AIBehaviour(BaseObject subject) { }
+
     abstract public void UpdateState();
 }
