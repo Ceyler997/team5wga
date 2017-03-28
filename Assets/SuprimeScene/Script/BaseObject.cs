@@ -4,13 +4,18 @@ using UnityEngine;
 
 public class BaseObject : MonoBehaviour {
     private Player player;
-	public Vector3 getPosition() {
-        return player.transform.position;
-    }
-    public void setPlayer(Player player) {
-        this.player = player;
+
+    public Vector3 getPosition() {
+        return transform.position;
     }
 
-	public Player getPlayer { get { return player; } }
+    public Player Player {
+        get {
+            return player;
+        }
 
+        set {
+            player = value;
+        }
+    }
 }
