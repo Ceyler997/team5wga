@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -13,45 +14,64 @@ public class Unit : BaseObject, IFightable {
     Movement movementAgent;
     Health health;
     CombatSystem combatSystem;
-    AIBehaviour behaviour;
-    Suprime master;
+    UnitAIBehaviour behaviour;
+    public Suprime master; // TODO make private
+    public BaseObject [] inside; // should be redone with radius object in BaseObject
     #endregion
 
     #region getters and setters
 
-    public Suprime Master {
-        get {
-            return master;
-        }
+    public Movement MovementAgent {
+        get {return movementAgent;}
 
-        set {
-            master = value;
-        }
+        set {movementAgent = value;}
     }
 
-    AIBehaviour Behaviour {
-        get {
-            return behaviour;
-        }
+    public Health Health {
+        get {return health;}
 
-        set {
-            behaviour = value;
-        }
+        set {health = value;}
+    }
+
+    public CombatSystem getCombatSystem() {
+        return CombatSystem;
+    }
+
+    public CombatSystem CombatSystem {
+        get { return combatSystem; }
+
+        set { combatSystem = value; }
+    }
+
+    UnitAIBehaviour Behaviour {
+        get {return behaviour;}
+
+        set {behaviour = value;}
+    }
+
+    public Suprime Master {
+        get {return master;}
+
+        set {master = value;}
     }
     #endregion
 
     #region MonoBehaviour methods
 
     void Start () {
-        movementAgent = GetComponent<Movement>();
-        health = GetComponent<Health>();
-        combatSystem = GetComponent<CombatSystem>();
-        behaviour = new UnitAgressiveBehaviour(this); // TODO make defensive in the end
+        MovementAgent = GetComponent<Movement>();
+        Health = GetComponent<Health>();
+        CombatSystem = GetComponent<CombatSystem>();
+        Behaviour = new UnitAgressiveBehaviour(this); // TODO make defensive in the end
 	}
 
     private void Update() {
-        behaviour.UpdateState();
+        Behaviour.UpdateState();
     }
     #endregion
+
+    internal void follow(Suprime master) {
+        throw new NotImplementedException();
+    }
 
 }
