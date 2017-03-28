@@ -1,11 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Movement : MonoBehaviour {
-    //movement speed can be changed in the Nav Mesh Agent
+    // Скорость передвижения юнита может быть изменена в Nav Mesh Agent in the Unity Redactor
 
     #region private fields
 
@@ -21,8 +19,14 @@ public class Movement : MonoBehaviour {
 
     #region public methods
 
+    // Moving to the point
     public void moveTo(Vector3 targetPosition) {
         navigationAgent.SetDestination(targetPosition);
+    }
+
+    // stopping movement
+    public void stop() {
+        navigationAgent.Stop();
     }
     #endregion
 }
