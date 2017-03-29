@@ -69,7 +69,7 @@ public class Unit : BaseObject, IFightable {
 
     void Start () {
         MovementAgent = GetComponent<Movement>();
-        Health = GetComponent<Health>();
+        HealthSystem = GetComponent<Health>();
         CombatSystem = GetComponent<CombatSystem>();
         Behaviour = new UnitAgressiveBehaviour(this); // TODO make defensive in the end
 	}
