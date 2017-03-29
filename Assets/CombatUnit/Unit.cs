@@ -11,7 +11,7 @@ public class Unit : BaseObject, IFightable {
     #region private fields
 
     Movement movementAgent;
-    Health health;
+    Health healthSystem;
     CombatSystem combatSystem;
     UnitAIBehaviour behaviour;
     Suprime master;
@@ -26,14 +26,18 @@ public class Unit : BaseObject, IFightable {
         set {movementAgent = value;}
     }
 
-    public Health Health {
-        get {return health;}
+    public Health HealthSystem {
+        get {return healthSystem;}
 
-        set {health = value;}
+        set {healthSystem = value;}
     }
 
     public CombatSystem getCombatSystem() {
         return CombatSystem;
+    }
+
+    public Health getHealthSystem() {
+        return HealthSystem;
     }
 
     public CombatSystem CombatSystem {

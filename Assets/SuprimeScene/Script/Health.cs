@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 public class Health : MonoBehaviour {
 
     public float health; //Текущее кол-во здоровья
