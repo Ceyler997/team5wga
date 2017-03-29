@@ -71,7 +71,8 @@ public class Unit : BaseObject, IFightable {
         MovementAgent = GetComponent<Movement>();
         HealthSystem = GetComponent<Health>();
         CombatSystem = GetComponent<CombatSystem>();
-        Behaviour = new UnitAgressiveBehaviour(this); // TODO make defensive in the end
+        // protective behaviour with this unit as behaviour subject and master as protect target
+        Behaviour = new UnitProtectiveBehaviour(this, master);
 	}
 
     private void Update() {
