@@ -24,6 +24,7 @@ public class Health : MonoBehaviour {
     //Востановление жизней (запускать в апдейте)
     void regen() {
         health += regenSpeed * Time.deltaTime;
+        health = Mathf.Min(health, maxHealth);
     }
     //Изменение значения скорости регенерации
     void setRegenSpeed(float regenSpeed) {
