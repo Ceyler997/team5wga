@@ -14,6 +14,7 @@ public class ControllableUnit : BaseUnit {
     public UnitStates UnitState = UnitStates.IDLE;
 
     public Transform Target;
+    public Projector SelectionProjector;
 
     public NavMeshAgent mAgent;
     public NavMeshObstacle mObstacle;
@@ -67,6 +68,8 @@ public class ControllableUnit : BaseUnit {
         foreach (Renderer rend in mRenderers)
             highlight.ObjectRenderers.Add(rend);
         IsSelected = true;
+        SelectionProjector.enabled = true;
+        
         //highlight.ObjectRenderers.AddRange();
     }
 
@@ -74,6 +77,7 @@ public class ControllableUnit : BaseUnit {
     {
         highlight.ObjectRenderers.Clear();
         IsSelected = false;
+        SelectionProjector.enabled = false;
     }
 
     public void MoveTo(Vector3 position)
