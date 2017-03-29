@@ -83,10 +83,4 @@ public class Unit : BaseObject, IFightable {
         Behaviour.UpdateState(); // Получаем команды от ИИ
     }
     #endregion
-
-    public void follow(Suprime master) {
-        // TODO implement
-        MovementAgent.moveTo(master.getPosition());
-    }
-
 }

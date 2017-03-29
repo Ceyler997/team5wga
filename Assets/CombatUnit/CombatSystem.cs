@@ -60,6 +60,7 @@ public class CombatSystem : MonoBehaviour {
     #region MonoBehaviour methods
 
     public void Start() {
+        // TODO setup properties from the prop file
         CurrentColor = BattleMagicColor.NO_COLOR;
         NextAttackTime = Time.time;
     }

@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BaseObject : MonoBehaviour {
     private Player player;
+    private float followRadius;
 
     public Vector3 getPosition() {
         return transform.position;
@@ -17,5 +18,11 @@ public class BaseObject : MonoBehaviour {
         set {
             player = value;
         }
+    }
+
+    public float FollowRadius {
+        get { return followRadius; }
+
+        set { followRadius = value; }
     }
 }

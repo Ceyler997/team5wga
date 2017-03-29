@@ -15,7 +15,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
         if (cs.Target == null) {
             if(Subject.Inside.Length == 0) {
-                Subject.follow(Subject.Master);
+                Subject.MovementAgent.follow(Subject.Master);
                 return;
             }
 
