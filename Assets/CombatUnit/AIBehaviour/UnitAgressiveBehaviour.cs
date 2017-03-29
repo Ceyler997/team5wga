@@ -14,7 +14,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
         bool isTargetClosest = cs.IsUnderAttack; // for defining, are we get the closest unit in this iteration
 
         if (cs.Target == null) {
-            if(Subject.Inside.Length == 0) {
+            if(Subject.RadiusStub.Length == 0) {
                 Subject.MovementAgent.follow(Subject.Master);
                 return;
             }

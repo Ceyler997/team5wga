@@ -15,7 +15,6 @@ public class Unit : BaseObject, IFightable {
     private CombatSystem combatSystem;
     private UnitAIBehaviour behaviour;
     private Suprime master;
-    private BaseObject [] inside; // TODO should be redone with radius object in BaseObject
     #endregion
 
     #region getters and setters
@@ -56,12 +55,6 @@ public class Unit : BaseObject, IFightable {
         get {return master;}
 
         set {master = value;}
-    }
-
-    public BaseObject [] Inside {
-        get {return inside;}
-
-        set {inside = value;}
     }
     #endregion
 
