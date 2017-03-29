@@ -66,9 +66,9 @@ public class HighlightsFX : MonoBehaviour
 		CreateMaterials();
 		SetOccluderObjects();
 		
-		//m_blur = GetComponent<BlurOptimized>();
-//		m_blur.blurShader = Shader.Find("Hidden/FastBlur");
-//		m_blur.enabled = false;
+		m_blur = GetComponent<BlurOptimized>();
+		m_blur.blurShader = Shader.Find("Hidden/FastBlur");
+		m_blur.enabled = false;
 
 		m_RTWidth = (int) (Screen.width / (float) m_resolution);
 		m_RTHeight = (int) (Screen.height / (float) m_resolution);
@@ -169,7 +169,7 @@ public class HighlightsFX : MonoBehaviour
 		RenderTexture blurred = RenderTexture.GetTemporary( m_RTWidth, m_RTHeight, 0, RenderTextureFormat.R8 );
         #endif
 
-	//	m_blur.OnRenderImage( highlightRT, blurred );
+		m_blur.OnRenderImage( highlightRT, blurred );
 
 	
 		RenderOccluders(highlightRT);
