@@ -10,12 +10,12 @@ public class Unit : BaseObject, IFightable {
 
     #region private fields
 
-    Movement movementAgent;
-    Health healthSystem;
-    CombatSystem combatSystem;
-    UnitAIBehaviour behaviour;
-    Suprime master;
-    BaseObject [] inside; // TODO should be redone with radius object in BaseObject
+    private Movement movementAgent;
+    private Health healthSystem;
+    private CombatSystem combatSystem;
+    private UnitAIBehaviour behaviour;
+    private Suprime master;
+    private BaseObject [] inside; // TODO should be redone with radius object in BaseObject
     #endregion
 
     #region getters and setters
@@ -26,6 +26,10 @@ public class Unit : BaseObject, IFightable {
         set {movementAgent = value;}
     }
 
+    public Health getHealthSystem() {
+        return HealthSystem;
+    }
+
     public Health HealthSystem {
         get {return healthSystem;}
 
@@ -34,10 +38,6 @@ public class Unit : BaseObject, IFightable {
 
     public CombatSystem getCombatSystem() {
         return CombatSystem;
-    }
-
-    public Health getHealthSystem() {
-        return HealthSystem;
     }
 
     public CombatSystem CombatSystem {
@@ -84,7 +84,7 @@ public class Unit : BaseObject, IFightable {
     }
     #endregion
 
-    internal void follow(Suprime master) {
+    public void follow(Suprime master) {
         // TODO implement
         MovementAgent.moveTo(master.getPosition());
     }

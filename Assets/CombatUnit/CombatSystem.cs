@@ -4,18 +4,18 @@ public class CombatSystem : MonoBehaviour {
 
     #region private variables
 
-    public float unitDamage; // TODO make private
-    public float unitCritDamage;
+    private float unitDamage;
+    private float unitCritDamage;
 
-    public float attackRadius; // TODO make private
+    private float attackRadius;
 
-    public float attackSpeed; // TODO make private
-    float nextAttackTime;
+    private float attackSpeed;
+    private float nextAttackTime;
 
     private IFightable target;
     private bool isUnderAttack;
     private BattleMagicColor currentColor;
-    float critChance; // from 0.0 to 1.0
+    private float critChance; // from 0.0 to 1.0
     #endregion
 
     #region getters and setters
@@ -58,7 +58,8 @@ public class CombatSystem : MonoBehaviour {
     #endregion
 
     #region MonoBehaviour methods
-    private void Start() {
+
+    public void Start() {
         CurrentColor = BattleMagicColor.NO_COLOR;
         NextAttackTime = Time.time;
     }
@@ -106,7 +107,7 @@ public class CombatSystem : MonoBehaviour {
         }
     }
 
-    internal void notifyAboutTarget(IFightable target) {
+    public void notifyAboutTarget(IFightable target) {
         if(Target == null) {
             Target = target;
         }
