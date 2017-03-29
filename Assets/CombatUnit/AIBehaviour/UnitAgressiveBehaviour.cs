@@ -10,7 +10,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
     #region public methods
 
     public override void UpdateState() {
-        CombatSystem cs = Subject.getCombatSystem();
+        CombatSystem cs = Subject.CombatSystem;
         bool isTargetClosest = cs.IsUnderAttack; // for defining, are we get the closest unit in this iteration
 
         if (cs.Target == null) {
@@ -19,13 +19,13 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
                 return;
             }
 
-            cs.Target = getClosestUnit();
+            cs.Target = Subject.getClosestUnitStub();
             notifyAboutTarget();
             isTargetClosest = true;
         }
 
         if(!isTargetClosest) {
-            cs.Target = getClosestUnit();
+            cs.Target = Subject.getClosestUnitStub();
         }
 
         if (cs.attack()) {

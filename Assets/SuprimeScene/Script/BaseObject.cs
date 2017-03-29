@@ -1,10 +1,9 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class BaseObject : MonoBehaviour {
     private Player player;
     private float followRadius;
+    private BaseObject [] radiusStub;
 
     public Vector3 getPosition() {
         return transform.position;
@@ -24,5 +23,32 @@ public class BaseObject : MonoBehaviour {
         get { return followRadius; }
 
         set { followRadius = value; }
+    }
+
+    public BaseObject [] RadiusStub {
+        get { return radiusStub; }
+
+        set { radiusStub = value; }
+    }
+
+    public IFightable getClosestUnitStub() { // getting closest to subject unit
+        if (RadiusStub.Length == 0) { // check, if there is a units Inside
+            throw new NoObjectsInsideRadiusException(); // exception, cause this function should not be called in the empty array
+        }
+
+        IFightable closestUnit = (IFightable) RadiusStub [0]; // TODO remove cast after radius setting up
+        Vector3 subjectPosition = transform.position;
+        float minDistance = Vector3.Distance(subjectPosition, RadiusStub [0].getPosition()); // setting min distance to first unit Inside
+
+        foreach (IFightable baseUnit in RadiusStub) { // baseUnit is unit or suprime
+            float distanceToUnit = Vector3.Distance(subjectPosition, baseUnit.getPosition());
+
+            if (distanceToUnit < minDistance) {
+                closestUnit = baseUnit;
+                minDistance = distanceToUnit;
+            }
+        }
+
+        return closestUnit;
     }
 }
