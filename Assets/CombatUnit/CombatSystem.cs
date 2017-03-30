@@ -3,22 +3,66 @@
 public class CombatSystem : MonoBehaviour {
 
     #region private variables
+    // все поля в свойствах (см. геттеры и сеттеры)
 
-    private float unitDamage;
-    private float unitCritDamage;
+    private float damage; // базовый урон юнита за удар
+    private float critDamage; // дополнительный урон от крита
 
-    private float attackRadius;
+    private float critChance; // базовая вероятность крита, от 0.0 до 1.0
+    private BattleMagicColor currentMagicColor; // текущий цвет магии, наложенной на юнита
 
-    private float attackSpeed;
-    private float nextAttackTime;
+    private float attackRadius; // радиус, в котором юнит атакует
 
-    private IFightable target;
-    private bool isUnderAttack;
-    private BattleMagicColor currentColor;
-    private float critChance; // from 0.0 to 1.0
+    private float attackSpeed; // время отката атаки
+    private float nextAttackTime; // минимальное время начала следующей атаки
+
+    private IFightable target; // цель атаки
+    private bool isUnderAttack; // атакуют ли цель
     #endregion
 
     #region getters and setters
+
+    public float Damage {
+        get { return damage; }
+
+        set { damage = value; }
+    }
+
+    public float CritDamage {
+        get { return critDamage; }
+
+        set { critDamage = value; }
+    }
+
+    public float CritChance {
+        get { return critChance; }
+
+        set { critChance = Mathf.Clamp(value, 0.0f, 1.0f); }
+    }
+
+    public BattleMagicColor CurrentMagicColor {
+        get { return currentMagicColor; }
+
+        set { currentMagicColor = value; }
+    }
+
+    public float AttackRadius {
+        get { return attackRadius; }
+
+        set { attackRadius = value; }
+    }
+
+    public float AttackSpeed {
+        get { return attackSpeed; }
+
+        set { attackSpeed = value; }
+    }
+
+    private float NextAttackTime {
+        get { return nextAttackTime; }
+
+        set { nextAttackTime = value; }
+    }
 
     public IFightable Target {
         get { return target; }
@@ -31,49 +75,26 @@ public class CombatSystem : MonoBehaviour {
 
         set { isUnderAttack = value; }
     }
-
-    public BattleMagicColor CurrentColor {
-        get { return currentColor; }
-
-        set { currentColor = value; }
-    }
-
-    public float NextAttackTime {
-        get { return nextAttackTime; }
-
-        set { nextAttackTime = value; }
-    }
-
-    public float AttackSpeed {
-        get { return attackSpeed; }
-
-        set { attackSpeed = value; }
-    }
-
-    public float CritChance {
-        get {return critChance;}
-
-        set {critChance = value;}
-    }
     #endregion
 
     #region private methods
 
+    // рассчитывает добавочный крит в текущий момент
     private float getCrit() {
         float curCritChance = CritChance;
 
-        if (CurrentColor == BattleMagicColor.NO_COLOR) {
+        if (CurrentMagicColor == BattleMagicColor.NO_COLOR) {
             return 0;
         }
 
-        if (CurrentColor.CounterMagic == Target.getCombatSystem().CurrentColor) {
+        if (CurrentMagicColor.CounterMagic == Target.getCombatSystem().CurrentMagicColor) {
             curCritChance -= Target.getCombatSystem().CritChance;
         }
 
         float dice = Random.Range(0.0f, 1.0f);
 
         if (dice < curCritChance) {
-            return unitCritDamage;
+            return CritDamage;
         } else {
             return 0;
         }
@@ -82,36 +103,44 @@ public class CombatSystem : MonoBehaviour {
 
     #region MonoBehaviour methods
 
-    public void Start() {
-        // TODO setup properties from the prop file
-        CurrentColor = BattleMagicColor.NO_COLOR;
+    public void Start() { // TODO part of this (unit* props) should be setted up from the outside
+        Damage = GameConf.unitDamage;
+        CritDamage = GameConf.unitCritDamage;
+        CritChance = GameConf.unitBasicCritChance;
+        CurrentMagicColor = BattleMagicColor.NO_COLOR;
+        AttackRadius = GameConf.unitAttackRadius;
+        AttackSpeed = GameConf.unitAttackSpeed;
         NextAttackTime = Time.time;
+        IsUnderAttack = false;
     }
     #endregion
 
     #region public methods
 
-    public void checkTarget() {
-        if(Target != null && Target.getHealthSystem().IsDead) { // if we have dead target
+    // Проверяет текущую цель и обнуляет её, если она мертва. Вызывать в цикле перед атакой
+    public void checkTarget() { 
+        if(Target != null && Target.getHealthSystem().IsDead) {
             Target = null;
-            isUnderAttack = false; // Will be setted back soon by alive targets
+            isUnderAttack = false; // Если атаковала не цель, поле будет вскоре установленно обратно
         }
     }
 
+    // Если юнита атакуют, то его цель меняется на атакующего
     public void attacked(IFightable attacker) {
         IsUnderAttack = true;
         Target = attacker;
     }
 
-    public bool attack() { // return true if unit CAN attack
-        if(Vector3.Distance(transform.position, Target.getPosition()) < attackRadius) {
-            if(Time.time >= NextAttackTime) {
-                float damageToTarger = unitDamage;
-                damageToTarger += getCrit();
+    // возвращает true, если цель МОЖЕТ атаковать текущую цель (т.е. не учитывая откат атаки)
+    public bool attack() {
+        if(Vector3.Distance(transform.position, Target.getPosition()) < AttackRadius) { // проверка расстояния
 
-                Target.getHealthSystem().getDamage(damageToTarger);
+            if(Time.time >= NextAttackTime) { // проверка отката
+                float damageToTarger = Damage + getCrit(); // получение наносимого урона
 
-                NextAttackTime = Time.time + AttackSpeed;
+                Target.getHealthSystem().getDamage(damageToTarger); // наносится урон цели
+
+                NextAttackTime = Time.time + AttackSpeed; // устанавливается откат
             }
 
             return true;
@@ -119,7 +148,8 @@ public class CombatSystem : MonoBehaviour {
         
         return false;
     }
-
+    
+    // получение уведомление о доступной цели. Если цели нет, то устанавливается полученная
     public void getTargetNotification(IFightable target) {
         if(Target == null) {
             Target = target;

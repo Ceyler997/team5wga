@@ -6,7 +6,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
     // все поля завёрнуты в свойства, смотри регион геттеров и сеттеров
 
     private UnitState currentUnitState; // текущее состояние юнита, перечисление в конце файла
-    private int agroRadius; // расстояние от ЦЕЛИ ЗАЩИТЫ, в котором враги будут атакованы //TODO может, стоит перенести в цель защиты
+    private float agroRadius; // расстояние от ЦЕЛИ ЗАЩИТЫ, в котором враги будут атакованы //TODO может, стоит перенести в цель защиты
     private BaseObject protectTarget; // цель защиты
     #endregion
 
@@ -18,6 +18,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
             throw new NoTargetToProtectException(); // Поведение падает если нет цели для защиты
         }
 
+        AgroRadius = GameConf.defenceAgroRadius;
         ProtectTarget = protectTarget;
         CurrentUnitState = UnitState.CALM; // Изначально юнит находится в спокойном состоянии
     }
@@ -37,7 +38,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
         set { protectTarget = value; }
     }
 
-    private int AgroRadius {
+    private float AgroRadius {
         get { return agroRadius; }
 
         set { agroRadius = value; }
