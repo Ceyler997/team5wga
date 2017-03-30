@@ -21,13 +21,12 @@ public class Radius : MonoBehaviour {
     // Если враг зашел в область видимости
 	void OnTriggerEnter(Collider other) {
         BaseObject enemy = other.GetComponent<BaseObject>();
-        if(enemy != null) {
+        if(enemy != null && other.GetType() != radius.GetType()) {
             if(enemy != owner) {
                 enemyList.Add(enemy);
                 owner.EnemyCheck(enemy);
             }
         }
-        Debug.Log("Not enemy");
     }
     //Враг покидает область видимости
 	void OnTriggerExit(Collider other) {

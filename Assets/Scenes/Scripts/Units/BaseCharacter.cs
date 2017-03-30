@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+//Удалить эту х**ню старую, как только все референсы будут убранны
 public class BaseCharacter : GameObjectEntity {
 	[HeaderAttribute("Base Character property")]
-    public string name = "Default Name"; //имя персонажа
     public float health = 100f; // здоровье
     public float movementSpeed = 9f; //скорость передвижения
 	public BelongPlayer belogPlayer = BelongPlayer.Player_0;
