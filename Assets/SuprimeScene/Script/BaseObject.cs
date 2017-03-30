@@ -1,22 +1,20 @@
 ﻿using UnityEngine;
-
 public class BaseObject : MonoBehaviour {
+
+    #region private fields
+
     private Player player;
     private float followRadius;
+    private float alarmDistance; // расстояние, на котором враги должны быть атакованы TODO setup from conf
     private IFightable [] radiusStub;
+    #endregion
 
-    public Vector3 getPosition() {
-        return transform.position;
-    }
+    #region getters and setters
 
     public Player Player {
-        get {
-            return player;
-        }
+        get { return player; }
 
-        set {
-            player = value;
-        }
+        set { player = value; }
     }
 
     public float FollowRadius {
@@ -25,10 +23,21 @@ public class BaseObject : MonoBehaviour {
         set { followRadius = value; }
     }
 
+    public float AlarmDistance {
+        get { return alarmDistance; }
+
+        set { alarmDistance = value; }
+    }
+
     public IFightable [] RadiusStub {
         get { return radiusStub; }
 
         set { radiusStub = value; }
+    }
+    #endregion
+
+    public Vector3 getPosition() {
+        return transform.position;
     }
 
     public IFightable getClosestUnitStub() { // getting closest to subject unit

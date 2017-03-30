@@ -18,6 +18,8 @@ public class CombatSystem : MonoBehaviour {
 
     private IFightable target; // цель атаки
     private bool isUnderAttack; // атакуют ли цель
+
+    private bool isSettedUp;
     #endregion
 
     #region getters and setters
@@ -75,6 +77,12 @@ public class CombatSystem : MonoBehaviour {
 
         set { isUnderAttack = value; }
     }
+
+    public bool IsSettedUp {
+        get { return isSettedUp; }
+
+        set { isSettedUp = value; }
+    }
     #endregion
 
     #region private methods
@@ -103,19 +111,30 @@ public class CombatSystem : MonoBehaviour {
 
     #region MonoBehaviour methods
 
-    public void Start() { // TODO part of this (unit* props) should be setted up from the outside
-        Damage = GameConf.unitDamage;
-        CritDamage = GameConf.unitCritDamage;
-        CritChance = GameConf.unitBasicCritChance;
+    public void Start() {
         CurrentMagicColor = BattleMagicColor.NO_COLOR;
-        AttackRadius = GameConf.unitAttackRadius;
-        AttackSpeed = GameConf.unitAttackSpeed;
         NextAttackTime = Time.time;
         IsUnderAttack = false;
+    }
+
+    private void Update() {
+        if (!IsSettedUp) {
+            throw new SystemNotSettedUpException();
+        }
     }
     #endregion
 
     #region public methods
+
+    // Функция для настройки системы после инициализации
+    public void setupSystem(float basicDmg, float critDmg, float critChance, float atkRadius, float atkSpeed) {
+        isSettedUp = true;
+        Damage = basicDmg;
+        CritDamage = critDmg;
+        CritChance = critChance;
+        AttackRadius = atkRadius;
+        AttackSpeed = atkSpeed;
+    }
 
     // Проверяет текущую цель и обнуляет её, если она мертва. Вызывать в цикле перед атакой
     public void updateTarget() { 

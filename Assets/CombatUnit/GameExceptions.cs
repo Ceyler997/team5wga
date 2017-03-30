@@ -21,3 +21,8 @@ class NoTargetToProtectException : Exception { } // Исключение при 
 
 class NoSubjectForControlException : Exception { } // Исключение при отстутствии цели для контроля у поведения
 #endregion
+
+#region General components exceptions
+
+class SystemNotSettedUpException : Exception { } // Исключение при попытке использовать не настроенную систему
+#endregion

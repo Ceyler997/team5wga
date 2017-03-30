@@ -8,20 +8,23 @@ public class Suprime : BaseObject {
     public float energy = 0f; //Текущее кол-во энергии
     public float maxEnergy = 50f; //Максимальное кол-во энергии у ВС
     public Crystall curentCrystall = null; //текущий кристалл, в радиусе которого находится ВС
-    public Health health; //здоровье ВС
+    private Health health; //здоровье ВС
     public Player controllPlayer;
     public Unit [] units;
 
+    private Health Health {
+        get { return health; }
+
+        set { health = value; }
+    }
+
     void Start() {
         controllPlayer = GetComponent<Player>();
-        health = GetComponent<Health>();
-        setHealt();
-    }
-    
-    private void setHealt() {
-          health.setHealth(controllPlayer.getManager.MaxSuprimeHealth,
-                           controllPlayer.getManager.MaxSuprimeHealth,
-                           controllPlayer.getManager.SuprimeRegenPerSecond);
+
+        Health = GetComponent<Health>();
+        Health.setupSystem(GameConf.suprimeStartHealth,
+            GameConf.suprimeMaxHealth, 
+            GameConf.suprimeBasicRegenSpeed);
     }
 
     //Вызывается кристаллом, при пересечении ВС радиуса кристалла

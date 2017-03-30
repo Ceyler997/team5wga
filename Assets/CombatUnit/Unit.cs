@@ -53,8 +53,18 @@ public class Unit : BaseObject, IFightable {
     // ВНИМАНИЕ мастер должен быть установлен сразу после воплощения
     void Start () {
         MovementAgent = GetComponent<Movement>();
+
         HealthSystem = GetComponent<Health>();
+        HealthSystem.setupSystem(GameConf.unitStartHealth,
+            GameConf.unitMaxHealth,
+            GameConf.unitBasicRegenSpeed);
+
         CombatSystem = GetComponent<CombatSystem>();
+        CombatSystem.setupSystem(GameConf.unitDamage,
+            GameConf.unitCritDamage,
+            GameConf.unitBasicCritChance,
+            GameConf.unitAttackRadius,
+            GameConf.unitAttackSpeed);
 	}
 
     public void Update() {

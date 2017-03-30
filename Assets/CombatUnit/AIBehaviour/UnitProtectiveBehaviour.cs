@@ -6,7 +6,6 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
     // все поля завёрнуты в свойства, смотри регион геттеров и сеттеров
 
     private UnitState currentUnitState; // текущее состояние юнита, перечисление в конце файла
-    private float agroRadius; // расстояние от ЦЕЛИ ЗАЩИТЫ, в котором враги будут атакованы //TODO может, стоит перенести в цель защиты
     private BaseObject protectTarget; // цель защиты
     #endregion
 
@@ -17,8 +16,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
         if (ProtectTarget == null) {
             throw new NoTargetToProtectException(); // Поведение падает если нет цели для защиты
         }
-
-        AgroRadius = GameConf.defenceAgroRadius;
+        
         ProtectTarget = protectTarget;
         CurrentUnitState = UnitState.CALM; // Изначально юнит находится в спокойном состоянии
     }
@@ -36,12 +34,6 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
         get { return protectTarget; }
 
         set { protectTarget = value; }
-    }
-
-    private float AgroRadius {
-        get { return agroRadius; }
-
-        set { agroRadius = value; }
     }
     #endregion
 
@@ -70,7 +62,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     IFightable closestEnemy = ProtectTarget.getClosestUnitStub(); // берём ближайшего к цели юнита
 
                     // если этот юнит в агро радиусе, переходим в встревоженное состояние
-                    if (Vector3.Distance(ProtectTarget.getPosition(), closestEnemy.getPosition()) < AgroRadius) {
+                    if (Vector3.Distance(ProtectTarget.getPosition(), closestEnemy.getPosition()) < ProtectTarget.AlarmDistance) {
                         cs.Target = closestEnemy;
                         CurrentUnitState = UnitState.ALARMED;
                         return;
