@@ -52,8 +52,12 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
             case UnitState.CALM:
 
                 if (cs.IsUnderAttack) {
+                    // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
                     if (cs.attack()) {
+                        Subject.MovementAgent.stop();
                         cs.Target.getCombatSystem().attacked(Subject);
+                    } else {
+                        Subject.MovementAgent.moveTo(cs.Target.getPosition());
                     }
 
                     // Для предотвращения зацикливания атак между двумя защищающими юнитами
@@ -91,8 +95,9 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     cs.Target = protectTarget.getClosestUnitStub();
                 }
 
-                // подойти к цели, если не получилось атаковать
+                // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
                 if (cs.attack()) {
+                    Subject.MovementAgent.stop();
                     cs.Target.getCombatSystem().attacked(Subject);
                 } else {
                     Subject.MovementAgent.moveTo(cs.Target.getPosition());

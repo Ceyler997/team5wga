@@ -120,7 +120,7 @@ public class CombatSystem : MonoBehaviour {
         return false;
     }
 
-    public void notifyAboutTarget(IFightable target) {
+    public void getTargetNotification(IFightable target) {
         if(Target == null) {
             Target = target;
         }

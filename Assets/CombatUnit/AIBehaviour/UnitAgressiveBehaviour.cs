@@ -10,23 +10,27 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
     public override void UpdateState() {
         CombatSystem cs = Subject.CombatSystem;
-        bool isTargetClosest = cs.IsUnderAttack; // for defining, are we get the closest unit in this iteration
+        bool isTargetClosest = cs.IsUnderAttack; // определяем, нужно ли проверять на расстояние до цели
 
+        // если юнит никого не видит, он следует за мастером
         if (cs.Target == null) {
             if (Subject.RadiusStub.Length == 0) {
                 Subject.MovementAgent.follow(Subject.Master);
                 return;
             }
 
+            // если нет цели, но юнит кого-то видит, то он берёт ближайшую цель и уведомляет о ней остальных
             cs.Target = Subject.getClosestUnitStub();
-            notifyAboutTarget();
+            notifyUnitsAboutTarget();
             isTargetClosest = true;
         }
 
+        // если юнит кого-то видит и не проверял расстояние - взять ближайшую
         if (!isTargetClosest && Subject.RadiusStub.Length != 0) {
             cs.Target = Subject.getClosestUnitStub();
         }
 
+        // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к цели
         if (cs.attack()) {
             Subject.MovementAgent.stop();
             cs.Target.getCombatSystem().attacked(Subject);
@@ -38,9 +42,10 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
     #region private methods
 
-    private void notifyAboutTarget() {
+    // уведомляет всех юнитов у мастера о цели
+    private void notifyUnitsAboutTarget() {
         foreach (Unit unit in Subject.Master.units) {
-            unit.getCombatSystem().notifyAboutTarget(Subject.getCombatSystem().Target);
+            unit.getCombatSystem().getTargetNotification(Subject.getCombatSystem().Target);
         }
     }
     #endregion
