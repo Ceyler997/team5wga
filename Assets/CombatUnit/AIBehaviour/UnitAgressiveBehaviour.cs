@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
     #region constructors
@@ -14,7 +13,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
         bool isTargetClosest = cs.IsUnderAttack; // for defining, are we get the closest unit in this iteration
 
         if (cs.Target == null) {
-            if(Subject.RadiusStub.Length == 0) {
+            if (Subject.RadiusStub.Length == 0) {
                 Subject.MovementAgent.follow(Subject.Master);
                 return;
             }
@@ -24,7 +23,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
             isTargetClosest = true;
         }
 
-        if(!isTargetClosest) {
+        if (!isTargetClosest && Subject.RadiusStub.Length != 0) {
             cs.Target = Subject.getClosestUnitStub();
         }
 

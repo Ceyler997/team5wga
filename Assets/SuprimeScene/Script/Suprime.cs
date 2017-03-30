@@ -17,7 +17,7 @@ public class Suprime : BaseObject {
         health = GetComponent<Health>();
         setHealt();
     }
-
+    
     private void setHealt() {
           health.setHealth(controllPlayer.getManager.MaxSuprimeHealth,
                            controllPlayer.getManager.MaxSuprimeHealth,

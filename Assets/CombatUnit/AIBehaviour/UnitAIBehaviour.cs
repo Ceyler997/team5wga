@@ -1,5 +1,4 @@
-﻿using UnityEngine;
-
+﻿
 abstract public class UnitAIBehaviour {
     private Unit subject;
 

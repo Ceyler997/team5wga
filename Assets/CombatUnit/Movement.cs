@@ -36,16 +36,16 @@ public class Movement : MonoBehaviour {
     }
 
     //Follow the target
-    public void follow(BaseObject target) {
-        if (NavigationAgent.remainingDistance < DESTINATION_EPS) { // Can be improved with target movement interpolation
-            Vector2 shift = Random.insideUnitCircle * target.FollowRadius;            
+    public void follow(BaseObject target) { // Can be improved with target movement interpolation
+        if (NavigationAgent.remainingDistance < DESTINATION_EPS) {
+            Vector2 shift = Random.insideUnitCircle * target.FollowRadius;
             moveTo(target.getPosition() + new Vector3(shift.x, 0, shift.y));
         }
     }
 
     // stopping movement
     public void stop() {
-        NavigationAgent.Stop();
+        NavigationAgent.ResetPath();
     }
     #endregion
 }
