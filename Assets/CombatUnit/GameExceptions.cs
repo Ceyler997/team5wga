@@ -7,3 +7,5 @@ class NoObjectsInsideRadiusException : Exception { } // Exception in case trying
 class UndefinedDefensiveUnitStateException : Exception { } // Exception in case undefined unit state
 
 class NoTargetToProtectException : Exception { } // Exception in case no target to protect in protective unit behaviour
+
+class NoSubjectForControlException : Exception { } // Exception in case no subject to control by behaviour
