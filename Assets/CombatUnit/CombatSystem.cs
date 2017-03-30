@@ -118,7 +118,7 @@ public class CombatSystem : MonoBehaviour {
     #region public methods
 
     // Проверяет текущую цель и обнуляет её, если она мертва. Вызывать в цикле перед атакой
-    public void checkTarget() { 
+    public void updateTarget() { 
         if(Target != null && Target.getHealthSystem().IsDead) {
             Target = null;
             isUnderAttack = false; // Если атаковала не цель, поле будет вскоре установленно обратно

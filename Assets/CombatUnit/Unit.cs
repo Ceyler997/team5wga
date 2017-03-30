@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
@@ -7,11 +8,11 @@ public class Unit : BaseObject, IFightable {
 
     #region private fields
 
-    private Movement movementAgent;
-    private Health healthSystem;
-    private CombatSystem combatSystem;
-    private UnitAIBehaviour behaviour;
-    private Suprime master;
+    private Movement movementAgent; // компонент передвижения
+    private Health healthSystem; // компонент здоровья
+    private CombatSystem combatSystem; // компонент системы боёвки
+    private UnitAIBehaviour behaviour; // Компонент поведения
+    private Suprime master; // Призвавший юнита ВС
     #endregion
 
     #region getters and setters
@@ -22,18 +23,10 @@ public class Unit : BaseObject, IFightable {
         set {movementAgent = value;}
     }
 
-    public Health getHealthSystem() {
-        return HealthSystem;
-    }
-
     public Health HealthSystem {
         get {return healthSystem;}
 
         set {healthSystem = value;}
-    }
-
-    public CombatSystem getCombatSystem() {
-        return CombatSystem;
     }
 
     public CombatSystem CombatSystem {
@@ -42,7 +35,7 @@ public class Unit : BaseObject, IFightable {
         set { combatSystem = value; }
     }
 
-    UnitAIBehaviour Behaviour {
+    public UnitAIBehaviour Behaviour {
         get {return behaviour;}
 
         set {behaviour = value;}
@@ -57,23 +50,38 @@ public class Unit : BaseObject, IFightable {
 
     #region MonoBehaviour methods
 
+    // ВНИМАНИЕ мастер должен быть установлен сразу после воплощения
     void Start () {
         MovementAgent = GetComponent<Movement>();
         HealthSystem = GetComponent<Health>();
         CombatSystem = GetComponent<CombatSystem>();
-        // protective behaviour with this unit as behaviour subject and master as protect target
-        Behaviour = new UnitProtectiveBehaviour(this, master);
 	}
 
-    private void Update() {
+    public void Update() {
         // Проверяем, есть ли мастер у юнита
         if (Master == null) {
             throw new UnitHaveNoMasterException();
         }
 
-        CombatSystem.checkTarget();
+        // Если поведения нет, устанавливаем защитное с защитой мастера
+        if(Behaviour == null) {
+            Behaviour = new UnitProtectiveBehaviour(this, master);
+        }
+
+        CombatSystem.updateTarget(); // Обновляем цель
 
         Behaviour.UpdateState(); // Получаем команды от ИИ
+    }
+    #endregion
+
+    #region IFightable implementation
+
+    public CombatSystem getCombatSystem() {
+        return CombatSystem;
+    }
+
+    public Health getHealthSystem() {
+        return HealthSystem;
     }
     #endregion
 }

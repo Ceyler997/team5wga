@@ -3,13 +3,13 @@ using UnityEngine.AI;
 
 [RequireComponent(typeof(NavMeshAgent))]
 public class Movement : MonoBehaviour {
-    // Скорость передвижения юнита может быть изменена в Nav Mesh Agent in the Unity Redactor
+    // Скорость передвижения юнита может быть изменена в Nav Mesh Agent в Unity
 
-    private static readonly float DESTINATION_EPS = 3.0f;
+    private static readonly float DESTINATION_EPS = 3.0f; // дистанция, при которой считается, что цель достигнута
 
     #region private fields
 
-    private NavMeshAgent navigationAgent;
+    private NavMeshAgent navigationAgent; // агент от юнити
     #endregion
 
     #region getters and setters
@@ -30,20 +30,22 @@ public class Movement : MonoBehaviour {
 
     #region public methods
 
-    // Moving to the point
+    // Передвижение к точке
     public void moveTo(Vector3 targetPosition) {
         NavigationAgent.SetDestination(targetPosition);
     }
 
-    //Follow the target
-    public void follow(BaseObject target) { // Can be improved with target movement interpolation
+    // Следование за целью
+    public void follow(BaseObject target) { // TODO Can be improved with target movement interpolation
+        // Если мы пришли к точке, взять новую в окружности радиусом FollowRadius вокруг цели
         if (NavigationAgent.remainingDistance < DESTINATION_EPS) {
             Vector2 shift = Random.insideUnitCircle * target.FollowRadius;
             moveTo(target.getPosition() + new Vector3(shift.x, 0, shift.y));
         }
     }
 
-    // stopping movement
+    // Остановка движения сбросом пути
+    // ВНИМАНИЕ follow будет считать, что цель достигнута и возьмёт новую точку
     public void stop() {
         NavigationAgent.ResetPath();
     }
