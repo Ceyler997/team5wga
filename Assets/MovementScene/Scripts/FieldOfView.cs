@@ -79,7 +79,6 @@ public class FieldOfView : MonoBehaviour {
     {
         VisibleTargets.Clear();
         Collider[] targetsInViewRadius = Physics.OverlapSphere(transform.position, viewRadius, TargetMask);
-
         for (int i = 0; i < targetsInViewRadius.Length; i++)
         {
             Transform target = targetsInViewRadius[i].transform;
@@ -87,7 +86,6 @@ public class FieldOfView : MonoBehaviour {
             if(Vector3.Angle (transform.forward, dirToTarget) < viewAngle / 2)
             {
                 float dstToTarget = Vector3.Distance(transform.position, target.position);
-
                 if (!Physics.Raycast(transform.position, dirToTarget, dstToTarget, ObstacleMask))
                 {
                     VisibleTargets.Add(target);
@@ -100,7 +98,6 @@ public class FieldOfView : MonoBehaviour {
     {
         Vector3 dir = DirFromAngle(globalAngle, true);
         RaycastHit hit;
-
         if(Physics.Raycast(transform.position, dir, out hit, viewRadius, ObstacleMask))
         {
             return new ViewCastInfo(true, hit.point, hit.distance, globalAngle);

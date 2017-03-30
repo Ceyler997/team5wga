@@ -7,12 +7,12 @@ using UnityEngine;
 public class CheckUnits : MonoBehaviour {
 
 	public BaseCharacter selectUnit = null;
-	public Camera camera; 
+	private Camera mainCamera; 
 	// Use this for initialization
 	void Start () {
 	}
 	
-	// Update is called once per frame
+/* 	// Update is called once per frame
 	void Update () {
 		if(selectUnit!=null)
 			Moving();
@@ -20,11 +20,12 @@ public class CheckUnits : MonoBehaviour {
 		/*if (Input.GetKeyDown ("space")) {
             Debug.Log("Press Key");
             Destroy(selectUnit.gameObject);
-        }*/
+        }
 	//	MouseSelect();
+	
 		 if(Input.GetMouseButtonDown(0)) {
 			RaycastHit hitInfo = new RaycastHit();
-			bool hit = Physics.Raycast(camera.ScreenPointToRay(Input.mousePosition),out hitInfo);
+			bool hit = Physics.Raycast( mainCamera.ScreenPointToRay(Input.mousePosition),out hitInfo);
 			if(hit) {
 				Suprime unit = hitInfo.transform.gameObject.GetComponent<Suprime>();
 				if(unit) {
@@ -34,7 +35,7 @@ public class CheckUnits : MonoBehaviour {
 		 }
 	
 	}
-
+	
 	void Moving() {
 		float h = Input.GetAxis("Horizontal")*selectUnit.movementSpeed;
 		float v = Input.GetAxis("Vertical")*selectUnit.movementSpeed;
@@ -43,7 +44,7 @@ public class CheckUnits : MonoBehaviour {
 		move *= Time.deltaTime;
 		selectUnit.transform.Translate(move);
 	}
-
+*/
 	void MouseSelect() {
 	}
 }

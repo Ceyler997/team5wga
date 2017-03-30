@@ -34,7 +34,7 @@ public class Crystall : GameObjectEntity {
 	public float curentTimeToCapture; //текущее время захвата
 	public  List<Collider> unitsList = new List<Collider>();//Массив юнитов, которые пересекли радиус A
 	public bool bStartCapture = false; //Если захват начался, то true
-	private Renderer renderer;
+	private Renderer texture;
 	//public List<Suprime> suprimeList = new List<Suprime>(); //Список ВС, которые в радиусе действия Кристалла, необходим для передачи энергии
 	public List<Material> materials = new List<Material>();
 
@@ -43,7 +43,7 @@ public class Crystall : GameObjectEntity {
 		radius = gameObject.AddComponent<SphereCollider>();
 		radius.radius = radiusSecond; 	
 		radius.isTrigger = true;
-		renderer  = GetComponent<Renderer>();
+		texture  = GetComponent<Renderer>();
 	}
 	//Персонаж входит в Кристалл
 	void OnTriggerEnter(Collider other) {
@@ -77,33 +77,37 @@ public class Crystall : GameObjectEntity {
 		unit.setCurCrystall(null);
 	}
 
-	//Проверяет окружение кристалла, и если рядом нет союзников то переключает переменную bCanCapture в true
-	public bool CheckCapture() {
-		if(!bStartCapture) {
-			foreach(Collider other in unitsList) {
-				BaseCharacter unit = other.gameObject.GetComponent<BaseCharacter>();
-				if(unit.belogPlayer == belongPlayer) {
-					curentTimeToCapture = 0f;
-					return false;
-				}
-			}
-		}
-		else { //Если идет захват
-			if(captureSuprime != null) {
-				foreach(Collider other in unitsList) {
-					BaseCharacter unit = other.gameObject.GetComponent<BaseCharacter>();
-					if(captureSuprime.belogPlayer != unit.belogPlayer) {
-						curentTimeToCapture = 0f;
-						return false;
-					}
-				}	
-			}
-		}
-		return true;
-	}
-	
-	//Остановка захвата
-	public void StopCapture() {
+    //Проверяет окружение кристалла, и если рядом нет союзников то переключает переменную bCanCapture в true
+
+    public bool CheckCapture()
+    {
+        return true;
+    }
+    /*		if(!bStartCapture) {
+                foreach(Collider other in unitsList) {
+                    BaseCharacter unit = other.gameObject.GetComponent<BaseCharacter>();
+                    if(unit.belogPlayer == belongPlayer) {
+                        curentTimeToCapture = 0f;
+                        return false;
+                    }
+                }
+            }
+            else { //Если идет захват
+                if(captureSuprime != null) {
+                    foreach(Collider other in unitsList) {
+                        BaseCharacter unit = other.gameObject.GetComponent<BaseCharacter>();
+                        if(captureSuprime.belogPlayer != unit.belogPlayer) {
+                            curentTimeToCapture = 0f;
+                            return false;
+                        }
+                    }	
+                }
+            }
+            return true;
+        }
+        */
+    //Остановка захвата
+    public void StopCapture() {
 		ChangeState();
 		bStartCapture = false;
 		curentTimeToCapture = 0f;
@@ -144,7 +148,7 @@ public class Crystall : GameObjectEntity {
 				unit.AddEnergy(energyPerSecond * Time.deltaTime);
 			}
 	}*/
-
+	/* 
 	public float getEnergy(Suprime suprime) {
 		if(energy >= 0 && suprime.belogPlayer==belongPlayer) {
 			float distance = Vector3.Distance(this.transform.position,suprime.transform.position);
@@ -159,15 +163,15 @@ public class Crystall : GameObjectEntity {
 		}
 		return 0;
 	}
-
+*/
 
 	//Смена владельца
 	private void ChangeBelong() { 
 		if(captureSuprime != null) {
-			this.belongPlayer = captureSuprime.belogPlayer;
+//			this.belongPlayer = captureSuprime.belogPlayer;
 			ChangeState();//изменяем состояние
 			StopCapture();
-			renderer.sharedMaterial = materials[(int)belongPlayer];
+			texture.sharedMaterial = materials[(int)belongPlayer];
 		//	AddListSuprime();
 		}
 	}
