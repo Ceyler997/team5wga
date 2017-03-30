@@ -3,7 +3,7 @@
 public class BaseObject : MonoBehaviour {
     private Player player;
     private float followRadius;
-    private BaseObject [] radiusStub;
+    private IFightable [] radiusStub;
 
     public Vector3 getPosition() {
         return transform.position;
@@ -25,7 +25,7 @@ public class BaseObject : MonoBehaviour {
         set { followRadius = value; }
     }
 
-    public BaseObject [] RadiusStub {
+    public IFightable [] RadiusStub {
         get { return radiusStub; }
 
         set { radiusStub = value; }
@@ -36,16 +36,18 @@ public class BaseObject : MonoBehaviour {
             throw new NoObjectsInsideRadiusException(); // exception, cause this function should not be called in the empty array
         }
 
-        IFightable closestUnit = (IFightable) RadiusStub [0]; // TODO remove cast after radius setting up
+        IFightable closestUnit = RadiusStub [0];
         Vector3 subjectPosition = transform.position;
         float minDistance = Vector3.Distance(subjectPosition, RadiusStub [0].getPosition()); // setting min distance to first unit Inside
 
         foreach (IFightable baseUnit in RadiusStub) { // baseUnit is unit or suprime
-            float distanceToUnit = Vector3.Distance(subjectPosition, baseUnit.getPosition());
+            if (!baseUnit.getHealthSystem().IsDead) { // Don't take dead targets
+                float distanceToUnit = Vector3.Distance(subjectPosition, baseUnit.getPosition());
 
-            if (distanceToUnit < minDistance) {
-                closestUnit = baseUnit;
-                minDistance = distanceToUnit;
+                if (distanceToUnit < minDistance) {
+                    closestUnit = baseUnit;
+                    minDistance = distanceToUnit;
+                }
             }
         }
 

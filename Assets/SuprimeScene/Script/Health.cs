@@ -4,6 +4,13 @@ public class Health : MonoBehaviour {
     public float health; //Текущее кол-во здоровья
     public float maxHealth; //Максимальное кол-во здоровья
     private float regenSpeed; //Скорость востановления здоровья
+    private bool isDead = false;
+
+    public bool IsDead {
+        get { return isDead; }
+
+        set { isDead = value; }
+    }
 
     public void setHealth(float health, float maxHealth, float regenSpeed) {
         this.health = health;
@@ -19,7 +26,8 @@ public class Health : MonoBehaviour {
     }
     //Смерть юнита
     void die() {
-
+        IsDead = true;
+        Destroy(gameObject);
     }
     //Востановление жизней (запускать в апдейте)
     void regen() {
