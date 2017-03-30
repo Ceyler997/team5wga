@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
@@ -70,10 +67,12 @@ public class Unit : BaseObject, IFightable {
 
     private void Update() {
         // Проверяем, есть ли мастер у юнита
-        if(Master == null) {
+        if (Master == null) {
             throw new UnitHaveNoMasterException();
         }
-        
+
+        CombatSystem.checkTarget();
+
         Behaviour.UpdateState(); // Получаем команды от ИИ
     }
     #endregion

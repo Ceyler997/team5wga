@@ -57,6 +57,29 @@ public class CombatSystem : MonoBehaviour {
     }
     #endregion
 
+    #region private methods
+
+    private float getCrit() {
+        float curCritChance = CritChance;
+
+        if (CurrentColor == BattleMagicColor.NO_COLOR) {
+            return 0;
+        }
+
+        if (CurrentColor.CounterMagic == Target.getCombatSystem().CurrentColor) {
+            curCritChance -= Target.getCombatSystem().CritChance;
+        }
+
+        float dice = Random.Range(0.0f, 1.0f);
+
+        if (dice < curCritChance) {
+            return unitCritDamage;
+        } else {
+            return 0;
+        }
+    }
+    #endregion
+
     #region MonoBehaviour methods
 
     public void Start() {
@@ -68,6 +91,13 @@ public class CombatSystem : MonoBehaviour {
 
     #region public methods
 
+    public void checkTarget() {
+        if(Target != null && Target.getHealthSystem().IsDead) { // if we have dead target
+            Target = null;
+            isUnderAttack = false; // Will be setted back soon by alive targets
+        }
+    }
+
     public void attacked(IFightable attacker) {
         IsUnderAttack = true;
         Target = attacker;
@@ -78,7 +108,9 @@ public class CombatSystem : MonoBehaviour {
             if(Time.time >= NextAttackTime) {
                 float damageToTarger = unitDamage;
                 damageToTarger += getCrit();
+
                 Target.getHealthSystem().getDamage(damageToTarger);
+
                 NextAttackTime = Time.time + AttackSpeed;
             }
 
@@ -86,26 +118,6 @@ public class CombatSystem : MonoBehaviour {
         }
         
         return false;
-    }
-
-    private float getCrit() {
-        float curCritChance = CritChance;
-
-        if (CurrentColor == BattleMagicColor.NO_COLOR) {
-            return 0;
-        }
-
-        if(CurrentColor.CounterMagic == Target.getCombatSystem().CurrentColor) {
-            curCritChance -= Target.getCombatSystem().CritChance;
-        }
-
-        float dice = Random.Range(0.0f, 1.0f);
-
-        if(dice < curCritChance) {
-            return unitCritDamage;
-        } else {
-            return 0;
-        }
     }
 
     public void notifyAboutTarget(IFightable target) {
