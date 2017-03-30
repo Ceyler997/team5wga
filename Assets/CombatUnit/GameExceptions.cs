@@ -1,11 +1,23 @@
 ﻿using System;
 
-class UnitHaveNoMasterException : Exception{ } // Exception in case unit have no master
+#region BaseObject exceptions
 
-class NoObjectsInsideRadiusException : Exception { } // Exception in case trying to get object in the radius, when there is no objects inside
+class NoObjectsInsideRadiusException : Exception { } // Исключение при попытке получить цель из радиуса при пустом радиусе
 
-class UndefinedDefensiveUnitStateException : Exception { } // Exception in case undefined unit state
+#region Unit exceptions
 
-class NoTargetToProtectException : Exception { } // Exception in case no target to protect in protective unit behaviour
+class UnitHaveNoMasterException : Exception { } // Исключение приотсутствии мастера у юнита
+#endregion
+#endregion
 
-class NoSubjectForControlException : Exception { } // Exception in case no subject to control by behaviour
+#region Behaviour exceptions
+
+#region DefensiveBehaviour exceptions
+
+class UndefinedDefensiveUnitStateException : Exception { } // Исключение при неизвестном состоянии юнита в режиме защиты
+
+class NoTargetToProtectException : Exception { } // Исключение при отсутствии цели для защиты у юнита в режиме защиты
+#endregion
+
+class NoSubjectForControlException : Exception { } // Исключение при отстутствии цели для контроля у поведения
+#endregion
