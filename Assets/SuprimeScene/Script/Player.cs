@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-	public string name; //Имя игрока
+	public string playerName; //Имя игрока
     public Suprime[] suprimes; //ВС, которыми владеет игрок
     private int countSuprime = 0; //Текущее кол-во ВС
     public List<Crystall> crystalls; //Кристалы, которыми владеет игрок
@@ -14,8 +14,6 @@ public class Player : MonoBehaviour {
         suprimes = new Suprime[manager.MaxSuprimeAmount];
         crystalls = new List<Crystall>();
         addSuprime(transform.position);
-        
-        
     }
 	//возвращает имя игрока
     public string GetName { get {return name; } }
