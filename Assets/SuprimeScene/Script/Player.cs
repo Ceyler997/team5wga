@@ -14,14 +14,14 @@ public class Player : MonoBehaviour {
         suprimes = new Suprime[manager.MaxSuprimeAmount];
         crystalls = new List<Crystall>();
         addSuprime(transform.position);
-        
-        
+
+        Application.CaptureScreenshot("Screenshot.png");
     }
 	//возвращает имя игрока
     public string GetName { get {return name; } }
-	//Возвращает массив кристаллов принадлежавших игроку
+	//Возвращает массив юнитов принадлежавших игроку
 	public Suprime[] GetSuprimes { get { return suprimes; } }
-    //Возвращает массив юнитов принадлежавших игроку
+    //Возвращает массив кристаллов принадлежавших игроку
     public List<Crystall> GetCrystalls{ get {return crystalls;} }
     public string PlayerName { get{return name;}  set { name = value; } }
 
@@ -49,6 +49,14 @@ public class Player : MonoBehaviour {
 
     // Update is called once per frame
     void Update () {
-		
+        Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 newPos = new Vector2(MousePos.x, MousePos.y);
+        Ray banana = new Ray(transform.position, newPos);
+        Debug.DrawRay(transform.position, newPos);
+        if (Physics.Raycast(banana))
+        {
+
+        }
+        
 	}
 }

@@ -679,11 +679,14 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1721182958324250}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ee43193276cf6ca4fbf678d31a0b2030, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  MoveRaycastMask:
+    serializedVersion: 2
+    m_Bits: 16384
   SelectedUnit: {fileID: 0}
   FinishedDragOnThisFrame: 0
   UserIsDragging: 0
