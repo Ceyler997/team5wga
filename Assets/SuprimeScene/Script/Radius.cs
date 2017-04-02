@@ -59,16 +59,34 @@ public class Radius : MonoBehaviour {
     }
 
     void OnTriggerEnter(Collider other) {
+        if (other is SphereCollider) { // если мы столкнулись с SphereCollider - мы столкнулись с радиусом другого объекта
+            return;
+        }
+
         tryToAddEnemy(other);
     }
 
     void OnTriggerExit(Collider other) {
-        if (other.GetComponent<Player>() != owner) {
-            IFightable exitedEnemy = other.GetComponent<IFightable>();
+        if (other is SphereCollider) { // если мы столкнулись с SphereCollider - мы столкнулись с радиусом другого объекта
+            return;
+        }
 
-            if (exitedEnemy != null) {
-                EnemyList.Remove(exitedEnemy);
-            }
+        IFightable exitedEnemy = other.GetComponentInParent<IFightable>(); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
+
+        if (exitedEnemy != null && ((BaseObject) exitedEnemy).ControllingPlayer != owner) {
+            EnemyList.Remove(exitedEnemy);
+        }
+    }
+    #endregion
+
+    #region private methods
+
+    // пытается добавить врага в список по коллайдеру
+    private void tryToAddEnemy(Collider other) {
+        IFightable enteredEnemy = other.GetComponentInParent<IFightable>(); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
+        if (enteredEnemy != null && ((BaseObject) enteredEnemy).ControllingPlayer != owner) {
+            EnemyList.Add(enteredEnemy);
+            print("add " + enteredEnemy + " from " + ((BaseObject) enteredEnemy).ControllingPlayer);
         }
     }
     #endregion
@@ -123,19 +141,6 @@ public class Radius : MonoBehaviour {
 
         foreach (Collider other in objectsInside) {
             tryToAddEnemy(other);
-        }
-    }
-    #endregion
-
-    // пытается добавить врага в список по коллайдеру
-    #region private methods
-    private void tryToAddEnemy(Collider other) {
-        if (other.GetComponent<Player>() != owner) {
-            IFightable enteredEnemy = other.GetComponent<IFightable>();
-
-            if (enteredEnemy != null) {
-                EnemyList.Add(enteredEnemy);
-            }
         }
     }
     #endregion

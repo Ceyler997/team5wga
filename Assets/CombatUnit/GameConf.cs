@@ -38,8 +38,8 @@ static class GameConf {
     public static readonly float crysMaxEnergy = 100.0f;
     public static readonly int crysStartLevel = 1;
     public static readonly int crysMaxLevel = 3;
-    public static readonly float crysAlarmRadius = 5.0f;
-    public static readonly float crysDetectRadius = 10.0f;
+    public static readonly float crysAlarmRadius = 10.0f;
+    public static readonly float crysDetectRadius = 20.0f;
 
     public static float getCrysRegenSpeed(int curentLevel) {
         switch (curentLevel) {
