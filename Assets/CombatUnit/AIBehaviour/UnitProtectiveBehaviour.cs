@@ -13,7 +13,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
 
     // Для задания защитного поведения необходим и юнит, и цель защиты
     public UnitProtectiveBehaviour(Unit subject, BaseObject protectTarget) : base(subject) {
-        if (ProtectTarget == null) {
+        if (protectTarget == null) {
             throw new NoTargetToProtectException(); // Поведение падает если нет цели для защиты
         }
         

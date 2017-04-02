@@ -160,6 +160,9 @@ public class CombatSystem : MonoBehaviour {
                 Target.HealthSystem.getDamage(damageToTarger); // наносится урон цели
 
                 NextAttackTime = Time.time + AttackSpeed; // устанавливается откат
+
+                // DEBUG
+                Debug.DrawLine(transform.position, Target.Position, Color.red, 0.2f);
             }
             return true;
         }        

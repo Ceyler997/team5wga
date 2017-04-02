@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 114911769599305296}
   - component: {fileID: 114411844328936950}
   - component: {fileID: 114912943346800456}
-  - component: {fileID: 54174505835180788}
+  - component: {fileID: 54128849902471878}
   m_Layer: 0
   m_Name: SuprimePrefab
   m_TagString: Untagged
@@ -118,7 +118,7 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1212939080037944}
   m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54174505835180788
+--- !u!54 &54128849902471878
 Rigidbody:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}

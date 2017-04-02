@@ -77,7 +77,7 @@ public class Suprime : BaseObject, IFightable {
 
     public void setupSuprime(Player controller) {
         setupBaseObject(controller,
-            GameConf.suprimeAlarmRadius,
+            GameConf.suprimeReactRadius,
             GameConf.suprimeDetectRadius);
 
         HealthSystem = GetComponent<Health>();
@@ -90,8 +90,8 @@ public class Suprime : BaseObject, IFightable {
             GameConf.suprimeMaxEnergy);
 
         CombatSys = GetComponent<CombatSystem>();
-        CombatSys.setupSystem(GameConf.suprimeBasicDmg,
-            GameConf.suprimeCritDmg,
+        CombatSys.setupSystem(GameConf.suprimeDamage,
+            GameConf.suprimeCritDamage,
             0,
             GameConf.suprimeAttackRadius,
             GameConf.suprimeAttackSpeed);
@@ -105,5 +105,14 @@ public class Suprime : BaseObject, IFightable {
         units = new List<Unit>();
     }
 
+    #endregion
+
+    #region DEBUG
+    public GameObject UnitPrefab;
+
+    public void spawnUnit() {
+        Unit unit = Instantiate(UnitPrefab, transform.position + Vector3.left * 3, Quaternion.identity).GetComponent<Unit>();
+        unit.setupUnit(this);
+    }
     #endregion
 }

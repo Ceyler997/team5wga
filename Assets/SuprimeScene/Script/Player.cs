@@ -78,4 +78,10 @@ public class Player : MonoBehaviour {
         addSuprime(transform.position);
     }
     #endregion
+
+    #region DEBUG
+    public void spawnUnit() {
+        Suprimes [0].spawnUnit();
+    }
+    #endregion
 }

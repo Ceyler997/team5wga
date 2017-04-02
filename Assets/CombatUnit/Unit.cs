@@ -36,9 +36,9 @@ public class Unit : BaseObject, IFightable {
     }
 
     public UnitAIBehaviour Behaviour {
-        get {return behaviour;}
+        get { return behaviour; }
 
-        set {behaviour = value;}
+        set { behaviour = value; }
     }
 
     public Suprime Master {
@@ -54,9 +54,31 @@ public class Unit : BaseObject, IFightable {
 
     #region MonoBehaviour methods
 
-    // ВНИМАНИЕ мастер должен быть установлен сразу после воплощения
-    void Start () {
+    new public void Update() { // Проверяем, есть ли мастер у юнита
+        base.Update();
+        if (Master == null) {
+            throw new UnitHaveNoMasterException();
+        }
+        
+        if(Behaviour == null) {
+            throw new UnitHaveNoBehaviourException();
+        }
+
+        CombatSys.updateTarget(); // Обновляем цель
+
+        Behaviour.UpdateState(); // Получаем команды от ИИ
+    }
+    #endregion
+
+    #region public methods
+
+    public void setupUnit(Suprime master) {
+        base.setupBaseObject(master.ControllingPlayer,
+            GameConf.unitReactRadius,
+            GameConf.unitDetectRadius);
+
         MovementAgent = GetComponent<Movement>();
+        MovementAgent.setupSystem(GameConf.unitMoveSpeed);
 
         HealthSystem = GetComponent<Health>();
         HealthSystem.setupSystem(GameConf.unitStartHealth,
@@ -69,22 +91,10 @@ public class Unit : BaseObject, IFightable {
             GameConf.unitBasicCritChance,
             GameConf.unitAttackRadius,
             GameConf.unitAttackSpeed);
-	}
 
-    new public void Update() { // Проверяем, есть ли мастер у юнита
-        base.Update();
-        if (Master == null) {
-            throw new UnitHaveNoMasterException();
-        }
+        Master = master;
 
-        // Если поведения нет, устанавливаем защитное с защитой мастера
-        if(Behaviour == null) {
-            Behaviour = new UnitProtectiveBehaviour(this, master);
-        }
-
-        CombatSys.updateTarget(); // Обновляем цель
-
-        Behaviour.UpdateState(); // Получаем команды от ИИ
+        Behaviour = new UnitProtectiveBehaviour(this, master);
     }
     #endregion
 }

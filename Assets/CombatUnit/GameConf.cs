@@ -5,14 +5,17 @@ static class GameConf {
 
     #region Unit Properties
 
-    public static readonly float unitAttackRadius = 5.0f;
-    public static readonly float unitAttackSpeed = 1.0f;
-    public static readonly float unitBasicCritChance = 0.1f;
-    public static readonly float unitDamage = 10.0f;
-    public static readonly float unitCritDamage = 5.0f;
     public static readonly float unitStartHealth = 100.0f;
     public static readonly float unitMaxHealth = 100.0f;
     public static readonly float unitBasicRegenSpeed = 5.0f;
+    public static readonly float unitDamage = 10.0f;
+    public static readonly float unitCritDamage = 5.0f;
+    public static readonly float unitAttackRadius = 5.0f;
+    public static readonly float unitAttackSpeed = 1.0f;
+    public static readonly float unitBasicCritChance = 0.1f;
+    public static readonly float unitMoveSpeed = 30.0f;
+    public static readonly float unitReactRadius = 5.0f;
+    public static readonly float unitDetectRadius = 10.0f;
     #endregion
 
     #region Suprime Properties
@@ -24,13 +27,13 @@ static class GameConf {
     public static readonly float suprimeMaxEnergy = 100.0f;
     public static readonly int suprimeStartLevel = 0;
     public static readonly int suprimeMaxLevel = 10;
-    public static readonly float suprimeBasicDmg = 5.0f;
-    public static readonly float suprimeCritDmg = 5.0f;
+    public static readonly float suprimeDamage = 5.0f;
+    public static readonly float suprimeCritDamage = 5.0f;
     public static readonly float suprimeAttackRadius = 10.0f;
     public static readonly float suprimeAttackSpeed = 2.0f;
     public static readonly float suprimeMoveSpeed = 10.0f;
-    public static readonly float suprimeAlarmRadius = 5.0f;
-    public static readonly float suprimeDetectRadius = 10.0f;
+    public static readonly float suprimeReactRadius = 10.0f;
+    public static readonly float suprimeDetectRadius = 20.0f;
     #endregion
 
     #region Crystall Properties
