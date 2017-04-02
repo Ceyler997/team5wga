@@ -624,8 +624,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c954b5decdb3704386923521b2a6974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLevel: 0
-  curentLevel: 0
 --- !u!114 &114079357182440144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -637,7 +635,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e4c5c30b95a24aa4abc0d4c8dd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energy: 0
 --- !u!114 &114498732266143670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -672,7 +669,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce7c461342ba334a93da0c099b02762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curentCrystall: {fileID: 0}
 --- !u!114 &114551930059656442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -698,8 +694,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cd1591b5b24fc4db1295a32b10f6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  health: 0
-  maxHealth: 0
 --- !u!114 &114789833510614870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -711,11 +705,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9970256fc1669b94daa4535f70078f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
-  suprimes: []
-  crystalls: []
-  manager: {fileID: 0}
-  P_Suprime: {fileID: 0}
+  SuprimePrefab: {fileID: 0}
 --- !u!119 &119258199936970038
 Projector:
   m_ObjectHideFlags: 1
@@ -815,7 +805,7 @@ NavMeshAgent:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1721182958324250}
-  m_Enabled: 0
+  m_Enabled: 1
   m_Radius: 0.5
   m_Speed: 10
   m_Acceleration: 1000
@@ -835,7 +825,7 @@ NavMeshObstacle:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1721182958324250}
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 3
   m_Shape: 0
   m_Extents: {x: 0.5, y: 1, z: 0.5}

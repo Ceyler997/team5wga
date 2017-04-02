@@ -1,49 +1,81 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
-	public string playerName; //Имя игрока
-    public Suprime[] suprimes; //ВС, которыми владеет игрок
-    private int countSuprime = 0; //Текущее кол-во ВС
-    public List<Crystall> crystalls; //Кристалы, которыми владеет игрок
-    public GameManager manager;
+
+    #region private fields
+
+    private string playerName; //Имя игрока
+    private Suprime[] suprimes; //ВС, которыми владеет игрок
+    private int suprimeCount; //Текущее кол-во ВС
+    private List<Crystal> crystals; //Кристалы, которыми владеет игрок
+    private GameManager manager;
     // Use this for initialization
-    public GameObject P_Suprime;
-    void Initialization () {
-        suprimes = new Suprime[GameConf.maxSuprimeAmount];
-        crystalls = new List<Crystall>();
-        addSuprime(transform.position);
-        
-        
+    public GameObject SuprimePrefab;
+    #endregion
+
+    #region getters and setters
+
+    //возвращает имя игрока
+    public string PlayerName {
+        get {return playerName; }
+        set { playerName = value; }
     }
-	//возвращает имя игрока
-    public string GetName { get {return playerName; } }
+
 	//Возвращает массив кристаллов принадлежавших игроку
-	public Suprime[] GetSuprimes { get { return suprimes; } }
-    //Возвращает массив юнитов принадлежавших игроку
-    public List<Crystall> GetCrystalls{ get {return crystalls;} }
-    public string PlayerName { get{return playerName;}  set { playerName = value; } }
+	public Suprime [] Suprimes {
+        get { return suprimes; }
+        set { suprimes = value; }
+    }
 
     //Возвращает кол-во ВС под контролем игрока
-    public int getNumOfSuprime() { return countSuprime; }
-	//Добавляет ВС в массив suprimes
-	public void addSuprime(Vector3 position) {
-        if(getNumOfSuprime() < GameConf.maxSuprimeAmount) {
-            Suprime suprime = Instantiate(P_Suprime, position, Quaternion.identity).GetComponent<Suprime>();
+    public int SuprimeCount {
+        get { return suprimeCount; }
+        set { suprimeCount = value; }
+    }
+
+    //Возвращает массив кристаллов принадлежавших игроку
+    public List<Crystal> Crystals {
+        get { return crystals; }
+        set { crystals = value; }
+    }
+
+    public GameManager Manager {
+        get {return manager;}
+        set {manager = value;}
+    }
+    #endregion
+
+    #region public methods
+
+    //Добавляет ВС в массив suprimes
+    public void addSuprime(Vector3 position) {
+        if(SuprimeCount < GameConf.maxSuprimeAmount) {
+            Suprime suprime = Instantiate(SuprimePrefab, position, Quaternion.identity).GetComponent<Suprime>();
             suprime.ControllingPlayer = this;
-            suprimes[getNumOfSuprime()] = suprime;
-            countSuprime++;
+            suprimes[SuprimeCount] = suprime;
+            ++SuprimeCount;
+        } else {
+            throw new TooMuchSuprimesException();
         }
 	}
-	public void addCrystall(Crystall crystall) {
-        crystalls.Add(crystall);
-    }
 
     public void setManager(GameManager manager) {
-        this.manager = manager;
-        Initialization();
+        if (Manager == null) {
+            Manager = manager;
+            Initialization();
+        } else {
+            throw new AttemptToManagerReassignmentException();
+        }
     }
+    #endregion
 
-    public GameManager getManager { get { return manager; } }
+    #region private methods
+
+    private void Initialization() {
+        suprimes = new Suprime [GameConf.maxSuprimeAmount];
+        crystals = new List<Crystal>();
+        addSuprime(transform.position);
+    }
+    #endregion
 }

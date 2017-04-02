@@ -34,4 +34,10 @@ public class NoSubjectForControlException : Exception { } // Исключени�
 public class SystemIsNotSettedUpException : Exception { } // Исключение при попытке использовать не настроенную систему
 
 public class NoUnitsInsideRadiusException : Exception { } // Исключение при попытке получить цель из радиуса при пустом радиусе
+
+public class PlayerNotExistingException : Exception { } // Исключение при попытке получить игрока с несуществующим ID
+
+public class TooMuchSuprimesException : Exception { } // Исключение при попытке создать больше ВС, чем разрешено параметрами
+
+public class AttemptToManagerReassignmentException : Exception { } // Исключение при попытке переназначить менеджера
 #endregion

@@ -11,7 +11,7 @@ public class Suprime : BaseObject, IFightable {
     #region private fields
     [HeaderAttribute("Suprime Property")]
 
-    private Crystall curentCrystall; //текущий кристалл, в радиусе которого находится ВС
+    private Crystal curentCrystall; //текущий кристалл, в радиусе которого находится ВС
     private Health healthSystem; //здоровье ВС
     private Energy energy; // энергия ВС
     private CombatSystem combatSystem; // Система сражения ВС
@@ -22,7 +22,7 @@ public class Suprime : BaseObject, IFightable {
     #region getters and setters
 
     //Вызывается кристаллом, при пересечении ВС радиуса кристалла
-    public Crystall CurentCrystall {
+    public Crystal CurentCrystall {
         get { return curentCrystall; }
 
         set { curentCrystall = value; }
