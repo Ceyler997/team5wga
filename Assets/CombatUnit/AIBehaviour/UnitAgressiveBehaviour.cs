@@ -14,20 +14,20 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
         // если юнит никого не видит, он следует за мастером
         if (cs.Target == null) {
-            if (!Subject.UnitsRadius.isEnemyInside()) {
+            if (!Subject.DetectRadius.isEnemyInside()) {
                 Subject.MovementAgent.follow(Subject.Master);
                 return;
             }
 
             // если нет цели, но юнит кого-то видит, то он берёт ближайшую цель и уведомляет о ней остальных
-            cs.Target = Subject.UnitsRadius.getClosestUnit();
+            cs.Target = Subject.DetectRadius.getClosestUnit();
             notifyUnitsAboutTarget();
             isTargetClosest = true;
         }
 
         // если юнит кого-то видит и не проверял расстояние - взять ближайшую
-        if (!isTargetClosest && Subject.UnitsRadius.isEnemyInside()) {
-            cs.Target = Subject.UnitsRadius.getClosestUnit();
+        if (!isTargetClosest && Subject.DetectRadius.isEnemyInside()) {
+            cs.Target = Subject.DetectRadius.getClosestUnit();
         }
 
         // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к цели

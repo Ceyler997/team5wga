@@ -40,7 +40,7 @@ public class Movement : MonoBehaviour {
         // Если мы пришли к точке, взять новую в окружности радиусом FollowRadius вокруг цели
         if (NavigationAgent.remainingDistance < DESTINATION_EPS) {
             Vector2 shift = Random.insideUnitCircle * target.FollowDistance;
-            moveTo(target.Position() + new Vector3(shift.x, 0, shift.y));
+            moveTo(target.Position + new Vector3(shift.x, 0, shift.y));
         }
     }
 

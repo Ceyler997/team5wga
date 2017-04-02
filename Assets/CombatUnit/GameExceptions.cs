@@ -2,8 +2,6 @@
 
 #region BaseObject exceptions
 
-public class NoObjectsInsideRadiusException : Exception { } // Исключение при попытке получить цель из радиуса при пустом радиусе
-
 #region Unit exceptions
 
 public class UnitHaveNoMasterException : Exception { } // Исключение приотсутствии мастера у юнита
@@ -31,7 +29,9 @@ public class NoTargetToProtectException : Exception { } // Исключение 
 public class NoSubjectForControlException : Exception { } // Исключение при отстутствии цели для контроля у поведения
 #endregion
 
-#region General components exceptions
+#region Components exceptions
 
 public class SystemIsNotSettedUpException : Exception { } // Исключение при попытке использовать не настроенную систему
+
+public class NoUnitsInsideRadiusException : Exception { } // Исключение при попытке получить цель из радиуса при пустом радиусе
 #endregion

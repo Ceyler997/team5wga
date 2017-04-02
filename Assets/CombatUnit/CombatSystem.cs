@@ -161,10 +161,8 @@ public class CombatSystem : MonoBehaviour {
 
                 NextAttackTime = Time.time + AttackSpeed; // устанавливается откат
             }
-
             return true;
-        }
-        
+        }        
         return false;
     }
     

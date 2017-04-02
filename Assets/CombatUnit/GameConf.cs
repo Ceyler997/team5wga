@@ -2,7 +2,6 @@
 using System;
 
 static class GameConf {
-    #region private fields
 
     #region Unit Properties
 
@@ -52,6 +51,6 @@ static class GameConf {
     #region Player Properties
 
     public static readonly int maxSuprimeAmount = 9;
-    #endregion
+    public static readonly int maxObjectsInsideRadiusAmount = 50; // max = 180 = 9 * 2 (suprimes) + (9 * 2) * 9 (units) TODO magic
     #endregion
 }
