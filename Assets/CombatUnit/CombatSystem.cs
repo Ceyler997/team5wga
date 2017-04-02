@@ -95,8 +95,8 @@ public class CombatSystem : MonoBehaviour {
             return 0;
         }
 
-        if (CurrentMagicColor.CounterMagic == Target.UnitCombatSystem.CurrentMagicColor) {
-            curCritChance -= Target.UnitCombatSystem.CritChance;
+        if (CurrentMagicColor.CounterMagic == Target.CombatSys.CurrentMagicColor) {
+            curCritChance -= Target.CombatSys.CritChance;
         }
 
         float dice = Random.Range(0.0f, 1.0f);
@@ -138,7 +138,7 @@ public class CombatSystem : MonoBehaviour {
 
     // Проверяет текущую цель и обнуляет её, если она мертва. Вызывать в цикле перед атакой
     public void updateTarget() { 
-        if(Target != null && Target.UnitHealthSystem.IsDead) {
+        if(Target != null && Target.HealthSystem.IsDead) {
             Target = null;
             isUnderAttack = false; // Если атаковала не цель, поле будет вскоре установленно обратно
         }
@@ -157,7 +157,7 @@ public class CombatSystem : MonoBehaviour {
             if(Time.time >= NextAttackTime) { // проверка отката
                 float damageToTarger = Damage + getCrit(); // получение наносимого урона
 
-                Target.UnitHealthSystem.getDamage(damageToTarger); // наносится урон цели
+                Target.HealthSystem.getDamage(damageToTarger); // наносится урон цели
 
                 NextAttackTime = Time.time + AttackSpeed; // устанавливается откат
             }
@@ -176,7 +176,7 @@ public class CombatSystem : MonoBehaviour {
 }
 
 public interface IFightable {
-    CombatSystem UnitCombatSystem { get; }
+    CombatSystem CombatSys { get; }
     Vector3 Position { get; }
-    Health UnitHealthSystem { get; }
+    Health HealthSystem { get; }
 }

@@ -6,8 +6,7 @@ public class BaseObject : MonoBehaviour {
     #region private fields
 
     private Player controllingPlayer; // игрок, контролирующий данного супрайма
-    private float followDistance; // расстояние, в пределах которого начинается точка следования
-    private float alarmDistance; // расстояние, на котором враги должны быть атакованы
+    private float reactDistance; // на этом расстоянии происходит взаимодействие с объектом
     private Radius detectRadius; // радиус вокруг объекта, в котором будут видны IFightable объекты
     private bool isSettedUp;
     #endregion
@@ -24,15 +23,11 @@ public class BaseObject : MonoBehaviour {
         }
     }
 
-    public float FollowDistance {
-        get { return followDistance; }
+    public float ReactDistance {
+        get { return reactDistance; }
     }
 
-    public float AlarmDistance {
-        get { return alarmDistance; }
-    }
-
-    public Radius DetectRadius{
+    public Radius DetectRadius {
         get { return detectRadius; }
     }
 
@@ -58,12 +53,11 @@ public class BaseObject : MonoBehaviour {
 
     #region protected methods
 
-    protected void setupBaseObject (Player controllingPlayer, float followRadius, float alarmRadius, float detectionRadius){
-        ControllingPlayer = controllingPlayer;
-        followDistance = followRadius;
-        alarmDistance = alarmRadius;
-        detectRadius = GetComponent<Radius>();
-        DetectRadius.setupSystem(detectionRadius, controllingPlayer);
+    protected void setupBaseObject(Player controllingPlayer, float reactDistance, float detectRadius) {
+        this.controllingPlayer = controllingPlayer;
+        this.reactDistance = reactDistance;
+        this.detectRadius = GetComponent<Radius>();
+        this.detectRadius.setupSystem(detectRadius, controllingPlayer);
         IsSettedUp = true;
     }
     #endregion

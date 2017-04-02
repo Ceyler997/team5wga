@@ -23,13 +23,13 @@ public class Unit : BaseObject, IFightable {
         set {movementAgent = value;}
     }
 
-    public Health UnitHealthSystem {
+    public Health HealthSystem {
         get {return healthSystem;}
 
         set {healthSystem = value;}
     }
 
-    public CombatSystem UnitCombatSystem {
+    public CombatSystem CombatSys {
         get { return combatSystem; }
 
         set { combatSystem = value; }
@@ -58,13 +58,13 @@ public class Unit : BaseObject, IFightable {
     void Start () {
         MovementAgent = GetComponent<Movement>();
 
-        UnitHealthSystem = GetComponent<Health>();
-        UnitHealthSystem.setupSystem(GameConf.unitStartHealth,
+        HealthSystem = GetComponent<Health>();
+        HealthSystem.setupSystem(GameConf.unitStartHealth,
             GameConf.unitMaxHealth,
             GameConf.unitBasicRegenSpeed);
 
-        UnitCombatSystem = GetComponent<CombatSystem>();
-        UnitCombatSystem.setupSystem(GameConf.unitDamage,
+        CombatSys = GetComponent<CombatSystem>();
+        CombatSys.setupSystem(GameConf.unitDamage,
             GameConf.unitCritDamage,
             GameConf.unitBasicCritChance,
             GameConf.unitAttackRadius,
@@ -82,7 +82,7 @@ public class Unit : BaseObject, IFightable {
             Behaviour = new UnitProtectiveBehaviour(this, master);
         }
 
-        UnitCombatSystem.updateTarget(); // Обновляем цель
+        CombatSys.updateTarget(); // Обновляем цель
 
         Behaviour.UpdateState(); // Получаем команды от ИИ
     }

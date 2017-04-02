@@ -24,6 +24,13 @@ static class GameConf {
     public static readonly float suprimeMaxEnergy = 100.0f;
     public static readonly int suprimeStartLevel = 0;
     public static readonly int suprimeMaxLevel = 10;
+    public static readonly float suprimeBasicDmg = 5.0f;
+    public static readonly float suprimeCritDmg = 5.0f;
+    public static readonly float suprimeAttackRadius = 10.0f;
+    public static readonly float suprimeAttackSpeed = 2.0f;
+    public static readonly float suprimeMoveSpeed = 10.0f;
+    public static readonly float suprimeAlarmRadius = 5.0f;
+    public static readonly float suprimeDetectRadius = 10.0f;
     #endregion
 
     #region Crystall Properties
@@ -31,8 +38,8 @@ static class GameConf {
     public static readonly float crysMaxEnergy = 100.0f;
     public static readonly int crysStartLevel = 1;
     public static readonly int crysMaxLevel = 3;
-    public static readonly float crysAlarmRadius = 10.0f;
-    public static readonly float crysDetectRadius = 20.0f;
+    public static readonly float crysAlarmRadius = 5.0f;
+    public static readonly float crysDetectRadius = 10.0f;
 
     public static float getCrysRegenSpeed(int curentLevel) {
         switch (curentLevel) {

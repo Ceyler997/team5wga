@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent (typeof (Energy))]
 [RequireComponent (typeof (Level))]
@@ -48,7 +45,6 @@ public class Crystal : BaseObject, ILeveable {
 
         setupBaseObject(null, // Кристалл инициализируется нейтральным
             GameConf.crysAlarmRadius,
-            GameConf.crysAlarmRadius,
             GameConf.crysDetectRadius);
 
         RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurentLevel);
@@ -64,7 +60,7 @@ public class Crystal : BaseObject, ILeveable {
 
     #region ILevelable implementation
 
-    void ILeveable.levelUp() {
+    public void levelUp() {
         LevelSystem.levelUp();
         RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurentLevel);
     }

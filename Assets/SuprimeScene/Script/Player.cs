@@ -52,7 +52,7 @@ public class Player : MonoBehaviour {
     public void addSuprime(Vector3 position) {
         if(SuprimeCount < GameConf.maxSuprimeAmount) {
             Suprime suprime = Instantiate(SuprimePrefab, position, Quaternion.identity).GetComponent<Suprime>();
-            suprime.ControllingPlayer = this;
+            suprime.setupSuprime(this);
             suprimes[SuprimeCount] = suprime;
             ++SuprimeCount;
         } else {

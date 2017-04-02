@@ -9,7 +9,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
     #region public methods
 
     public override void UpdateState() {
-        CombatSystem cs = Subject.UnitCombatSystem;
+        CombatSystem cs = Subject.CombatSys;
         bool isTargetClosest = cs.IsUnderAttack; // определяем, нужно ли проверять на расстояние до цели
 
         // если юнит никого не видит, он следует за мастером
@@ -33,7 +33,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
         // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к цели
         if (cs.attack()) {
             Subject.MovementAgent.stop();
-            cs.Target.UnitCombatSystem.attacked(Subject);
+            cs.Target.CombatSys.attacked(Subject);
         } else {
             Subject.MovementAgent.moveTo(cs.Target.Position);
         }
@@ -45,7 +45,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
     // уведомляет всех юнитов у мастера о цели
     private void notifyUnitsAboutTarget() {
         foreach (Unit unit in Subject.Master.Units) {
-            unit.UnitCombatSystem.getTargetNotification(Subject.UnitCombatSystem.Target);
+            unit.CombatSys.getTargetNotification(Subject.CombatSys.Target);
         }
     }
     #endregion

@@ -1,5 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 public class Radius : MonoBehaviour {
@@ -48,13 +47,7 @@ public class Radius : MonoBehaviour {
     #endregion
 
     #region MonoBehaviour methods
-
-    public void Start() {
-        EnemyList = new List<IFightable>();
-        RadiusCollider = gameObject.AddComponent<SphereCollider>();
-        RadiusCollider.isTrigger = true;
-    }
-
+    
     public void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
@@ -83,6 +76,9 @@ public class Radius : MonoBehaviour {
     #region public methods
 
     public void setupSystem(float radiusSize, Player radiusOwner) { // передавать null как владельца при нейтральном объекте
+        EnemyList = new List<IFightable>();
+        RadiusCollider = gameObject.AddComponent<SphereCollider>();
+        RadiusCollider.isTrigger = true;
         RadiusCollider.radius = radiusSize;
         Owner = radiusOwner;
         IsSettedUp = true;

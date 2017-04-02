@@ -5,18 +5,20 @@ using UnityEngine;
 
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Energy))]
-[RequireComponent(typeof(Level))]
 [RequireComponent(typeof(CombatSystem))]
+[RequireComponent(typeof(Level))]
+[RequireComponent(typeof(Movement))]
 public class Suprime : BaseObject, IFightable {
     #region private fields
     [HeaderAttribute("Suprime Property")]
 
-    private Crystal curentCrystall; //текущий кристалл, в радиусе которого находится ВС
     private Health healthSystem; //здоровье ВС
-    private Energy energy; // энергия ВС
-    private CombatSystem combatSystem; // Система сражения ВС
+    private Energy energySystem; // энергия ВС
+    private CombatSystem combatSys; // Система сражения ВС
     private Level level; //Уровень
+    private Movement moveSystem; // Передвижение
     private List<Unit> units; //Юниты, прикреплённые к данному ВС
+    private Crystal curentCrystall; //текущий кристалл, в радиусе которого находится ВС
     #endregion
 
     #region getters and setters
@@ -24,25 +26,21 @@ public class Suprime : BaseObject, IFightable {
     //Вызывается кристаллом, при пересечении ВС радиуса кристалла
     public Crystal CurentCrystall {
         get { return curentCrystall; }
-
         set { curentCrystall = value; }
     }
 
-    public Health UnitHealthSystem {
+    public Health HealthSystem {
         get { return healthSystem; }
-
         set { healthSystem = value; }
     }
 
-    private Energy Energy {
-        get { return energy; }
-
-        set { energy = value; }
+    private Energy EnergySystem {
+        get { return energySystem; }
+        set { energySystem = value; }
     }
 
     private Level Level {
         get { return level; }
-
         set { level = value; }
     }
 
@@ -50,36 +48,22 @@ public class Suprime : BaseObject, IFightable {
         get { return units; }
     }
 
-    public CombatSystem UnitCombatSystem {
-        get { return combatSystem; }
-
-        set { combatSystem = value; }
+    public CombatSystem CombatSys {
+        get { return combatSys; }
+        set { combatSys = value; }
     }
 
+    public Movement MoveSystem {
+        get { return moveSystem; }
+        set { moveSystem = value; }
+    }
 
     Vector3 IFightable.Position {
         get { return transform.position; }
     }
-
     #endregion
 
     #region MonoBehaviour methods
-
-    private void Start() {
-        UnitHealthSystem = GetComponent<Health>();
-        UnitHealthSystem.setupSystem(GameConf.suprimeStartHealth,
-            GameConf.suprimeMaxHealth,
-            GameConf.suprimeBasicRegenSpeed);
-
-        Energy = GetComponent<Energy>();
-        Energy.setupSystem(GameConf.suprimeStartEnergy, 
-            GameConf.suprimeMaxEnergy);
-
-        Level = GetComponent<Level>();
-        Level.setupSystem(GameConf.suprimeStartLevel, GameConf.suprimeMaxLevel);
-
-        units = new List<Unit>();
-    }
 
     new public void Update() {
         base.Update();
@@ -87,5 +71,39 @@ public class Suprime : BaseObject, IFightable {
             throw new SuprimeHaveNoPlayerException();
         }
     }
+    #endregion
+
+    #region public methods
+
+    public void setupSuprime(Player controller) {
+        setupBaseObject(controller,
+            GameConf.suprimeAlarmRadius,
+            GameConf.suprimeDetectRadius);
+
+        HealthSystem = GetComponent<Health>();
+        HealthSystem.setupSystem(GameConf.suprimeStartHealth,
+            GameConf.suprimeMaxHealth,
+            GameConf.suprimeBasicRegenSpeed);
+
+        EnergySystem = GetComponent<Energy>();
+        EnergySystem.setupSystem(GameConf.suprimeStartEnergy,
+            GameConf.suprimeMaxEnergy);
+
+        CombatSys = GetComponent<CombatSystem>();
+        CombatSys.setupSystem(GameConf.suprimeBasicDmg,
+            GameConf.suprimeCritDmg,
+            0,
+            GameConf.suprimeAttackRadius,
+            GameConf.suprimeAttackSpeed);
+
+        Level = GetComponent<Level>();
+        Level.setupSystem(GameConf.suprimeStartLevel, GameConf.suprimeMaxLevel);
+
+        MoveSystem = GetComponent<Movement>();
+        MoveSystem.setupSystem(GameConf.suprimeMoveSpeed);
+
+        units = new List<Unit>();
+    }
+
     #endregion
 }

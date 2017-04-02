@@ -38,7 +38,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
     #endregion
 
     public override void UpdateState() {
-        CombatSystem cs = Subject.UnitCombatSystem; // Используется для сокращения размера строк
+        CombatSystem cs = Subject.CombatSys; // Используется для сокращения размера строк
 
         switch (CurrentUnitState) {
             #region CALM STATE
@@ -48,7 +48,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
                     if (cs.attack()) {
                         Subject.MovementAgent.stop();
-                        cs.Target.UnitCombatSystem.attacked(Subject);
+                        cs.Target.CombatSys.attacked(Subject);
                     } else {
                         Subject.MovementAgent.moveTo(cs.Target.Position);
                     }
@@ -62,7 +62,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     IFightable closestEnemy = ProtectTarget.DetectRadius.getClosestUnit(); // берём ближайшего к цели юнита
 
                     // если этот юнит в агро радиусе, переходим в встревоженное состояние
-                    if (Vector3.Distance(ProtectTarget.Position, closestEnemy.Position) < ProtectTarget.AlarmDistance) {
+                    if (Vector3.Distance(ProtectTarget.Position, closestEnemy.Position) < ProtectTarget.ReactDistance) {
                         cs.Target = closestEnemy;
                         CurrentUnitState = UnitState.ALARMED;
                         return;
@@ -91,7 +91,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                 // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
                 if (cs.attack()) {
                     Subject.MovementAgent.stop();
-                    cs.Target.UnitCombatSystem.attacked(Subject);
+                    cs.Target.CombatSys.attacked(Subject);
                 } else {
                     Subject.MovementAgent.moveTo(cs.Target.Position);
                 }
