@@ -48,7 +48,7 @@ public class Health : MonoBehaviour {
 
     public void Update() {
         if (!IsSettedUp) {
-            throw new SystemNotSettedUpException();
+            throw new SystemIsNotSettedUpException();
         }
 
         regen();

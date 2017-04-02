@@ -49,8 +49,11 @@ public class Crystall : GameObjectEntity {
 	void OnTriggerEnter(Collider other) {
 		if(!unitsList.Contains(other)) { 
 			unitsList.Add(other);
-			//AddListSuprime();
-			other.gameObject.GetComponent<BaseCharacter>().setCurCrystall(this);
+            //AddListSuprime();
+            BaseObject unit = other.gameObject.GetComponent<BaseObject>();
+            if (unit is Suprime) {
+                ((Suprime) unit).CurentCrystall = this;
+            }
 		}
 	}
 
@@ -67,14 +70,16 @@ public class Crystall : GameObjectEntity {
 	
 	//Персонаж покидает кристалл
 	void OnTriggerExit(Collider other) {
-		RemoveFromTriggerList(other.gameObject.GetComponent<BaseCharacter>());
+		RemoveFromTriggerList(other.gameObject.GetComponent<BaseObject>());
 	//	AddListSuprime();
 	}
 
 	//Удаление юнита из списа 
-	public void RemoveFromTriggerList(BaseCharacter unit) {
+	public void RemoveFromTriggerList(BaseObject unit) {
 		unitsList.Remove(unit.GetComponent<Collider>());
-		unit.setCurCrystall(null);
+        if (unit is Suprime) {
+            ((Suprime) unit).CurentCrystall = null;
+        }
 	}
 
     //Проверяет окружение кристалла, и если рядом нет союзников то переключает переменную bCanCapture в true

@@ -18,6 +18,6 @@ public class ShowEnergyUnit : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-		text.text = Mathf.Round(suprime.energy).ToString();	
+	//	text.text = Mathf.Round(suprime.energy).ToString();	
 	}
 }

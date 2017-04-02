@@ -1,26 +1,29 @@
 ﻿using UnityEngine;
+
+[RequireComponent(typeof(Radius))]
 public class BaseObject : MonoBehaviour {
 
     #region private fields
 
-    private Player player;
-    private float followRadius;
-    private float alarmDistance; // расстояние, на котором враги должны быть атакованы TODO setup from conf
-    private IFightable [] radiusStub;
+    private Player controllingPlayer; // игрок, контролирующий данного супрайма
+    private float followDistance; // расстояние, в пределах которого начинается точка следования
+    private float alarmDistance; // расстояние, на котором враги должны быть атакованы
+    private Radius unitsRadius; // радиус вокруг объекта, в котором будут видны IFightable объекты
+    private bool isSettedUp;
     #endregion
 
     #region getters and setters
 
-    public Player Player {
-        get { return player; }
+    public Player ControllingPlayer {
+        get { return controllingPlayer; }
 
-        set { player = value; }
+        set { controllingPlayer = value; }
     }
 
-    public float FollowRadius {
-        get { return followRadius; }
+    public float FollowDistance {
+        get { return followDistance; }
 
-        set { followRadius = value; }
+        set { followDistance = value; }
     }
 
     public float AlarmDistance {
@@ -29,37 +32,44 @@ public class BaseObject : MonoBehaviour {
         set { alarmDistance = value; }
     }
 
-    public IFightable [] RadiusStub {
-        get { return radiusStub; }
+    public Radius UnitsRadius{
+        get { return unitsRadius; }
 
-        set { radiusStub = value; }
+        set { unitsRadius = value; }
+    }
+
+    private bool IsSettedUp {
+        get { return isSettedUp; }
+
+        set { isSettedUp = value; }
     }
     #endregion
 
-    public Vector3 getPosition() {
+    #region MonoBehaviour methods
+
+    public void Update() {
+        if (!IsSettedUp) {
+            throw new SystemIsNotSettedUpException();
+        }
+    }
+    #endregion
+
+    #region protected methods
+
+    protected void setupBaseObject (Player controllingPlayer, float followRadius, float alarmRadius, float detectionRadius){
+        ControllingPlayer = controllingPlayer;
+        FollowDistance = followRadius;
+        AlarmDistance = alarmRadius;
+        UnitsRadius = GetComponent<Radius>();
+        UnitsRadius.setupSystem(detectionRadius);
+        IsSettedUp = true;
+    }
+    #endregion
+
+    #region public methods
+
+    public Vector3 Position() {
         return transform.position;
     }
-
-    public IFightable getClosestUnitStub() { // getting closest to subject unit
-        if (RadiusStub.Length == 0) { // check, if there is a units Inside
-            throw new NoObjectsInsideRadiusException(); // exception, cause this function should not be called in the empty array
-        }
-
-        IFightable closestUnit = RadiusStub [0];
-        Vector3 subjectPosition = transform.position;
-        float minDistance = Vector3.Distance(subjectPosition, RadiusStub [0].getPosition()); // setting min distance to first unit Inside
-
-        foreach (IFightable baseUnit in RadiusStub) { // baseUnit is unit or suprime
-            if (!baseUnit.getHealthSystem().IsDead) { // Don't take dead targets
-                float distanceToUnit = Vector3.Distance(subjectPosition, baseUnit.getPosition());
-
-                if (distanceToUnit < minDistance) {
-                    closestUnit = baseUnit;
-                    minDistance = distanceToUnit;
-                }
-            }
-        }
-
-        return closestUnit;
-    }
+    #endregion
 }

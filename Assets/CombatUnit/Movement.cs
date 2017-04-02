@@ -39,8 +39,8 @@ public class Movement : MonoBehaviour {
     public void follow(BaseObject target) { // TODO Can be improved with target movement interpolation
         // Если мы пришли к точке, взять новую в окружности радиусом FollowRadius вокруг цели
         if (NavigationAgent.remainingDistance < DESTINATION_EPS) {
-            Vector2 shift = Random.insideUnitCircle * target.FollowRadius;
-            moveTo(target.getPosition() + new Vector3(shift.x, 0, shift.y));
+            Vector2 shift = Random.insideUnitCircle * target.FollowDistance;
+            moveTo(target.Position() + new Vector3(shift.x, 0, shift.y));
         }
     }
 

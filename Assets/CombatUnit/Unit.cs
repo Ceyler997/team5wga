@@ -23,13 +23,13 @@ public class Unit : BaseObject, IFightable {
         set {movementAgent = value;}
     }
 
-    public Health HealthSystem {
+    public Health UnitHealthSystem {
         get {return healthSystem;}
 
         set {healthSystem = value;}
     }
 
-    public CombatSystem CombatSystem {
+    public CombatSystem UnitCombatSystem {
         get { return combatSystem; }
 
         set { combatSystem = value; }
@@ -46,6 +46,10 @@ public class Unit : BaseObject, IFightable {
 
         set {master = value;}
     }
+
+    Vector3 IFightable.Position {
+        get { return transform.position; }
+    }
     #endregion
 
     #region MonoBehaviour methods
@@ -54,21 +58,21 @@ public class Unit : BaseObject, IFightable {
     void Start () {
         MovementAgent = GetComponent<Movement>();
 
-        HealthSystem = GetComponent<Health>();
-        HealthSystem.setupSystem(GameConf.unitStartHealth,
+        UnitHealthSystem = GetComponent<Health>();
+        UnitHealthSystem.setupSystem(GameConf.unitStartHealth,
             GameConf.unitMaxHealth,
             GameConf.unitBasicRegenSpeed);
 
-        CombatSystem = GetComponent<CombatSystem>();
-        CombatSystem.setupSystem(GameConf.unitDamage,
+        UnitCombatSystem = GetComponent<CombatSystem>();
+        UnitCombatSystem.setupSystem(GameConf.unitDamage,
             GameConf.unitCritDamage,
             GameConf.unitBasicCritChance,
             GameConf.unitAttackRadius,
             GameConf.unitAttackSpeed);
 	}
 
-    public void Update() {
-        // Проверяем, есть ли мастер у юнита
+    new public void Update() { // Проверяем, есть ли мастер у юнита
+        base.Update();
         if (Master == null) {
             throw new UnitHaveNoMasterException();
         }
@@ -78,20 +82,9 @@ public class Unit : BaseObject, IFightable {
             Behaviour = new UnitProtectiveBehaviour(this, master);
         }
 
-        CombatSystem.updateTarget(); // Обновляем цель
+        UnitCombatSystem.updateTarget(); // Обновляем цель
 
         Behaviour.UpdateState(); // Получаем команды от ИИ
-    }
-    #endregion
-
-    #region IFightable implementation
-
-    public CombatSystem getCombatSystem() {
-        return CombatSystem;
-    }
-
-    public Health getHealthSystem() {
-        return HealthSystem;
     }
     #endregion
 }

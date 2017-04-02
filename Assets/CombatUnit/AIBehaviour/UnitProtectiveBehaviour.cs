@@ -38,7 +38,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
     #endregion
 
     public override void UpdateState() {
-        CombatSystem cs = Subject.CombatSystem; // Используется для сокращения размера строк
+        CombatSystem cs = Subject.UnitCombatSystem; // Используется для сокращения размера строк
 
         switch (CurrentUnitState) {
             #region CALM STATE
@@ -48,9 +48,9 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
                     if (cs.attack()) {
                         Subject.MovementAgent.stop();
-                        cs.Target.getCombatSystem().attacked(Subject);
+                        cs.Target.UnitCombatSystem.attacked(Subject);
                     } else {
-                        Subject.MovementAgent.moveTo(cs.Target.getPosition());
+                        Subject.MovementAgent.moveTo(cs.Target.Position);
                     }
 
                     // Для предотвращения зацикливания атак между двумя защищающими юнитами
@@ -58,11 +58,11 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     return;
                 }
 
-                if (ProtectTarget.RadiusStub.Length != 0) { // Если внутри радиуса цели кто-то есть
-                    IFightable closestEnemy = ProtectTarget.getClosestUnitStub(); // берём ближайшего к цели юнита
+                if (ProtectTarget.UnitsRadius.isEnemyInside()) { // Если внутри радиуса цели кто-то есть
+                    IFightable closestEnemy = ProtectTarget.UnitsRadius.getClosestUnit(); // берём ближайшего к цели юнита
 
                     // если этот юнит в агро радиусе, переходим в встревоженное состояние
-                    if (Vector3.Distance(ProtectTarget.getPosition(), closestEnemy.getPosition()) < ProtectTarget.AlarmDistance) {
+                    if (Vector3.Distance(ProtectTarget.Position(), closestEnemy.Position) < ProtectTarget.AlarmDistance) {
                         cs.Target = closestEnemy;
                         CurrentUnitState = UnitState.ALARMED;
                         return;
@@ -78,22 +78,22 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
             case UnitState.ALARMED:
 
                 // если внутри радиуса цели никого нет, переходим в спокойное состояние
-                if (ProtectTarget.RadiusStub.Length == 0) {
+                if (!ProtectTarget.UnitsRadius.isEnemyInside()) {
                     CurrentUnitState = UnitState.CALM;
                     return;
                 }
 
                 // если юнита никто не атакует, взять ближайшего к цели защиты врага
                 if (!cs.IsUnderAttack) {
-                    cs.Target = protectTarget.getClosestUnitStub();
+                    cs.Target = protectTarget.UnitsRadius.getClosestUnit();
                 }
 
                 // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
                 if (cs.attack()) {
                     Subject.MovementAgent.stop();
-                    cs.Target.getCombatSystem().attacked(Subject);
+                    cs.Target.UnitCombatSystem.attacked(Subject);
                 } else {
-                    Subject.MovementAgent.moveTo(cs.Target.getPosition());
+                    Subject.MovementAgent.moveTo(cs.Target.Position);
                 }
 
                 break;

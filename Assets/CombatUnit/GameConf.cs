@@ -1,8 +1,8 @@
 ﻿
+using System;
+
 static class GameConf {
     #region private fields
-
-    public static readonly float defenceAgroRadius = 10.0f;
 
     #region Unit Properties
 
@@ -17,9 +17,41 @@ static class GameConf {
     #endregion
 
     #region Suprime Properties
+
     public static readonly float suprimeStartHealth = 100.0f;
     public static readonly float suprimeMaxHealth = 100.0f;
     public static readonly float suprimeBasicRegenSpeed = 5.0f;
+    public static readonly float suprimeStartEnergy = 0.0f;
+    public static readonly float suprimeMaxEnergy = 100.0f;
+    public static readonly int suprimeStartLevel = 0;
+    public static readonly int suprimeMaxLevel = 10;
+    #endregion
+
+    #region Crystall Properties
+    public static readonly float crysStartEnergy = 100.0f;
+    public static readonly float crysMaxEnergy = 100.0f;
+    public static readonly int crysStartLevel = 1;
+    public static readonly int crysMaxLevel = 3;
+    public static readonly float crysAlarmRadius = 10.0f;
+    public static readonly float crysDetectRadius = 20.0f;
+
+    public static float getCrysRegenSpeed(int curentLevel) {
+        switch (curentLevel) {
+            case 1:
+                return 5.0f;
+            case 2:
+                return 10.0f;
+            case 3:
+                return 15.0f;
+            default:
+                throw new UndefinedCrystalLevelException();
+        }
+    }
+    #endregion
+
+    #region Player Properties
+
+    public static readonly int maxSuprimeAmount = 9;
     #endregion
     #endregion
 }

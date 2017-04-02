@@ -1,21 +1,54 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Energy : MonoBehaviour {
-    private float energy; //Текущее кол-во энергии
-    private float maxEnergy; //Максимальное кол-во энергии
 
-    // Use this for initialization
-    void Start () {
-		
-	}
-	public void restoreEnergy(float energy) {
-        energy += energy;
+    #region private fields
+
+    private float currentEnergy; //Текущее кол-во энергии
+    private float maxEnergy; //Максимальное кол-во энергии
+    private bool isSettedUp;
+    #endregion
+
+    #region getters and setters
+
+    private float CurrentEnergy {
+        get { return currentEnergy; }
+
+        set { currentEnergy = value; }
     }
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+
+    private float MaxEnergy {
+        get { return maxEnergy; }
+
+        set { maxEnergy = value; }
+    }
+
+    private bool IsSettedUp {
+        get { return isSettedUp; }
+
+        set { isSettedUp = value; }
+    }
+    #endregion
+
+    #region public methods
+
+    public void changeEnergy(float deltaEnergy) {
+        CurrentEnergy += deltaEnergy;
+        CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, MaxEnergy);
+    }
+
+    public void setupSystem(float curentEnergy, float maxEnergy) {
+        IsSettedUp = true;
+        CurrentEnergy = curentEnergy;
+        MaxEnergy = maxEnergy;
+    }
+    #endregion
+
+    #region MonoBehaviour methods
+    private void Update() {
+        if (!IsSettedUp) {
+            throw new SystemIsNotSettedUpException();
+        }
+    }
+    #endregion
 }
