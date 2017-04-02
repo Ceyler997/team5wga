@@ -86,7 +86,6 @@ public class Radius : MonoBehaviour {
         IFightable enteredEnemy = other.GetComponentInParent<IFightable>(); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
         if (enteredEnemy != null && ((BaseObject) enteredEnemy).ControllingPlayer != owner) {
             EnemyList.Add(enteredEnemy);
-            print("add " + enteredEnemy + " from " + ((BaseObject) enteredEnemy).ControllingPlayer);
         }
     }
     #endregion
