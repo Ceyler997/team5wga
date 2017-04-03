@@ -54,7 +54,7 @@ public class CharactersController : MonoBehaviour
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, MoveRaycastMask) && SelectedUnit != null)
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, MoveRaycastMask) && SelectedUnit != null)
             {
                 print(hit.collider.gameObject.layer);
                 SelectedUnit.MoveTo(hit.point);
