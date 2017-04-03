@@ -1,0 +1,124 @@
+﻿using System.Collections.Generic;
+using UnityEngine;
+
+[RequireComponent(typeof(Movement))]
+[RequireComponent(typeof(Health))]
+[RequireComponent(typeof(CombatSystem))]
+public class Unit : BaseObject, IFightable {
+
+    #region private fields
+
+    private Movement movementAgent; // компонент передвижения
+    private Health healthSystem; // компонент здоровья
+    private CombatSystem combatSystem; // компонент системы боёвки
+    private UnitAIBehaviour behaviour; // Компонент поведения
+    private Suprime master; // Призвавший юнита ВС
+
+    private List<IDeathObserver> deathObservers; //список наблюдателей
+    #endregion
+
+    #region getters and setters
+
+    public Movement MovementAgent {
+        get {return movementAgent;}
+        set {movementAgent = value;}
+    }
+
+    public Health HealthSystem {
+        get {return healthSystem;}
+        set {healthSystem = value;}
+    }
+
+    public CombatSystem CombatSys {
+        get { return combatSystem; }
+        set { combatSystem = value; }
+    }
+
+    public UnitAIBehaviour Behaviour {
+        get { return behaviour; }
+        set { behaviour = value; }
+    }
+
+    public Suprime Master {
+        get {return master;}
+        set {master = value;}
+    }
+
+    Vector3 IFightable.Position {
+        get { return transform.position; }
+    }
+
+    private List<IDeathObserver> DeathObservers {
+        get {return deathObservers;}
+        set {deathObservers = value;}
+    }
+    #endregion
+
+    #region MonoBehaviour methods
+
+    new public void Update() { // Проверяем, есть ли мастер у юнита
+        base.Update();
+        if (Master == null) {
+            throw new UnitHaveNoMasterException();
+        }
+        
+        if(Behaviour == null) {
+            throw new UnitHaveNoBehaviourException();
+        }
+
+        Behaviour.UpdateState(); // Получаем команды от ИИ
+    }
+    #endregion
+
+    #region public methods
+
+    public void setupUnit(Suprime master) {
+        base.setupBaseObject(master.ControllingPlayer,
+            GameConf.unitReactRadius,
+            GameConf.unitDetectRadius);
+
+        MovementAgent = GetComponent<Movement>();
+        MovementAgent.setupSystem(GameConf.unitMoveSpeed);
+
+        HealthSystem = GetComponent<Health>();
+        HealthSystem.setupSystem(GameConf.unitStartHealth,
+            GameConf.unitMaxHealth,
+            GameConf.unitBasicRegenSpeed,
+            this);
+
+        CombatSys = GetComponent<CombatSystem>();
+        CombatSys.setupSystem(GameConf.unitDamage,
+            GameConf.unitCritDamage,
+            GameConf.unitBasicCritChance,
+            GameConf.unitAttackRadius,
+            GameConf.unitAttackSpeed);
+
+        Master = master;
+
+        DeathObservers = new List<IDeathObserver>();
+
+        Behaviour = new UnitProtectiveBehaviour(this, master);
+    }
+    #endregion
+
+    #region IDeathSubject implementation
+
+    public void Attach(IDeathObserver observer) {
+        DeathObservers.Add(observer);
+    }
+
+    public void Detach(IDeathObserver observer) {
+        DeathObservers.Remove(observer);
+    }
+
+    public void SubjectDeath() {
+        while(DeathObservers.Count != 0) {
+            DeathObservers[0].onSubjectDeath(this); // При смерти объекта его подписчики от него отписываются
+        }
+
+        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
+
+        Destroy(gameObject);
+    }
+    #endregion
+}

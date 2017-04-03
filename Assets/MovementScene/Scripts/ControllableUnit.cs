@@ -14,6 +14,7 @@ public class ControllableUnit : BaseUnit {
     public UnitStates UnitState = UnitStates.IDLE;
 
     public Transform Target;
+    public Projector SelectionProjector;
 
     public NavMeshAgent mAgent;
     public NavMeshObstacle mObstacle;
@@ -62,18 +63,52 @@ public class ControllableUnit : BaseUnit {
         }
     }
 
+    private void OnMouseOver()
+    {
+        HighLight(true);
+    }
+
+    private void OnMouseExit()
+    {
+        HighLight(false);
+    }
+
+    bool isHighlighted = false;
+    private void HighLight(bool state)
+    {
+        if (state)
+        {
+            if (isHighlighted)
+                return;
+
+            foreach (Renderer rend in mRenderers)
+                highlight.ObjectRenderers.Add(rend);
+
+            isHighlighted = true;
+        }
+        else
+        {
+            highlight.ObjectRenderers.Clear();
+            isHighlighted = false;
+        }
+       
+    }
+
     public void SelectUnit()
     {
-        foreach (Renderer rend in mRenderers)
-            highlight.ObjectRenderers.Add(rend);
+        //foreach (Renderer rend in mRenderers)
+        //    highlight.ObjectRenderers.Add(rend);
         IsSelected = true;
+        SelectionProjector.enabled = true;
+        
         //highlight.ObjectRenderers.AddRange();
     }
 
     public void DeselectUnit()
     {
-        highlight.ObjectRenderers.Clear();
+        //highlight.ObjectRenderers.Clear();
         IsSelected = false;
+        SelectionProjector.enabled = false;
     }
 
     public void MoveTo(Vector3 position)

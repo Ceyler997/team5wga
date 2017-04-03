@@ -4,21 +4,20 @@ using UnityEngine;
 
 public class DrawCircle : MonoBehaviour {
 
-	private int lengthOfLineRenderer = 20;
+//	private int lengthOfLineRenderer = 20;
 	private float ThetaScale = 0.01f;
 	int size;
 	LineRenderer line1;
 	LineRenderer line2;
-	Crystall crystall;
+	Crystal crystall;
 	void Start() {
-		crystall = gameObject.GetComponent<Crystall>();
 		line1 = createLine("radius1");
 		line2 = createLine("radius2");
 	}
 
 	void Update() {
-		DrawCrystallCircle(line1,crystall.radiusFirst);
-		DrawCrystallCircle(line2,crystall.radiusSecond);
+		DrawCrystallCircle(line1,10);
+		DrawCrystallCircle(line2,20);
 	}
 
 	private LineRenderer createLine(string name) {
