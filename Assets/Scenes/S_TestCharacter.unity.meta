@@ -1,6 +1,11 @@
 fileFormatVersion: 2
+<<<<<<< HEAD:Assets/Scenes/MainScene.unity.meta
+guid: e6a573efeb693634ab7bd045c8e0e83b
+timeCreated: 1488107132
+=======
 guid: 4f46555b06e0c1f4092be71e7373e5f6
 timeCreated: 1485606967
+>>>>>>> 014b69684952d2cef9df1701a209ce6e0112f2dc:Assets/Scenes/S_TestCharacter.unity.meta
 licenseType: Free
 DefaultImporter:
   userData: 

@@ -7,6 +7,7 @@ public class CharactersController : MonoBehaviour
 
     public static CharactersController Instance;
 
+    public LayerMask MoveRaycastMask;
     public ControllableUnit SelectedUnit;
     public bool FinishedDragOnThisFrame;
     public bool UserIsDragging;
@@ -16,6 +17,7 @@ public class CharactersController : MonoBehaviour
     void Awake()
     {
         Instance = this;
+        MoveRaycastMask = 1 << 14;
     }
 
     // Update is called once per frame
@@ -52,8 +54,9 @@ public class CharactersController : MonoBehaviour
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit) && hit.transform.CompareTag("Ground") && SelectedUnit != null)
+            if (Physics.Raycast(ray, out hit, MoveRaycastMask) && SelectedUnit != null)
             {
+                print(hit.collider.gameObject.layer);
                 SelectedUnit.MoveTo(hit.point);
             }
         }

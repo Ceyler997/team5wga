@@ -84,4 +84,16 @@ public class Player : MonoBehaviour {
         Suprimes [0].spawnUnit();
     }
     #endregion
+    // Update is called once per frame
+    void Update () {
+        Vector3 MousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        Vector2 newPos = new Vector2(MousePos.x, MousePos.y);
+        Ray banana = new Ray(transform.position, newPos);
+        Debug.DrawRay(transform.position, newPos);
+        if (Physics.Raycast(banana))
+        {
+
+        }
+        
+	}
 }
