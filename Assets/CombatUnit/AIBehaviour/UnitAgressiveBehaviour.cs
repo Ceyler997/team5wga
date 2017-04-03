@@ -30,13 +30,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
             cs.Target = Subject.DetectRadius.getClosestUnit();
         }
 
-        // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к цели
-        if (cs.attack()) {
-            Subject.MovementAgent.stop();
-            cs.Target.CombatSys.attacked(Subject);
-        } else {
-            Subject.MovementAgent.moveTo(cs.Target.Position);
-        }
+        attack();
     }
     #endregion
 

@@ -45,14 +45,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
             case UnitState.CALM:
 
                 if (cs.IsUnderAttack) {
-                    // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
-                    if (cs.attack()) {
-                        Subject.MovementAgent.stop();
-                        cs.Target.CombatSys.attacked(Subject);
-                    } else {
-                        Subject.MovementAgent.moveTo(cs.Target.Position);
-                    }
-
+                    attack();
                     // Для предотвращения зацикливания атак между двумя защищающими юнитами
                     cs.IsUnderAttack = false;
                     return;
@@ -88,13 +81,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     cs.Target = protectTarget.DetectRadius.getClosestUnit();
                 }
 
-                // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
-                if (cs.attack()) {
-                    Subject.MovementAgent.stop();
-                    cs.Target.CombatSys.attacked(Subject);
-                } else {
-                    Subject.MovementAgent.moveTo(cs.Target.Position);
-                }
+                attack();
 
                 break;
             #endregion

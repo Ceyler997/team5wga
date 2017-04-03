@@ -1,7 +1,8 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Radius : MonoBehaviour {
+public class Radius : MonoBehaviour, IDeathObserver{
 
     #region private fields
 
@@ -63,7 +64,7 @@ public class Radius : MonoBehaviour {
             return;
         }
 
-        tryToAddEnemy(other);
+        tryToAddEnemy(other.GetComponentInParent<IFightable>()); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
     }
 
     void OnTriggerExit(Collider other) {
@@ -71,21 +72,29 @@ public class Radius : MonoBehaviour {
             return;
         }
 
-        IFightable exitedEnemy = other.GetComponentInParent<IFightable>(); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
+        tryToRemoveEnemy(other.GetComponentInParent<IFightable>()); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
 
-        if (exitedEnemy != null && ((BaseObject) exitedEnemy).ControllingPlayer != owner) {
-            EnemyList.Remove(exitedEnemy);
-        }
     }
     #endregion
 
     #region private methods
 
-    // пытается добавить врага в список по коллайдеру
-    private void tryToAddEnemy(Collider other) {
-        IFightable enteredEnemy = other.GetComponentInParent<IFightable>(); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
-        if (enteredEnemy != null && ((BaseObject) enteredEnemy).ControllingPlayer != owner) {
-            EnemyList.Add(enteredEnemy);
+    // пытается добавить объект в список
+    private void tryToAddEnemy(IFightable enteredObject) {
+        if (enteredObject != null && ((BaseObject) enteredObject).ControllingPlayer != owner) {
+            EnemyList.Add(enteredObject);
+            enteredObject.Attach(this);
+        }
+    }
+
+    // пытается убрать объект из списка
+    private void tryToRemoveEnemy(IFightable exitedObject) {
+        if (exitedObject != null && ((BaseObject) exitedObject).ControllingPlayer != owner) {
+            if (EnemyList.Remove(exitedObject) 
+                && CachedClosestEnemy == exitedObject) {
+                CachedClosestEnemy = null;
+            }
+            exitedObject.Detach(this);
         }
     }
     #endregion
@@ -139,8 +148,15 @@ public class Radius : MonoBehaviour {
         EnemyList = new List<IFightable>();
 
         foreach (Collider other in objectsInside) {
-            tryToAddEnemy(other);
+            tryToAddEnemy(other.GetComponentInParent<IFightable>());
         }
+    }
+    #endregion
+
+    #region IDeathObserver implementation
+
+    public void onSubjectDeath(IFightable subject) {
+        tryToRemoveEnemy(subject);
     }
     #endregion
 }

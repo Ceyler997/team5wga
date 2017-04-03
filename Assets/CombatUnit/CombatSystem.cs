@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class CombatSystem : MonoBehaviour {
+public class CombatSystem : MonoBehaviour, IDeathObserver {
 
     #region private variables
     // все поля в свойствах (см. геттеры и сеттеры)
@@ -26,61 +26,62 @@ public class CombatSystem : MonoBehaviour {
 
     public float Damage {
         get { return damage; }
-
         set { damage = value; }
     }
 
     public float CritDamage {
         get { return critDamage; }
-
         set { critDamage = value; }
     }
 
     public float CritChance {
         get { return critChance; }
-
         set { critChance = Mathf.Clamp(value, 0.0f, 1.0f); }
     }
 
     public BattleMagicColor CurrentMagicColor {
         get { return currentMagicColor; }
-
         set { currentMagicColor = value; }
     }
 
     public float AttackRadius {
         get { return attackRadius; }
-
         set { attackRadius = value; }
     }
 
     public float AttackSpeed {
         get { return attackSpeed; }
-
         set { attackSpeed = value; }
     }
 
     private float NextAttackTime {
         get { return nextAttackTime; }
-
         set { nextAttackTime = value; }
     }
 
     public IFightable Target {
         get { return target; }
+        set {
+            if(target != null) {
+                target.Detach(this);
+                target.CombatSys.IsUnderAttack = false; // Указываем, что мы больше не атакуем текущую цель
+            }
 
-        set { target = value; }
+            if (value != null) {
+                value.Attach(this);
+            }
+
+            target = value;
+        }
     }
 
     public bool IsUnderAttack {
         get { return isUnderAttack; }
-
         set { isUnderAttack = value; }
     }
 
     public bool IsSettedUp {
         get { return isSettedUp; }
-
         set { isSettedUp = value; }
     }
     #endregion
@@ -136,14 +137,6 @@ public class CombatSystem : MonoBehaviour {
         AttackSpeed = atkSpeed;
     }
 
-    // Проверяет текущую цель и обнуляет её, если она мертва. Вызывать в цикле перед атакой
-    public void updateTarget() { 
-        if(Target != null && Target.HealthSystem.IsDead) {
-            Target = null;
-            isUnderAttack = false; // Если атаковала не цель, поле будет вскоре установленно обратно
-        }
-    }
-
     // Если юнита атакуют, то его цель меняется на атакующего
     public void attacked(IFightable attacker) {
         IsUnderAttack = true;
@@ -154,15 +147,16 @@ public class CombatSystem : MonoBehaviour {
     public bool attack() {
         if(Vector3.Distance(transform.position, Target.Position) < AttackRadius) { // проверка расстояния
 
-            if(Time.time >= NextAttackTime) { // проверка отката
+            if (Time.time >= NextAttackTime) { // проверка отката
+                // DEBUG
+                Debug.DrawLine(transform.position, Target.Position, Color.red, 0.2f);
+
                 float damageToTarger = Damage + getCrit(); // получение наносимого урона
 
                 Target.HealthSystem.getDamage(damageToTarger); // наносится урон цели
 
                 NextAttackTime = Time.time + AttackSpeed; // устанавливается откат
 
-                // DEBUG
-                Debug.DrawLine(transform.position, Target.Position, Color.red, 0.2f);
             }
             return true;
         }        
@@ -176,10 +170,31 @@ public class CombatSystem : MonoBehaviour {
         }
     }
     #endregion
+
+    #region IDeathObserver implementation
+
+    public void onSubjectDeath(IFightable subject) {
+        if(subject == Target) {
+            Target = null;
+        } else {
+            throw new WrongDeathSubsciptionException();
+        }
+    }
+    #endregion
 }
 
-public interface IFightable {
+public interface IFightable : IDeathSubject {
     CombatSystem CombatSys { get; }
     Vector3 Position { get; }
     Health HealthSystem { get; }
+}
+
+public interface IDeathObserver {
+    void onSubjectDeath(IFightable subject);
+}
+
+public interface IDeathSubject {
+    void Attach(IDeathObserver observer);
+    void Detach(IDeathObserver observer);
+    void SubjectDeath();
 }

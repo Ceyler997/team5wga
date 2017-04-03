@@ -42,4 +42,6 @@ public class PlayerNotExistingException : Exception { } // Исключение 
 public class TooMuchSuprimesException : Exception { } // Исключение при попытке создать больше ВС, чем разрешено параметрами
 
 public class AttemptToManagerReassignmentException : Exception { } // Исключение при попытке переназначить менеджера
+
+public class WrongDeathSubsciptionException : Exception { } // Исключение при неправильной подписке или попытке подписаться на null
 #endregion

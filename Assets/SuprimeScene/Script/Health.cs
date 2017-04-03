@@ -7,7 +7,7 @@ public class Health : MonoBehaviour {
     private float curHealth; //Текущее кол-во здоровья
     private float maxHealth; //Максимальное кол-во здоровья
     private float regenSpeed; //Скорость востановления здоровья
-    private bool isDead;
+    private IDeathSubject subject;
     private bool isSettedUp;
     #endregion
 
@@ -15,31 +15,26 @@ public class Health : MonoBehaviour {
 
     private float CurrentHealth {
         get { return curHealth; }
-
         set { curHealth = value; }
     }
 
     private float MaxHealth {
         get { return maxHealth; }
-
         set { maxHealth = value; }
     }
 
     public float RegenSpeed {
         get { return regenSpeed; }
-
         set { regenSpeed = value; }
     }
 
-    public bool IsDead {
-        get { return isDead; }
-
-        set { isDead = value; }
+    private IDeathSubject Subject {
+        get { return subject; }
+        set { subject = value; }
     }
 
     private bool IsSettedUp {
         get { return isSettedUp; }
-
         set { isSettedUp = value; }
     }
     #endregion
@@ -58,11 +53,12 @@ public class Health : MonoBehaviour {
     #region public methods
 
     // Функция для настройки системы после инициализации
-    public void setupSystem(float health, float maxHealth, float regenSpeed) {
+    public void setupSystem(float health, float maxHealth, float regenSpeed, IDeathSubject deathSubject) {
         CurrentHealth = health;
         MaxHealth = maxHealth;
         RegenSpeed = regenSpeed;
         IsSettedUp = true;
+        Subject = deathSubject;
     }
 
     //Получение урона
@@ -77,8 +73,7 @@ public class Health : MonoBehaviour {
 
     //Смерть юнита
     private void die() {
-        IsDead = true;
-        Destroy(gameObject);
+        Subject.SubjectDeath();
     }
 
     //Востановление жизней (запускать в апдейте)

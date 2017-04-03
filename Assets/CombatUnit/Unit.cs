@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
@@ -13,42 +13,44 @@ public class Unit : BaseObject, IFightable {
     private CombatSystem combatSystem; // компонент системы боёвки
     private UnitAIBehaviour behaviour; // Компонент поведения
     private Suprime master; // Призвавший юнита ВС
+
+    private List<IDeathObserver> deathObservers; //список наблюдателей
     #endregion
 
     #region getters and setters
 
     public Movement MovementAgent {
         get {return movementAgent;}
-
         set {movementAgent = value;}
     }
 
     public Health HealthSystem {
         get {return healthSystem;}
-
         set {healthSystem = value;}
     }
 
     public CombatSystem CombatSys {
         get { return combatSystem; }
-
         set { combatSystem = value; }
     }
 
     public UnitAIBehaviour Behaviour {
         get { return behaviour; }
-
         set { behaviour = value; }
     }
 
     public Suprime Master {
         get {return master;}
-
         set {master = value;}
     }
 
     Vector3 IFightable.Position {
         get { return transform.position; }
+    }
+
+    private List<IDeathObserver> DeathObservers {
+        get {return deathObservers;}
+        set {deathObservers = value;}
     }
     #endregion
 
@@ -63,8 +65,6 @@ public class Unit : BaseObject, IFightable {
         if(Behaviour == null) {
             throw new UnitHaveNoBehaviourException();
         }
-
-        CombatSys.updateTarget(); // Обновляем цель
 
         Behaviour.UpdateState(); // Получаем команды от ИИ
     }
@@ -83,7 +83,8 @@ public class Unit : BaseObject, IFightable {
         HealthSystem = GetComponent<Health>();
         HealthSystem.setupSystem(GameConf.unitStartHealth,
             GameConf.unitMaxHealth,
-            GameConf.unitBasicRegenSpeed);
+            GameConf.unitBasicRegenSpeed,
+            this);
 
         CombatSys = GetComponent<CombatSystem>();
         CombatSys.setupSystem(GameConf.unitDamage,
@@ -94,7 +95,30 @@ public class Unit : BaseObject, IFightable {
 
         Master = master;
 
+        DeathObservers = new List<IDeathObserver>();
+
         Behaviour = new UnitProtectiveBehaviour(this, master);
+    }
+    #endregion
+
+    #region IDeathSubject implementation
+
+    public void Attach(IDeathObserver observer) {
+        DeathObservers.Add(observer);
+    }
+
+    public void Detach(IDeathObserver observer) {
+        DeathObservers.Remove(observer);
+    }
+
+    public void SubjectDeath() {
+        while(DeathObservers.Count != 0) {
+            DeathObservers[0].onSubjectDeath(this); // При смерти объекта его подписчики от него отписываются
+        }
+
+        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
+
+        Destroy(gameObject);
     }
     #endregion
 }

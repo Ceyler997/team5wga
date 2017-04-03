@@ -19,6 +19,8 @@ public class Suprime : BaseObject, IFightable {
     private Movement moveSystem; // Передвижение
     private List<Unit> units; //Юниты, прикреплённые к данному ВС
     private Crystal curentCrystall; //текущий кристалл, в радиусе которого находится ВС
+
+    private List<IDeathObserver> deathObservers; //список наблюдателей
     #endregion
 
     #region getters and setters
@@ -61,13 +63,18 @@ public class Suprime : BaseObject, IFightable {
     Vector3 IFightable.Position {
         get { return transform.position; }
     }
+
+    private List<IDeathObserver> DeathObservers {
+        get { return deathObservers; }
+        set { deathObservers = value; }
+    }
     #endregion
 
     #region MonoBehaviour methods
 
     new public void Update() {
         base.Update();
-        if(ControllingPlayer == null) {
+        if (ControllingPlayer == null) {
             throw new SuprimeHaveNoPlayerException();
         }
     }
@@ -83,7 +90,8 @@ public class Suprime : BaseObject, IFightable {
         HealthSystem = GetComponent<Health>();
         HealthSystem.setupSystem(GameConf.suprimeStartHealth,
             GameConf.suprimeMaxHealth,
-            GameConf.suprimeBasicRegenSpeed);
+            GameConf.suprimeBasicRegenSpeed,
+            this);
 
         EnergySystem = GetComponent<Energy>();
         EnergySystem.setupSystem(GameConf.suprimeStartEnergy,
@@ -103,16 +111,45 @@ public class Suprime : BaseObject, IFightable {
         MoveSystem.setupSystem(GameConf.suprimeMoveSpeed);
 
         units = new List<Unit>();
+        DeathObservers = new List<IDeathObserver>();
     }
 
     #endregion
 
     #region DEBUG
+
     public GameObject UnitPrefab;
 
     public void spawnUnit() {
         Unit unit = Instantiate(UnitPrefab, transform.position + Vector3.left * 3, Quaternion.identity).GetComponent<Unit>();
         unit.setupUnit(this);
+        unit.Behaviour = new UnitAgressiveBehaviour(unit);
+        units.Add(unit);
+    }
+    #endregion
+
+    #region IDeathSubject implementation
+
+    public void Attach(IDeathObserver observer) {
+        DeathObservers.Add(observer);
+    }
+
+    public void Detach(IDeathObserver observer) {
+        DeathObservers.Remove(observer);
+    }
+
+    public void SubjectDeath() {
+        while (DeathObservers.Count != 0) {
+            DeathObservers [0].onSubjectDeath(this); // При смерти объекта его подписчики от него отписываются
+        }
+
+        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
+
+        foreach (Unit unit in Units) {
+            Destroy(unit.gameObject);
+        }
+
+        Destroy(gameObject);
     }
     #endregion
 }

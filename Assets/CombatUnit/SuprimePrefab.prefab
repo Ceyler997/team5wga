@@ -144,6 +144,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6860cc355699de14bb880b6f5cc4b806, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  debugTarget: {fileID: 0}
 --- !u!114 &114411844328936950
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -155,6 +156,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c52e51514f0b64ebb61c5176f4c616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  insideList: []
 --- !u!114 &114888894280442392
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -199,6 +201,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce7c461342ba334a93da0c099b02762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  UnitPrefab: {fileID: 1869840471673688, guid: 8a654c756dfd13348b9fa01c6518c25e, type: 2}
 --- !u!114 &114978623349125634
 MonoBehaviour:
   m_ObjectHideFlags: 1
