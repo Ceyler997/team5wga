@@ -149,7 +149,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver {
 
             if (Time.time >= NextAttackTime) { // проверка отката
                 // DEBUG
-                Debug.DrawLine(transform.position, Target.Position, Color.red, 0.2f);
+                Debug.DrawLine(transform.position, Target.Position, Color.white, 0.2f);
 
                 float damageToTarger = Damage + getCrit(); // получение наносимого урона
 

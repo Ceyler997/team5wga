@@ -3,120 +3,94 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class ControllableUnit : BaseUnit {
+[RequireComponent(typeof(Movement))]
+public class ControllableUnit : MonoBehaviour {
 
-    public enum UnitStates
-    {
-        IDLE,
-        WALKING
+    #region private fields
+    
+    private Movement unitMoveSystem;
+    public Projector selectionProjector;
+    
+    private bool isHighlighted = false;
+
+    private Renderer [] mRenderers;
+    private HighlightsFX highlight;
+    #endregion
+
+    #region getters and setters
+
+    private Projector SelectionProjector {
+        get { return selectionProjector; }
+        set { selectionProjector = value; }
     }
 
-    public UnitStates UnitState = UnitStates.IDLE;
+    private Renderer [] MRenderers {
+        get { return mRenderers; }
+        set { mRenderers = value; }
+    }
 
-    public Transform Target;
-    public Projector SelectionProjector;
+    private HighlightsFX Highlight {
+        get { return highlight; }
+        set { highlight = value; }
+    }
 
-    public NavMeshAgent mAgent;
-    public NavMeshObstacle mObstacle;
-    public bool isCameraLockedOn = false;
+    public Movement UnitMoveSystem {
+        get { return unitMoveSystem; }
+        set { unitMoveSystem = value; }
+    }
 
-    Renderer[] mRenderers;
-    HighlightsFX highlight;
+    private bool IsHighlighted {
+        get { return isHighlighted; }
+        set { isHighlighted = value; }
+    }
+    #endregion
+
+    #region MonoBehaviour methods
 
     // Use this for initialization
-    void Start()
-    {
-        mAgent = GetComponent<NavMeshAgent>();
-        mObstacle = GetComponent<NavMeshObstacle>();
-        mRenderers = GetComponentsInChildren<Renderer>();
-        highlight = Camera.main.GetComponent<HighlightsFX>();
+    void Start() {
+        UnitMoveSystem = GetComponent<Movement>();
+        MRenderers = GetComponentsInChildren<Renderer>();
+        Highlight = Camera.main.GetComponent<HighlightsFX>();
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        switch (UnitState)
-        {
-            case UnitStates.WALKING:
-                //mObstacle.enabled = false;
-                //mAgent.enabled = true;
-                break;
-
-            case UnitStates.IDLE:
-                //mAgent.enabled = false;
-                //mObstacle.enabled = true;
-                break;
-        }
-
-        if (mAgent.pathStatus == NavMeshPathStatus.PathComplete && UnitState == UnitStates.WALKING)
-        {
-            UnitState = UnitStates.IDLE;
-
-        }
-
-        if (!CompareTag("Unit"))
-        {
-            foreach(Renderer rend in mRenderers)
-            {
-                rend.enabled = false;
-            }
-        }
-    }
-
-    private void OnMouseOver()
-    {
+    private void OnMouseOver() {
         HighLight(true);
     }
 
-    private void OnMouseExit()
-    {
+    private void OnMouseExit() {
         HighLight(false);
     }
+    #endregion
 
-    bool isHighlighted = false;
-    private void HighLight(bool state)
-    {
-        if (state)
-        {
-            if (isHighlighted)
-                return;
+    #region public methods
 
-            foreach (Renderer rend in mRenderers)
-                highlight.ObjectRenderers.Add(rend);
-
-            isHighlighted = true;
-        }
-        else
-        {
-            highlight.ObjectRenderers.Clear();
-            isHighlighted = false;
-        }
-       
-    }
-
-    public void SelectUnit()
-    {
-        //foreach (Renderer rend in mRenderers)
-        //    highlight.ObjectRenderers.Add(rend);
-        IsSelected = true;
+    public void selectUnit() {
         SelectionProjector.enabled = true;
-        
-        //highlight.ObjectRenderers.AddRange();
     }
 
-    public void DeselectUnit()
-    {
-        //highlight.ObjectRenderers.Clear();
-        IsSelected = false;
+    public void DeselectUnit() {
         SelectionProjector.enabled = false;
     }
+    #endregion
 
-    public void MoveTo(Vector3 position)
-    {
-        UnitState = UnitStates.WALKING;
-        mObstacle.enabled = false;
-        mAgent.enabled = true;
-        Target.position = position;
-        mAgent.SetDestination(Target.position);
+    #region private methods
+
+    private void HighLight(bool state) {
+        if (state) {
+            if (IsHighlighted)
+                return;
+
+            foreach (Renderer rend in MRenderers)
+                Highlight.ObjectRenderers.Add(rend);
+
+            IsHighlighted = true;
+        } else {
+            Highlight.ObjectRenderers.Clear();
+            IsHighlighted = false;
+        }
+
     }
+    #endregion
+
 }

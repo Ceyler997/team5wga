@@ -14,50 +14,39 @@ public class CharactersController : MonoBehaviour
 
 
     // Use this for initialization
-    void Awake()
-    {
+    void Awake() {
         Instance = this;
         MoveRaycastMask = 1 << 14;
     }
 
     // Update is called once per frame
-    void Update()
-    {
+    void Update() {
 
-
-        if (Input.GetMouseButtonDown(0))
-        {
+        if (Input.GetMouseButtonDown(0)) {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit) && hit.transform.CompareTag("Unit"))
-            {
-                ControllableUnit unit = hit.transform.GetComponent<ControllableUnit>();
-                if (unit != null)
-                {
-                    unit.SelectUnit();
+            if (Physics.Raycast(ray, out hit)) {
+                ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
+                if (unit != null) {
+                    unit.selectUnit();
                     SelectedUnit = unit;
                 }
-            }
-            else
-            {
-                if (SelectedUnit != null)
-                {
+            } else {
+                if (SelectedUnit != null) {
                     SelectedUnit.DeselectUnit();
                     SelectedUnit = null;
                 }
             }
         }
 
-        if (Input.GetMouseButtonDown(1))
-        {
+        if (Input.GetMouseButtonDown(1)) {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, MoveRaycastMask) && SelectedUnit != null)
-            {
-                print(hit.collider.gameObject.layer);
-                SelectedUnit.MoveTo(hit.point);
+            if (Physics.Raycast(ray, out hit, MoveRaycastMask) && SelectedUnit != null) {
+                //print(hit.collider.gameObject.layer);
+                SelectedUnit.UnitMoveSystem.moveTo(hit.point);
             }
         }
     }

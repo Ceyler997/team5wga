@@ -29,7 +29,7 @@ static class GameConf {
     public static readonly int suprimeMaxLevel = 10;
     public static readonly float suprimeDamage = 5.0f;
     public static readonly float suprimeCritDamage = 5.0f;
-    public static readonly float suprimeAttackRadius = 10.0f;
+    public static readonly float suprimeAttackRadius = 5.0f;
     public static readonly float suprimeAttackSpeed = 2.0f;
     public static readonly float suprimeMoveSpeed = 10.0f;
     public static readonly float suprimeReactRadius = 10.0f;

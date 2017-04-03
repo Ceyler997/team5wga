@@ -123,7 +123,6 @@ public class Suprime : BaseObject, IFightable {
     public void spawnUnit() {
         Unit unit = Instantiate(UnitPrefab, transform.position + Vector3.left * 3, Quaternion.identity).GetComponent<Unit>();
         unit.setupUnit(this);
-        unit.Behaviour = new UnitAgressiveBehaviour(unit);
         units.Add(unit);
     }
     #endregion

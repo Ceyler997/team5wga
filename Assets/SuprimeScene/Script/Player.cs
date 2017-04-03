@@ -5,7 +5,7 @@ public class Player : MonoBehaviour {
 
     #region private fields
 
-    private string playerName; //Имя игрока
+    public string playerName; //Имя игрока
     private Suprime[] suprimes; //ВС, которыми владеет игрок
     private int suprimeCount; //Текущее кол-во ВС
     private List<Crystal> crystals; //Кристалы, которыми владеет игрок
