@@ -145,6 +145,7 @@ public class Suprime : BaseObject, IFightable {
         CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
 
         foreach (Unit unit in Units) {
+            unit.SubjectDeath();
             Destroy(unit.gameObject);
         }
 
