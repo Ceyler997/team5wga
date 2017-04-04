@@ -45,35 +45,39 @@ public class RTSCamera : MonoBehaviour {
         else if (Input.mousePosition.y > Screen.height - ScrollZone)
             z += speed;
 
-        Vector3 localCameraPosition = cameraTransform.localPosition;
-        if (Input.mouseScrollDelta.y > 0) {
-            localCameraPosition.z += 5;
-        } else if (Input.mouseScrollDelta.y < 0) {
-            localCameraPosition.z -= 5;
-        }
-        localCameraPosition.z = Mathf.Clamp(localCameraPosition.z, ZoomMin, ZoomMax);
-        cameraTransform.localPosition = localCameraPosition;
         return new Vector3(x, 0, z);
     }
 
     void Update() {
         // Скорость перемещеня камеры
         float speed = ScrollSpeed * Time.deltaTime;
-        
+
         // Если разрешено перемещение с клавиатуры
-        if(bUseKeyboard)
+        if (bUseKeyboard)
             MoveCamera(keyboardInput(speed));
 
         // Если разрешено перемещение с помощью мыши
-        if(bUseMouse)
+        if (bUseMouse)
             MoveCamera(mouseInput(speed));
-        
+
         // Поворот камеры
         if (Input.GetMouseButton(2)) {
             float rotateSpeed = 3F;
             transform.Rotate(Vector3.up, rotateSpeed * Input.GetAxis("Mouse X"), Space.World);
             return;
-        }       
+        }
+
+        // Зум камеры
+        Vector3 localCameraPosition = cameraTransform.localPosition;
+
+        if (Input.mouseScrollDelta.y > 0) {
+            localCameraPosition.z += 5;
+        } else if (Input.mouseScrollDelta.y < 0) {
+            localCameraPosition.z -= 5;
+        }
+
+        localCameraPosition.z = Mathf.Clamp(localCameraPosition.z, ZoomMin, ZoomMax);
+        cameraTransform.localPosition = localCameraPosition;
     }
     // Перемещени камеры по х и z координате
     void MoveCamera(Vector3 moveDelta) {

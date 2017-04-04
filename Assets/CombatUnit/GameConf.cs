@@ -8,7 +8,7 @@ static class GameConf {
     public static readonly float unitStartHealth = 100.0f;
     public static readonly float unitMaxHealth = 100.0f;
     public static readonly float unitBasicRegenSpeed = 5.0f;
-    public static readonly float unitDamage = 10.0f;
+    public static readonly float unitDamage = 30.0f;
     public static readonly float unitCritDamage = 5.0f;
     public static readonly float unitAttackRadius = 5.0f;
     public static readonly float unitAttackSpeed = 1.0f;

@@ -23,7 +23,7 @@ public class GameManagerScript : Photon.PunBehaviour {
     public string gameVersion = "0";
 
     [Tooltip("Name of scene for load to battle")]
-    public string battleSceneName = "BattlegroundScene";
+    public string battleSceneName = "SuprimeScene";
     #endregion
 
     #region Private Fields

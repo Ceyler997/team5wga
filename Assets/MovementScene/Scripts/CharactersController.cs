@@ -26,16 +26,16 @@ public class CharactersController : MonoBehaviour
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+            if (SelectedUnit != null) {
+                SelectedUnit.deselectUnit();
+                SelectedUnit = null;
+            }
+
             if (Physics.Raycast(ray, out hit)) {
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
                 if (unit != null) {
                     unit.selectUnit();
                     SelectedUnit = unit;
-                }
-            } else {
-                if (SelectedUnit != null) {
-                    SelectedUnit.DeselectUnit();
-                    SelectedUnit = null;
                 }
             }
         }
@@ -45,7 +45,6 @@ public class CharactersController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, MoveRaycastMask) && SelectedUnit != null) {
-                //print(hit.collider.gameObject.layer);
                 SelectedUnit.UnitMoveSystem.moveTo(hit.point);
             }
         }
