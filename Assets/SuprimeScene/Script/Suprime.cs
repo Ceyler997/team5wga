@@ -8,7 +8,7 @@ using UnityEngine;
 [RequireComponent(typeof(CombatSystem))]
 [RequireComponent(typeof(Level))]
 [RequireComponent(typeof(Movement))]
-public class Suprime : BaseObject, IFightable {
+public class Suprime : BaseObject, IFightable, IDeathObserver {
     #region private fields
     [HeaderAttribute("Suprime Property")]
 
@@ -123,7 +123,9 @@ public class Suprime : BaseObject, IFightable {
     public void spawnUnit() {
         Unit unit = Instantiate(UnitPrefab, transform.position + Vector3.left * 3, Quaternion.identity).GetComponent<Unit>();
         unit.setupUnit(this);
-        unit.Behaviour = new UnitAgressiveBehaviour(unit);
+        //unit.Behaviour = new UnitAgressiveBehaviour(unit);
+        unit.Attach(this);
+
         units.Add(unit);
     }
     #endregion
@@ -151,6 +153,15 @@ public class Suprime : BaseObject, IFightable {
         }
 
         Destroy(gameObject);
+    }
+
+    public void onSubjectDeath(IFightable subject) {
+        if (subject is Unit) {
+            Units.Remove((Unit) subject);
+            subject.Detach(this);
+        } else {
+            throw new WrongDeathSubsciptionException();
+        }
     }
     #endregion
 }

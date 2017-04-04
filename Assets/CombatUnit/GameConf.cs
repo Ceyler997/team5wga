@@ -15,7 +15,7 @@ static class GameConf {
     public static readonly float unitBasicCritChance = 0.1f;
     public static readonly float unitMoveSpeed = 30.0f;
     public static readonly float unitReactRadius = 5.0f;
-    public static readonly float unitDetectRadius = 10.0f;
+    public static readonly float unitDetectRadius = 20.0f;
     #endregion
 
     #region Suprime Properties
@@ -33,7 +33,7 @@ static class GameConf {
     public static readonly float suprimeAttackSpeed = 2.0f;
     public static readonly float suprimeMoveSpeed = 10.0f;
     public static readonly float suprimeReactRadius = 10.0f;
-    public static readonly float suprimeDetectRadius = 20.0f;
+    public static readonly float suprimeDetectRadius = 10.0f;
     #endregion
 
     #region Crystall Properties
