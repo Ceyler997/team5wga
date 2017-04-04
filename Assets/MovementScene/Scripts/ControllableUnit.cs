@@ -54,7 +54,7 @@ public class ControllableUnit : MonoBehaviour {
         Highlight = Camera.main.GetComponent<HighlightsFX>();
     }
 
-    private void OnMouseOver() {
+    private void OnMouseEnter() {
         HighLight(true);
     }
 
