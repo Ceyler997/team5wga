@@ -54,13 +54,11 @@ public class ControllableUnit : MonoBehaviour {
         Highlight = Camera.main.GetComponent<HighlightsFX>();
     }
 
-    private void OnMouseOver() {
-        print("Highlighted");
+    private void OnMouseEnter() {
         HighLight(true);
     }
 
     private void OnMouseExit() {
-        print("Unhighlighted");
         HighLight(false);
     }
     #endregion
