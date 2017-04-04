@@ -71,7 +71,7 @@ public class ControllableUnit : MonoBehaviour {
         SelectionProjector.enabled = true;
     }
 
-    public void DeselectUnit() {
+    public void deselectUnit() {
         SelectionProjector.enabled = false;
     }
     #endregion
