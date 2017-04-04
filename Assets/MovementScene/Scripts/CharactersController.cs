@@ -8,6 +8,7 @@ public class CharactersController : MonoBehaviour
     public static CharactersController Instance;
 
     public LayerMask MoveRaycastMask;
+    public LayerMask SelectableMask;
     public ControllableUnit SelectedUnit;
     public bool FinishedDragOnThisFrame;
     public bool UserIsDragging;
@@ -26,8 +27,9 @@ public class CharactersController : MonoBehaviour
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit)) {
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, SelectableMask)) {
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
+                print(hit.collider.name);
                 if (unit != null) {
                     unit.selectUnit();
                     SelectedUnit = unit;
@@ -44,7 +46,7 @@ public class CharactersController : MonoBehaviour
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit, MoveRaycastMask) && SelectedUnit != null) {
+            if (Physics.Raycast(ray, out hit, Mathf.Infinity, MoveRaycastMask) && SelectedUnit != null) {
                 //print(hit.collider.gameObject.layer);
                 SelectedUnit.UnitMoveSystem.moveTo(hit.point);
             }

@@ -55,10 +55,12 @@ public class ControllableUnit : MonoBehaviour {
     }
 
     private void OnMouseOver() {
+        print("Highlighted");
         HighLight(true);
     }
 
     private void OnMouseExit() {
+        print("Unhighlighted");
         HighLight(false);
     }
     #endregion
