@@ -12,9 +12,7 @@ public abstract class BaseObject : MonoBehaviour, IEnemyChecker {
         radius = GetComponent<Radius>();
     }
     public abstract void setRadius(float size);
-    public virtual void EnemyCheck(BaseObject enemy) {
-        Debug.Log("OMG! ENEMY IS HERE! Please override this function in the children class! ");
-    }
+    public abstract void EnemyCheck(BaseObject enemy);
     public Player ControllPlayer{ get { return controllPlayer; } set { controllPlayer = value; } }
     public Radius Radius{get { return radius; } }
 

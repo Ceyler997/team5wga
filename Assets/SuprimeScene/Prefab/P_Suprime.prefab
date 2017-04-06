@@ -134,6 +134,8 @@ GameObject:
   - component: {fileID: 114079357182440144}
   - component: {fileID: 114016378048253488}
   - component: {fileID: 54463404028639136}
+  - component: {fileID: 114457296626834548}
+  - component: {fileID: 114017429758312826}
   m_Layer: 12
   m_Name: P_Suprime
   m_TagString: Unit
@@ -186,7 +188,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4853903800504316}
   - component: {fileID: 212392067338440080}
-  m_Layer: 11
+  m_Layer: 12
   m_Name: MinimapToken
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -626,6 +628,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxLevel: 0
   curentLevel: 0
+--- !u!114 &114017429758312826
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1721182958324250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a9974d6d6cdd1940b3853ba0a516b84, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114079357182440144
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -638,6 +651,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   energy: 0
+--- !u!114 &114457296626834548
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1721182958324250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70c52e51514f0b64ebb61c5176f4c616, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  radius: {fileID: 0}
+  enemyList: []
 --- !u!114 &114498732266143670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -711,7 +737,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9970256fc1669b94daa4535f70078f74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  name: 
+  playerName: 
   suprimes: []
   crystalls: []
   manager: {fileID: 0}

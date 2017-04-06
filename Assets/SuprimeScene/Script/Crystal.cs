@@ -41,4 +41,9 @@ public class Crystal : BaseObject, ILeveable {
     public override void setRadius(float size) {
         Radius.Initialization(size, this);
     }
+    
+    public override void EnemyCheck(BaseObject enemy) {
+        Debug.Log("Crystall has saw an enemy!");
+    }
+    
 }

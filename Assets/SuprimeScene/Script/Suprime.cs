@@ -54,8 +54,7 @@ public class Suprime : BaseObject, IFightable, IEnemyChecker {
         Destroy(gameObject);
     }
 
-    public override void setRadius(float size)
-    {
+    public override void setRadius(float size) {
         Radius.Initialization(size, this);
     }
 }

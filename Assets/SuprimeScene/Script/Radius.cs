@@ -2,9 +2,12 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+
+// Все кто реализуют интерфейс и компонент класса, будут получать информацию о врагах
 interface IEnemyChecker {
     void EnemyCheck(BaseObject enemy);
 }
+
 public class Radius : MonoBehaviour {
     public SphereCollider radius; // Размер области видимости
     public List<BaseObject> enemyList; // Список врагов, находящихся в области кристалла
@@ -28,10 +31,10 @@ public class Radius : MonoBehaviour {
             }
         }
     }
-    //Враг покидает область видимости
+    // Враг покидает область видимости
 	void OnTriggerExit(Collider other) {
 		BaseObject enemy = other.GetComponent<BaseObject>();
-        if(enemy != null) {
+        if(enemy != null && other.GetType() != radius.GetType()) {
             if(enemy != owner) {
                 enemyList.Remove(enemy);
             }
