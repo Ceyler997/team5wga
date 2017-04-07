@@ -1005,7 +1005,7 @@ MonoBehaviour:
   popUp: {fileID: 1918680962}
   logLevel: 0
   gameVersion: 1
-  battleSceneName: BattlegroundScene
+  battleSceneName: SuprimeScene
 --- !u!1 &821504152
 GameObject:
   m_ObjectHideFlags: 0

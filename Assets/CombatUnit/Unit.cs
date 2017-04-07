@@ -61,8 +61,8 @@ public class Unit : BaseObject, IFightable {
         if (Master == null) {
             throw new UnitHaveNoMasterException();
         }
-        
-        if(Behaviour == null) {
+
+        if (Behaviour == null) {
             throw new UnitHaveNoBehaviourException();
         }
 
@@ -112,8 +112,12 @@ public class Unit : BaseObject, IFightable {
     }
 
     public void SubjectDeath() {
-        while(DeathObservers.Count != 0) {
-            DeathObservers[0].onSubjectDeath(this); // При смерти объекта его подписчики от него отписываются
+        while(DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список изменяется в процессе обхода
+            // Подписчик по своим внутренним алгоритмам может как отписаться, так и не отписаться
+            // поэтому мы берём отдельного подписчика, а не обращаемся по индексу (первый объект может измениться)
+            IDeathObserver observer = DeathObservers [0];
+            observer.onSubjectDeath(this);
+            Detach(observer); // При смерти объекта отписываем его подписчиков
         }
 
         CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель

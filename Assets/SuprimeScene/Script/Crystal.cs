@@ -34,6 +34,7 @@ public class Crystal : BaseObject, ILeveable {
     #endregion
 
     #region MonoBehaviours methods
+
     public void Start() {
         EnergySystem = GetComponent<Energy>();
         EnergySystem.setupSystem(GameConf.crysStartEnergy,

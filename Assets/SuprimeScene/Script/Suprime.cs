@@ -141,15 +141,16 @@ public class Suprime : BaseObject, IFightable, IDeathObserver {
     }
 
     public void SubjectDeath() {
-        while (DeathObservers.Count != 0) {
-            DeathObservers [0].onSubjectDeath(this); // При смерти объекта его подписчики от него отписываются
+        while (DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список динамически изменяется
+            IDeathObserver observer = DeathObservers [0];
+            observer.onSubjectDeath(this);
+            Detach(observer); // При смерти объекта его подписчики от него отписываются
         }
 
         CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
 
-        foreach (Unit unit in Units) {
-            unit.SubjectDeath();
-            Destroy(unit.gameObject);
+        while (Units.Count!=0) {
+            Units [0].SubjectDeath(); // При смерти юнит уходит из списка прикреплённых юнитов
         }
 
         Destroy(gameObject);
@@ -158,7 +159,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver {
     public void onSubjectDeath(IFightable subject) {
         if (subject is Unit) {
             Units.Remove((Unit) subject);
-            subject.Detach(this);
         } else {
             throw new WrongDeathSubsciptionException();
         }

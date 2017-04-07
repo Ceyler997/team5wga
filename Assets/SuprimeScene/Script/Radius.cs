@@ -140,7 +140,8 @@ public class Radius : MonoBehaviour, IDeathObserver{
         return CachedClosestEnemy;
     }
 
-    // обновляет список врагов, находящийся внутри
+    // обновляет список врагов, находящийся внутри 
+    // Ещё не тестировался
     // ОСТОРОЖНО, ТЯЖЁЛЫЙ МЕТОД
     public void UpdateEnemyList() {
         Collider[] objectsInside = new Collider[GameConf.maxObjectsInsideRadiusAmount];

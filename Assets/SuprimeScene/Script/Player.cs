@@ -42,7 +42,14 @@ public class Player : MonoBehaviour {
 
     public GameManager Manager {
         get {return manager;}
-        set {manager = value;}
+        set {
+            if (manager == null) {
+                manager = value;
+                Initialization();
+            } else {
+                throw new AttemptToManagerReassignmentException();
+            }
+        }
     }
     #endregion
 
@@ -59,15 +66,6 @@ public class Player : MonoBehaviour {
             throw new TooMuchSuprimesException();
         }
 	}
-
-    public void setManager(GameManager manager) {
-        if (Manager == null) {
-            Manager = manager;
-            Initialization();
-        } else {
-            throw new AttemptToManagerReassignmentException();
-        }
-    }
     #endregion
 
     #region private methods

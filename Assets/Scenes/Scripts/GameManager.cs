@@ -14,7 +14,7 @@ public class GameManager : MonoBehaviour {
     
     public void Start() {
         foreach(Player player in players) {
-            player.setManager(this);
+            player.Manager(this);
         }
     }
 
