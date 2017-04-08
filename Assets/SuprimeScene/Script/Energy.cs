@@ -8,6 +8,7 @@ public class Energy : MonoBehaviour {
 	public void changeEnergy(float deltaEnergy) {
         if(energy < maxEnergy)
             energy += deltaEnergy;
+        
     }
 	public void setEnergy(float maxEnergy, float curentEnergy) {
         this.maxEnergy = maxEnergy;

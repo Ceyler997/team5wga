@@ -21,6 +21,7 @@ public class Radius : MonoBehaviour {
 		radius.isTrigger = true;
         owner = ownerObject;
     }
+
     // Если враг зашел в область видимости
 	void OnTriggerEnter(Collider other) {
         BaseObject enemy = other.GetComponent<BaseObject>();
@@ -31,6 +32,7 @@ public class Radius : MonoBehaviour {
             }
         }
     }
+
     // Враг покидает область видимости
 	void OnTriggerExit(Collider other) {
 		BaseObject enemy = other.GetComponent<BaseObject>();
@@ -40,5 +42,4 @@ public class Radius : MonoBehaviour {
             }
         }
 	}
-	
 }

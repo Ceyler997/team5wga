@@ -6,39 +6,40 @@ using UnityEngine;
 [RequireComponent (typeof (Health))]
 [RequireComponent (typeof (Energy))]
 [RequireComponent (typeof (Level))]
+[RequireComponent(typeof(Teleport))]
 public class Suprime : BaseObject, IFightable, IEnemyChecker {
     [HeaderAttribute("Suprime Property")]
-    public Crystall curentCrystall = null; //текущий кристалл, в радиусе которого находится ВС
-    private Health health; //здоровье ВС
-    private Energy energy;//энергия ВС
-    private Level level; //Уровень ВС
+    public Crystall curentCrystall = null; // текущий кристалл, в радиусе которого находится ВС
+    private Health health; // здоровье ВС
+    private Energy energyComponent;// энергия ВС
+    private Level level; // Уровень ВС
+    private SuprimeMagic teleport; //Телепорт к ближайшему кристаллу
+
+    public Energy EnergyComponent { get { return energyComponent; } set { energyComponent = value; } }
 
     void Start() {
         health = GetComponent<Health>();
-        energy = GetComponent<Energy>();
+        energyComponent = GetComponent<Energy>();
         level  = GetComponent<Level>();
-        setEnergy();
-        setHealth();
-        setLevel();
-        setRadius(10);
+        energyComponent.setEnergy(GameConf.suprimeMaxEnergy, GameConf.suprimeStartEnergy);
+        health.setHealth(GameConf.suprimeMaxHealth, GameConf.suprimeStartHealth,
+                         GameConf.suprimeBasicRegenSpeed, this);
+        level.setup(GameConf.suprimeMaxLevel, GameConf.suprimeStartLevel);
+        Radius.Initialization(GameConf.suprimeDetectRadius, this);
+
+        //Инициализация магии
+        teleport = GetComponent<Teleport>();
+        teleport.setup(this,GameConf.TeleportCostEnergy,GameConf.TeleportCastTime);
     }
 
     void Update() {
-
+        if(Input.GetKeyDown("space")) {
+             teleport.cast();
+           // transform.position = new Vector3(0, 0, 0);
+        }
+        
     }
-
-    void setEnergy() {
-        energy.setEnergy(ControllPlayer.getManager.MaxSuprimeEnergy,
-                        ControllPlayer.getManager.MaxSuprimeEnergy);
-    }
-    void setHealth() {
-        health.setHealth(ControllPlayer.getManager.MaxSuprimeHealth,
-                         ControllPlayer.getManager.MaxSuprimeHealth,
-                         ControllPlayer.getManager.SuprimeRegenPerSecond, this);
-    }
-    void setLevel() {
-        level.setup(ControllPlayer.getManager.SuprimeMaxLevel,ControllPlayer.getManager.SuprimeStartLevel);
-    }
+    
 
     //Вызывается кристаллом, при пересечении ВС радиуса кристалла
     public void setCurentCrystall(Crystall crystall) {
@@ -52,9 +53,5 @@ public class Suprime : BaseObject, IFightable, IEnemyChecker {
     }
     void IFightable.die() {
         Destroy(gameObject);
-    }
-
-    public override void setRadius(float size) {
-        Radius.Initialization(size, this);
     }
 }

@@ -11,35 +11,30 @@ public class Crystal : BaseObject, ILeveable {
     private float regenSpeed = 0; //Скорость восстановления энергии
     private Energy energy; //Текущее кол-во энергии
     private Level level; //Уровень кристалла
-    private GameManager manager; //Игровой менеджер
-    
-    public void Initialization (GameManager manager) {
-        this.manager = manager;
+
+    public void Setup(Player ownerPlayer) {
         energy = GetComponent<Energy>();
         level = GetComponent<Level>();
-        setEnergy();
+        energy.setEnergy(GameConf.crysMaxEnergy, 0f);
         setupLevel();
-        setPlayer(null);
-        setRadius(manager.CrystallGetSecondRadius);
+        setPlayer(ownerPlayer);
+        Radius.Initialization(GameConf.crysDetectRadius, this);
     }
-	 void setEnergy() {
-        energy.setEnergy(manager.MaxSuprimeEnergy,0f);
-    }
+	
 	void Update () {
         //Если кто-нибудь владеет кристалом то вырабатываем энергию
         if(ControllPlayer != null && energy != null)
             energy.changeEnergy(regenSpeed * Time.deltaTime);
     }
+
     void setupLevel() {
-        level.setup(manager.CrytallMaxLevel, manager.CrytallStartLevel);
-        regenSpeed = manager.GetCrystallRegenEnergySpeed(level.curentLevel);
+        level.setup(GameConf.crysMaxLevel, GameConf.crysStartLevel);
+        regenSpeed = GameConf.getCrysRegenSpeed(level.curentLevel);
     }
+
     void ILeveable.levelUp() {
         level.levelUp();
-        regenSpeed = manager.GetCrystallRegenEnergySpeed(level.curentLevel);
-    }
-    public override void setRadius(float size) {
-        Radius.Initialization(size, this);
+        regenSpeed = GameConf.getCrysRegenSpeed(level.curentLevel);
     }
     
     public override void EnemyCheck(BaseObject enemy) {

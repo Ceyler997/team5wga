@@ -11,7 +11,6 @@ public abstract class BaseObject : MonoBehaviour, IEnemyChecker {
         controllPlayer = player;
         radius = GetComponent<Radius>();
     }
-    public abstract void setRadius(float size);
     public abstract void EnemyCheck(BaseObject enemy);
     public Player ControllPlayer{ get { return controllPlayer; } set { controllPlayer = value; } }
     public Radius Radius{get { return radius; } }
