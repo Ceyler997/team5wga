@@ -17,7 +17,7 @@ public class Radius : MonoBehaviour, IDeathObserver{
 
     #region getters and setters
 
-    private SphereCollider RadiusCollider {
+    public SphereCollider RadiusCollider { // TODO make private later
         get { return radiusCollider; }
 
         set { radiusCollider = value; }
@@ -150,7 +150,9 @@ public class Radius : MonoBehaviour, IDeathObserver{
         EnemyList = new List<IFightable>();
 
         foreach (Collider other in objectsInside) {
-            tryToAddEnemy(other.GetComponentInParent<IFightable>());
+            if (other != null) {
+                tryToAddEnemy(other.GetComponentInParent<IFightable>());
+            }
         }
     }
     #endregion

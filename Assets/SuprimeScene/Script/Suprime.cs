@@ -9,6 +9,7 @@ using UnityEngine;
 [RequireComponent(typeof(Level))]
 [RequireComponent(typeof(Movement))]
 public class Suprime : BaseObject, IFightable, IDeathObserver {
+
     #region private fields
     [HeaderAttribute("Suprime Property")]
 
@@ -36,7 +37,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver {
         set { healthSystem = value; }
     }
 
-    private Energy EnergySystem {
+    public Energy EnergySystem {
         get { return energySystem; }
         set { energySystem = value; }
     }

@@ -7,6 +7,7 @@ public abstract class Magic: MonoBehaviour {
     float durationTime; // кулдаун
     float currentDurationTime; //текущее значение времени кулдауна
     bool isAbleToCast = false; // может ли кастовать, проверяется с цикле
+                                // может, стоит изменять по какому-то коллбеку?
 
     public abstract void cast();
     public abstract void decast();

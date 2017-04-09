@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class Magic : MonoBehaviour {
+// TODO Check, should I delete it
+//public abstract class Magic : MonoBehaviour {
 
-    #region private fields
+//    #region private fields
 
-    float energyToCast;
-    float castingTime;
-    float durationTime;
-    float currentDurationTime;
-    bool isAbleToCast;
-    #endregion
+//    float energyToCast;
+//    float castingTime;
+//    float durationTime;
+//    float currentDurationTime;
+//    bool isAbleToCast;
+//    #endregion
 
-    #region public methods
+//    #region public methods
 
-    public abstract void cast();
-    public abstract void decast();
-    #endregion
-}
+//    public abstract void cast();
+//    public abstract void decast();
+//    #endregion
+//}
 
 public class BattleMagicColor { // TODO move to suprime magic
     public static readonly BattleMagicColor NO_COLOR = new BattleMagicColor(NO_COLOR);

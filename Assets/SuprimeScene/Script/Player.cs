@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class Player : MonoBehaviour {
@@ -22,8 +23,8 @@ public class Player : MonoBehaviour {
         set { playerName = value; }
     }
 
-	//Возвращает массив кристаллов принадлежавших игроку
-	public Suprime [] Suprimes {
+    //Возвращает массив кристаллов принадлежавших игроку
+    public Suprime [] Suprimes {
         get { return suprimes; }
         set { suprimes = value; }
     }
@@ -65,7 +66,12 @@ public class Player : MonoBehaviour {
         } else {
             throw new TooMuchSuprimesException();
         }
-	}
+    }
+
+    public void addCrystall(Crystal crystal) {
+        Crystals.Add(crystal);
+        crystal.ControllingPlayer = this;
+    }
     #endregion
 
     #region private methods

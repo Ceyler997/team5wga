@@ -11,7 +11,7 @@ public class Energy : MonoBehaviour {
 
     #region getters and setters
 
-    private float CurrentEnergy {
+    public float CurrentEnergy {
         get { return currentEnergy; }
 
         set { currentEnergy = value; }

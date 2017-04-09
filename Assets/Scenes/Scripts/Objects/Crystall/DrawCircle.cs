@@ -16,7 +16,7 @@ public class DrawCircle : MonoBehaviour {
 
 	void Update() {
 		if(drawRadius != null)
-			DrawCrystallCircle(line1,drawRadius.radius.radius);
+			DrawCrystallCircle(line1,drawRadius.RadiusCollider.radius);
 	}
 
 	private LineRenderer createLine(string name) {
