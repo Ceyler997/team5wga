@@ -1,5 +1,4 @@
-﻿
-using System;
+﻿using System;
 
 static class GameConf {
 
@@ -44,6 +43,8 @@ static class GameConf {
     public static readonly float crysAlarmRadius = 10.0f;
     public static readonly float crysDetectRadius = 20.0f;
 
+
+
     public static float getCrysRegenSpeed(int curentLevel) {
         switch (curentLevel) {
             case 1:
@@ -53,7 +54,7 @@ static class GameConf {
             case 3:
                 return 15.0f;
             default:
-                throw new UndefinedCrystalLevelException();
+                return 5.0f;
         }
     }
     #endregion
@@ -61,6 +62,17 @@ static class GameConf {
     #region Player Properties
 
     public static readonly int maxSuprimeAmount = 9;
-    public static readonly int maxObjectsInsideRadiusAmount = 50; // max = 180 = 9 * 2 (suprimes) + (9 * 2) * 9 (units) TODO magic
+    public static readonly int maxObjectsInsideRadiusAmount = 50; // max = 180 = 9 * 2 (suprimes) + (9 * 2) * 9 (units) TODO magic 
+                                                                  //(а почему ты посчитал самого себя (ВС) ведь его в радиусе нет?)
     #endregion
+
+    #region Magic Properties
+
+    public const float TeleportCastTime = 2.0f;
+    public const float TeleportCostEnergy = 10.0f;
+    
+
+    #endregion
+
+
 }

@@ -6,6 +6,7 @@ public class RTSCamera : MonoBehaviour {
 
     public float ScrollZone = 30;//Размер границы края экрана для перемещения камеры
     public float ScrollSpeed = 5; //Скорость приближения
+
     public float xMax;// Максимальное смещение по оси X
     public float xMin;// Минимальное смещение по оси X
     public float zMax;// Максимальное смещение по оси Z
@@ -13,9 +14,9 @@ public class RTSCamera : MonoBehaviour {
 
     public float ZoomMin;//Минимальное значение приближения
     public float ZoomMax;//Максимальное значение приближения
+
     public bool bUseKeyboard = false; //Использование клавиатуры для пермещения
-    public bool bUseMouse = true; //Использование клавиатуры для пермещения
-    
+    public bool bUseMouse = true; //Использование клавиатуры для пермещения    
 
     private Vector3 desiredPosition;
     private Transform cameraTransform;
@@ -44,8 +45,20 @@ public class RTSCamera : MonoBehaviour {
             z -= speed;
         else if (Input.mousePosition.y > Screen.height - ScrollZone)
             z += speed;
-
+ 
+        
         return new Vector3(x, 0, z);
+    }
+
+    void zoomCamera() {
+        Vector3 localCameraPosition = cameraTransform.localPosition;
+        if (Input.mouseScrollDelta.y > 0) {
+            localCameraPosition.z += 5;
+        } else if (Input.mouseScrollDelta.y < 0) {
+            localCameraPosition.z -= 5;
+        }
+        localCameraPosition.z = Mathf.Clamp(localCameraPosition.z, ZoomMin, ZoomMax);
+        cameraTransform.localPosition = localCameraPosition;
     }
 
     void Update() {
@@ -59,25 +72,13 @@ public class RTSCamera : MonoBehaviour {
         // Если разрешено перемещение с помощью мыши
         if (bUseMouse)
             MoveCamera(mouseInput(speed));
-
+        
+        zoomCamera();
         // Поворот камеры
         if (Input.GetMouseButton(2)) {
             float rotateSpeed = 3F;
             transform.Rotate(Vector3.up, rotateSpeed * Input.GetAxis("Mouse X"), Space.World);
-            return;
-        }
-
-        // Зум камеры
-        Vector3 localCameraPosition = cameraTransform.localPosition;
-
-        if (Input.mouseScrollDelta.y > 0) {
-            localCameraPosition.z += 5;
-        } else if (Input.mouseScrollDelta.y < 0) {
-            localCameraPosition.z -= 5;
-        }
-
-        localCameraPosition.z = Mathf.Clamp(localCameraPosition.z, ZoomMin, ZoomMax);
-        cameraTransform.localPosition = localCameraPosition;
+        }       
     }
     // Перемещени камеры по х и z координате
     void MoveCamera(Vector3 moveDelta) {

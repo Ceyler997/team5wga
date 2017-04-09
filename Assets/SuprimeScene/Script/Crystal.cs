@@ -36,6 +36,10 @@ public class Crystal : BaseObject, ILeveable {
     #region MonoBehaviours methods
 
     public void Start() {
+        setupBaseObject(null, // Кристалл инициализируется нейтральным
+            GameConf.crysAlarmRadius,
+            GameConf.crysDetectRadius);
+
         EnergySystem = GetComponent<Energy>();
         EnergySystem.setupSystem(GameConf.crysStartEnergy,
             GameConf.crysMaxEnergy);
@@ -43,10 +47,6 @@ public class Crystal : BaseObject, ILeveable {
         LevelSystem = GetComponent<Level>();
         LevelSystem.setupSystem(GameConf.crysStartLevel,
             GameConf.crysMaxLevel);
-
-        setupBaseObject(null, // Кристалл инициализируется нейтральным
-            GameConf.crysAlarmRadius,
-            GameConf.crysDetectRadius);
 
         RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurentLevel);
     }

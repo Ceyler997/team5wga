@@ -1,23 +1,17 @@
 fileFormatVersion: 2
-guid: 673550bd5b2062f40a642ed1c37936e4
-timeCreated: 1486555345
+guid: 5b22be6893caabc4285b6b4243a80ad3
+timeCreated: 1490740068
 licenseType: Free
 ModelImporter:
   serializedVersion: 19
   fileIDToRecycleName:
-    100000: Camera
-    100002: //RootNode
-    100004: Crystall Mesh
-    100006: Lamp
-    400000: Camera
-    400002: //RootNode
-    400004: Crystall Mesh
-    400006: Lamp
-    2300000: Crystall Mesh
-    2300002: //RootNode
-    3300000: Crystall Mesh
-    3300002: //RootNode
-    4300000: Crystall Mesh
+    100000: //RootNode
+    400000: //RootNode
+    2300000: //RootNode
+    3300000: //RootNode
+    4300000: Cube
+    7400000: Default Take
+    9500000: //RootNode
   materials:
     importMaterials: 1
     materialName: 0
@@ -42,7 +36,7 @@ ModelImporter:
     isReadable: 1
   meshes:
     lODScreenPercentages: []
-    globalScale: 100
+    globalScale: 1
     meshCompression: 0
     addColliders: 0
     importBlendShapes: 1
@@ -80,7 +74,7 @@ ModelImporter:
     hasExtraRoot: 0
     skeletonHasParents: 1
   lastHumanDescriptionAvatarSource: {instanceID: 0}
-  animationType: 0
+  animationType: 2
   humanoidOversampling: 1
   additionalBone: 0
   userData: 
