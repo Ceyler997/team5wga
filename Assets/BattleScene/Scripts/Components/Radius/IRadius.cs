@@ -12,7 +12,7 @@ public interface IRadius : IDeathObserver {
 
     void setupSystem(float radiusSize, Player radiusOwner); // передавать null как владельца при нейтральном объекте
     void updateEnemyList(); // обновляет список врагов, находящихся внутри
-    Vector3 getCenter();
+    Vector3 getCenter(); // возвращает центр радиуса
 
     #endregion
 }

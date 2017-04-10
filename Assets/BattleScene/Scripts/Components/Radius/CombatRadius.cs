@@ -81,7 +81,7 @@ public class CombatRadius : IRadius {
         return CachedClosestEnemy;
     }
 
-    // Стоит вызывать в LateUpdate
+    // Очищает кеш ближайшего врага, стоит вызывать в LateUpdate
     public void clearCache() {
         CachedClosestEnemy = null;
     }

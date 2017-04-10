@@ -29,7 +29,7 @@ public class BaseObject : MonoBehaviour {
 
     public IRadius DetectRadius {
         get { return detectRadius; }
-        set { detectRadius = value }
+        set { detectRadius = value; }
     }
 
     private bool IsSettedUp {

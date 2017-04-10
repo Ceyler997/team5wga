@@ -29,5 +29,5 @@ abstract public class UnitAIBehaviour {
 
     abstract public void UpdateState(); // Реализовать и использовать в Update для управления субъектом
 
-    virtual public void LateUpdateState() { }; // Реализовать и использовать в LateUpdate для служебных функций
+    virtual public void LateUpdateState() { } // Реализовать и использовать в LateUpdate для служебных функций
 }

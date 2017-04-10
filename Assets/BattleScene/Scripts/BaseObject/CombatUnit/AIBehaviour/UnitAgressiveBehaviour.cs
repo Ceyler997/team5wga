@@ -2,8 +2,8 @@
 public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
     #region properties
-    CombatRadius UnitRadius { get; set; }
-    bool IsPrevUpdateFinished { get; set; }
+    CombatRadius UnitRadius { get; set; } // для быстрого доступа к радиусу цели защиты
+    bool IsPrevUpdateFinished { get; set; } // для отслеживания очистки кеша радиуса
     #endregion
 
     #region constructors
