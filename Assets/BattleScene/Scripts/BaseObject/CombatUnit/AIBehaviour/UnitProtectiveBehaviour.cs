@@ -51,7 +51,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                 }
 
                 if (TargetRadius.isEnemyInside()) { // Если внутри радиуса цели кто-то есть
-                    IFightable closestEnemy = TargetRadius.getClosestUnit(); // берём ближайшего к цели юнита
+                    IFightable closestEnemy = TargetRadius.getClosestEnemy(); // берём ближайшего к цели юнита
 
                     // если этот юнит в агро радиусе, переходим в встревоженное состояние
                     if (Vector3.Distance(ProtectTarget.Position, closestEnemy.Position) < ProtectTarget.ReactDistance) {
@@ -77,7 +77,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
 
                 // если юнита никто не атакует, взять ближайшего к цели защиты врага
                 if (!cs.IsUnderAttack) {
-                    cs.Target = TargetRadius.getClosestUnit();
+                    cs.Target = TargetRadius.getClosestEnemy();
                 }
 
                 attack();

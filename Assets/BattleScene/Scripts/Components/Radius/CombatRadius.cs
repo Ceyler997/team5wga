@@ -9,6 +9,7 @@ public class CombatRadius : IRadius {
 
     private IRadius Filling { get; set; }
     private IFightable CachedClosestEnemy { get; set; }
+    private bool IsCheckedInUpdate { get; set; }
     #endregion
 
     #region constructors
@@ -54,28 +55,33 @@ public class CombatRadius : IRadius {
 
     // Проверяет, есть ли внутри враги
     public bool isEnemyInside() {
-        return Filling.ObjectsInside.Count != 0;
+        if (!IsCheckedInUpdate) {
+            getClosestEnemy();
+        }
+
+        return (CachedClosestEnemy != null);
     }
 
     // Возвращает ближайшего к центру врага. null при отсутствии врагов
-    public IFightable getClosestUnit() {
-        if (CachedClosestEnemy == null) {
-            if (!isEnemyInside()) {
-                return null;
-            }
+    public IFightable getClosestEnemy() {
+        if (!IsCheckedInUpdate) {
 
             Vector3 curCenter = Filling.getCenter();
             CachedClosestEnemy = null;
-            float distToClosestEnemy = -1.0f;
+            float distToClosestEnemy = 0;
 
-            foreach (IFightable enemy in Filling.ObjectsInside) {
-                float distToEnemy = Vector3.Distance(curCenter, enemy.Position);
+            foreach (BaseObject objectInside in Filling.ObjectsInside) {
+                if (objectInside is IFightable && objectInside.ControllingPlayer != Owner) {
+                    float distToEnemy = Vector3.Distance(curCenter, objectInside.Position);
 
-                if (distToEnemy < distToClosestEnemy || distToClosestEnemy == -1.0f) {
-                    CachedClosestEnemy = enemy;
-                    distToClosestEnemy = distToEnemy;
+                    if (distToEnemy < distToClosestEnemy || distToClosestEnemy == 0) {
+                        CachedClosestEnemy = (IFightable) objectInside;
+                        distToClosestEnemy = distToEnemy;
+                    }
                 }
             }
+
+            IsCheckedInUpdate = true;
         }
 
         return CachedClosestEnemy;
@@ -84,6 +90,7 @@ public class CombatRadius : IRadius {
     // Очищает кеш ближайшего врага, стоит вызывать в LateUpdate
     public void clearCache() {
         CachedClosestEnemy = null;
+        IsCheckedInUpdate = false;
     }
     #endregion
 }

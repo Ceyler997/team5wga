@@ -39,14 +39,14 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
             }
 
             // если нет цели, но юнит кого-то видит, то он берёт ближайшую цель и уведомляет о ней остальных
-            cs.Target = UnitRadius.getClosestUnit();
+            cs.Target = UnitRadius.getClosestEnemy();
             notifyUnitsAboutTarget();
             isTargetClosest = true;
         }
 
         // если юнит кого-то видит и не проверял расстояние - взять ближайшую
         if (!isTargetClosest && UnitRadius.isEnemyInside()) {
-            cs.Target = UnitRadius.getClosestUnit();
+            cs.Target = UnitRadius.getClosestEnemy();
         }
 
         attack();
