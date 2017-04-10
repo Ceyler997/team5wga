@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(Radius))]
 public class DrawCircle : MonoBehaviour {
 
 	private float ThetaScale = 0.01f;
