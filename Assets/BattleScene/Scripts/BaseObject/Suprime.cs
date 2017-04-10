@@ -157,7 +157,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver {
         Destroy(gameObject);
     }
 
-    public void onSubjectDeath(IFightable subject) {
+    public void onSubjectDeath(IDeathSubject subject) {
         if (subject is Unit) {
             Units.Remove((Unit) subject);
         } else {

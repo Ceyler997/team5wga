@@ -2,13 +2,6 @@
 
 public class UnitProtectiveBehaviour : UnitAIBehaviour {
 
-    #region private fields
-    // все поля завёрнуты в свойства, смотри регион геттеров и сеттеров
-
-    private UnitState currentUnitState; // текущее состояние юнита, перечисление в конце файла
-    private BaseObject protectTarget; // цель защиты
-    #endregion
-
     #region constructors
 
     // Для задания защитного поведения необходим и юнит, и цель защиты
@@ -16,28 +9,34 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
         if (protectTarget == null) {
             throw new NoTargetToProtectException(); // Поведение падает если нет цели для защиты
         }
-        
+
         ProtectTarget = protectTarget;
         CurrentUnitState = UnitState.CALM; // Изначально юнит находится в спокойном состоянии
+
+        if(ProtectTarget.DetectRadius is CombatRadius) {
+            TargetRadius = (CombatRadius) ProtectTarget.DetectRadius;
+        } else {
+            TargetRadius = new CombatRadius(ProtectTarget.DetectRadius);
+            ProtectTarget.DetectRadius = TargetRadius;
+        }
     }
     #endregion
 
-    #region getters and setters
+    #region properties
 
-    private UnitState CurrentUnitState {
-        get { return currentUnitState; }
-
-        set { currentUnitState = value; }
-    }
-
-    private BaseObject ProtectTarget {
-        get { return protectTarget; }
-
-        set { protectTarget = value; }
-    }
+    private UnitState CurrentUnitState { get; set; } // текущее состояние юнита, перечисление в конце файла
+    private BaseObject ProtectTarget { get; set; } // цель защиты
+    CombatRadius TargetRadius { get; set; }
+    bool IsPrevUpdateFinished { get; set; }
     #endregion
 
     public override void UpdateState() {
+        if (!IsPrevUpdateFinished) {
+            throw new PrevUpdateNotFinishedException();
+        }
+
+        IsPrevUpdateFinished = false; // начали обновление
+
         CombatSystem cs = Subject.CombatSys; // Используется для сокращения размера строк
 
         switch (CurrentUnitState) {
@@ -51,8 +50,8 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     return;
                 }
 
-                if (ProtectTarget.DetectRadius.isEnemyInside()) { // Если внутри радиуса цели кто-то есть
-                    IFightable closestEnemy = ProtectTarget.DetectRadius.getClosestUnit(); // берём ближайшего к цели юнита
+                if (TargetRadius.isEnemyInside()) { // Если внутри радиуса цели кто-то есть
+                    IFightable closestEnemy = TargetRadius.getClosestUnit(); // берём ближайшего к цели юнита
 
                     // если этот юнит в агро радиусе, переходим в встревоженное состояние
                     if (Vector3.Distance(ProtectTarget.Position, closestEnemy.Position) < ProtectTarget.ReactDistance) {
@@ -71,14 +70,14 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
             case UnitState.ALARMED:
 
                 // если внутри радиуса цели никого нет, переходим в спокойное состояние
-                if (!ProtectTarget.DetectRadius.isEnemyInside()) {
+                if (!TargetRadius.isEnemyInside()) {
                     CurrentUnitState = UnitState.CALM;
                     return;
                 }
 
                 // если юнита никто не атакует, взять ближайшего к цели защиты врага
                 if (!cs.IsUnderAttack) {
-                    cs.Target = protectTarget.DetectRadius.getClosestUnit();
+                    cs.Target = TargetRadius.getClosestUnit();
                 }
 
                 attack();
@@ -89,6 +88,11 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
             default:
                 throw new UndefinedDefensiveUnitStateException();
         }
+    }
+
+    override public void LateUpdateState() {
+        TargetRadius.clearCache();
+        IsPrevUpdateFinished = true; // закончили обновление
     }
 }
 

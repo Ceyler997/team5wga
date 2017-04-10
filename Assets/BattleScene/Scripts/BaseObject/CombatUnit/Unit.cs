@@ -68,6 +68,10 @@ public class Unit : BaseObject, IFightable {
 
         Behaviour.UpdateState(); // Получаем команды от ИИ
     }
+
+    public void LateUpdate() {
+        Behaviour.LateUpdateState();
+    }
     #endregion
 
     #region public methods

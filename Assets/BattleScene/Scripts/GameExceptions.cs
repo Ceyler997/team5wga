@@ -29,6 +29,8 @@ public class NoTargetToProtectException : Exception { } // Исключение 
 public class NoSubjectForControlException : Exception { } // Исключение при отстутствии цели для контроля у поведения
 
 public class UnitHaveNoBehaviourException : Exception { } // Исключение при отсутствии поведения
+
+public class PrevUpdateNotFinishedException : Exception { } // Исключение при неполном цикле обновления
 #endregion
 
 #region Components exceptions

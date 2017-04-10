@@ -173,7 +173,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver {
 
     #region IDeathObserver implementation
 
-    public void onSubjectDeath(IFightable subject) {
+    public void onSubjectDeath(IDeathSubject subject) {
         if(subject == Target) {
             Target = null;
         } else {
@@ -190,7 +190,7 @@ public interface IFightable : IDeathSubject {
 }
 
 public interface IDeathObserver {
-    void onSubjectDeath(IFightable subject);
+    void onSubjectDeath(IDeathSubject subject);
 }
 
 public interface IDeathSubject {
