@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CombatRadius : IRadius {
+public class CombatRadius : IRadius, IUpdateObserver {
 
     #region properties
 
@@ -86,9 +86,13 @@ public class CombatRadius : IRadius {
 
         return CachedClosestEnemy;
     }
+    #endregion
 
-    // Очищает кеш ближайшего врага, стоит вызывать в LateUpdate
-    public void clearCache() {
+    #region IUpdateObserver implementation
+
+    public void OnUpdate() { }
+
+    public void OnLateUpdate() {
         CachedClosestEnemy = null;
         IsCheckedInUpdate = false;
     }

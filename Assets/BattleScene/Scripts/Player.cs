@@ -10,7 +10,6 @@ public class Player : MonoBehaviour {
     private Suprime[] suprimes; //ВС, которыми владеет игрок
     private int suprimeCount; //Текущее кол-во ВС
     private List<Crystal> crystals; //Кристалы, которыми владеет игрок
-    private GameManager manager;
     // Use this for initialization
     public GameObject SuprimePrefab;
     #endregion
@@ -39,18 +38,6 @@ public class Player : MonoBehaviour {
     public List<Crystal> Crystals {
         get { return crystals; }
         set { crystals = value; }
-    }
-
-    public GameManager Manager {
-        get {return manager;}
-        set {
-            if (manager == null) {
-                manager = value;
-                Initialization();
-            } else {
-                throw new AttemptToManagerReassignmentException();
-            }
-        }
     }
     #endregion
 

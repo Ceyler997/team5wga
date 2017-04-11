@@ -3,7 +3,6 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
     #region properties
     CombatRadius UnitRadius { get; set; } // для быстрого доступа к радиусу цели защиты
-    bool IsPrevUpdateFinished { get; set; } // для отслеживания очистки кеша радиуса
     #endregion
 
     #region constructors
@@ -21,13 +20,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
     #region public methods
 
-    public override void UpdateState() {
-        if (!IsPrevUpdateFinished) {
-            throw new PrevUpdateNotFinishedException();
-        }
-
-        IsPrevUpdateFinished = false; // начали обновление
-
+    public override void OnUpdate() {
         CombatSystem cs = Subject.CombatSys;
         bool isTargetClosest = cs.IsUnderAttack; // определяем, нужно ли проверять на расстояние до цели
 
@@ -50,11 +43,6 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
         }
 
         attack();
-    }
-
-    override public void LateUpdateState() {
-        UnitRadius.clearCache();
-        IsPrevUpdateFinished = true; // закончили обновление
     }
 
     #endregion

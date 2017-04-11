@@ -65,12 +65,6 @@ public class Unit : BaseObject, IFightable {
         if (Behaviour == null) {
             throw new UnitHaveNoBehaviourException();
         }
-
-        Behaviour.UpdateState(); // Получаем команды от ИИ
-    }
-
-    public void LateUpdate() {
-        Behaviour.LateUpdateState();
     }
     #endregion
 

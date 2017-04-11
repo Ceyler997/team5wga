@@ -27,15 +27,9 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
     private UnitState CurrentUnitState { get; set; } // текущее состояние юнита, перечисление в конце файла
     private BaseObject ProtectTarget { get; set; } // цель защиты
     CombatRadius TargetRadius { get; set; } // для быстрого доступа к радиусу цели защиты
-    bool IsPrevUpdateFinished { get; set; } // для отслеживания очистки кеша радиуса
     #endregion
 
-    public override void UpdateState() {
-        if (!IsPrevUpdateFinished) {
-            throw new PrevUpdateNotFinishedException();
-        }
-
-        IsPrevUpdateFinished = false; // начали обновление
+    public override void OnUpdate() {
 
         CombatSystem cs = Subject.CombatSys; // Используется для сокращения размера строк
 
@@ -88,11 +82,6 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
             default:
                 throw new UndefinedDefensiveUnitStateException();
         }
-    }
-
-    override public void LateUpdateState() {
-        TargetRadius.clearCache();
-        IsPrevUpdateFinished = true; // закончили обновление
     }
 }
 
