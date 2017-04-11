@@ -59,11 +59,8 @@ public class Player : MonoBehaviour {
         Crystals.Add(crystal);
         crystal.ControllingPlayer = this;
     }
-    #endregion
 
-    #region private methods
-
-    private void setupPlayer() {
+    public void setupPlayer() {
         suprimes = new Suprime [GameConf.maxSuprimeAmount];
         crystals = new List<Crystal>();
         addSuprime(transform.position);

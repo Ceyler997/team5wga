@@ -36,16 +36,7 @@ public class Unit : BaseObject, IFightable {
 
     public UnitAIBehaviour Behaviour {
         get { return behaviour; }
-        set {
-            if (behaviour != null) {
-                GameManager.Instance.Detach(behaviour);
-            }
-
-            if (value != null) {
-                GameManager.Instance.Attach(value);
-            }
-            behaviour = value;
-        }
+        set { behaviour = value; }
     }
 
     public Suprime Master {
@@ -74,6 +65,8 @@ public class Unit : BaseObject, IFightable {
         if (Behaviour == null) {
             throw new UnitHaveNoBehaviourException();
         }
+
+        Behaviour.UpdateState();
     }
     #endregion
 

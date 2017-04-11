@@ -1,5 +1,5 @@
 ﻿
-abstract public class UnitAIBehaviour : IUpdateObserver {
+abstract public class UnitAIBehaviour {
     private Unit subject; // Управляемый юнит
 
     public UnitAIBehaviour(Unit subject) { // Конструктор для создания поведения, запрещает конструктор по умолчанию
@@ -27,7 +27,5 @@ abstract public class UnitAIBehaviour : IUpdateObserver {
         }
     }
 
-    abstract public void OnUpdate(); // Реализовать и использовать в Update для управления субъектом
-
-    virtual public void OnLateUpdate() { } // Реализовать и использовать в LateUpdate для служебных функций
+    abstract public void UpdateState(); // Реализовать и использовать в Update для управления субъектом
 }

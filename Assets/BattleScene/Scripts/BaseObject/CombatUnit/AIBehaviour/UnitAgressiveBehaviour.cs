@@ -20,7 +20,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour {
 
     #region public methods
 
-    public override void OnUpdate() {
+    public override void UpdateState() {
         CombatSystem cs = Subject.CombatSys;
         bool isTargetClosest = cs.IsUnderAttack; // определяем, нужно ли проверять на расстояние до цели
 

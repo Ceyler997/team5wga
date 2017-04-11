@@ -31,7 +31,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
     CombatRadius TargetRadius { get; set; } // для быстрого доступа к радиусу цели защиты
     #endregion
 
-    public override void OnUpdate() {
+    public override void UpdateState() {
 
         CombatSystem cs = Subject.CombatSys; // Используется для сокращения размера строк
 
