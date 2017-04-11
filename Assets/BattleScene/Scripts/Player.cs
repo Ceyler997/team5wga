@@ -63,7 +63,7 @@ public class Player : MonoBehaviour {
 
     #region private methods
 
-    private void Initialization() {
+    private void setupPlayer() {
         suprimes = new Suprime [GameConf.maxSuprimeAmount];
         crystals = new List<Crystal>();
         addSuprime(transform.position);

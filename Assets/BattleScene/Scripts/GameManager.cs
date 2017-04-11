@@ -55,7 +55,7 @@ public class GameManager : MonoBehaviour, IUpdateObject {
         foreach(Crystal crystal in crystals) {
             crystal.setupCrystal(null);
         }
-
+        
         //DEBUG
         players[0].addCrystall(crystals[0]);
         //players[0].addCrystall(crystalls[1]);

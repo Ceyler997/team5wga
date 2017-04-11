@@ -86,6 +86,12 @@ public class CombatRadius : IRadius, IUpdateObserver {
 
         return CachedClosestEnemy;
     }
+
+    // Очищает кеш ближайшего врага
+    private void clearCache() {
+        CachedClosestEnemy = null;
+        IsCheckedInUpdate = false;
+    }
     #endregion
 
     #region IUpdateObserver implementation
@@ -93,8 +99,7 @@ public class CombatRadius : IRadius, IUpdateObserver {
     public void OnUpdate() { }
 
     public void OnLateUpdate() {
-        CachedClosestEnemy = null;
-        IsCheckedInUpdate = false;
+        clearCache();
     }
     #endregion
 }

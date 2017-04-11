@@ -13,11 +13,13 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
         ProtectTarget = protectTarget;
         CurrentUnitState = UnitState.CALM; // Изначально юнит находится в спокойном состоянии
 
+        // оборачиваем радиус цели в CombatRadius
         if(ProtectTarget.DetectRadius is CombatRadius) { // чтобы не заворачивать радиус несколько раз при смене состояния
             TargetRadius = (CombatRadius) ProtectTarget.DetectRadius;
         } else {
             TargetRadius = new CombatRadius(ProtectTarget.DetectRadius);
             ProtectTarget.DetectRadius = TargetRadius;
+            GameManager.Instance.Attach(TargetRadius);
         }
     }
     #endregion

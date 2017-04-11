@@ -36,7 +36,16 @@ public class Unit : BaseObject, IFightable {
 
     public UnitAIBehaviour Behaviour {
         get { return behaviour; }
-        set { behaviour = value; }
+        set {
+            if (behaviour != null) {
+                GameManager.Instance.Detach(behaviour);
+            }
+
+            if (value != null) {
+                GameManager.Instance.Attach(value);
+            }
+            behaviour = value;
+        }
     }
 
     public Suprime Master {

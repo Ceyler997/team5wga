@@ -50,6 +50,12 @@ public class BaseObject : MonoBehaviour {
             throw new SystemIsNotSettedUpException();
         }
     }
+
+    public void OnDestroy() {
+        if(DetectRadius is CombatRadius) {
+            GameManager.Instance.Detach((CombatRadius) DetectRadius);
+        }
+    }
     #endregion
 
     #region protected methods
