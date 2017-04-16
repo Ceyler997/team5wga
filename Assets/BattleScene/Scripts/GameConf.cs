@@ -62,16 +62,16 @@ static class GameConf {
     #region Player Properties
 
     public static readonly int maxSuprimeAmount = 9;
-    public static readonly int maxObjectsInsideRadiusAmount = 50; // max = 180 = 9 * 2 (suprimes) + (9 * 2) * 9 (units) TODO magic 
-                                                                  //(а почему ты посчитал самого себя (ВС) ведь его в радиусе нет?)
-                                                                  // так как параметр используется в радиусе кристалла
-                                                                  // после прочтения сжечь)
     #endregion
 
     #region Magic Properties
 
+    // Телепорт
     public const float TeleportCastTime = 2.0f;
     public const float TeleportCostEnergy = 10.0f;
+    // Захват кристалла
+    public const float CrystalCaptureCastTime = 10.0f;
+    public const float CrystalCaptureCostEnergy = 50.0f;
     #endregion
 
 

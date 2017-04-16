@@ -1,12 +1,13 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
-public class Radius : MonoBehaviour, IRadius {
+public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
     #region private fields
 
     private SphereCollider radiusCollider;
-    public List<BaseObject> objectsInside; // TODO make private later
+    private List<BaseObject> objectsInside;
     private Player owner;
     private bool isSettedUp;
     #endregion
@@ -15,31 +16,29 @@ public class Radius : MonoBehaviour, IRadius {
 
     public SphereCollider RadiusCollider { // TODO make private later
         get { return radiusCollider; }
-
         set { radiusCollider = value; }
     }
 
     public List<BaseObject> ObjectsInside {
         get { return objectsInside; }
-
         set { objectsInside = value; }
     }
 
     private bool IsSettedUp {
         get { return isSettedUp; }
-
         set { isSettedUp = value; }
     }
 
     public Player Owner {
         get { return owner; }
-
         set { owner = value; }
     }
+
+    private List<IRadiusObserver> RadiusObservers { get; set; }
     #endregion
 
     #region MonoBehaviour methods
-    
+
     public void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
@@ -47,19 +46,19 @@ public class Radius : MonoBehaviour, IRadius {
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other is SphereCollider) { // если мы столкнулись с SphereCollider - мы столкнулись с радиусом другого объекта
+        if (other.GetType() == radiusCollider.GetType()) { // мы столкнулись с радиусом другого объекта
             return;
         }
 
-        tryToAddEnemy(other.GetComponentInParent<BaseObject>()); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
+        tryToAddObject(other.GetComponentInParent<BaseObject>()); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
     }
 
     void OnTriggerExit(Collider other) {
-        if (other is SphereCollider) { // если мы столкнулись с SphereCollider - мы столкнулись с радиусом другого объекта
+        if (other.GetType() == radiusCollider.GetType()) { // мы столкнулись с радиусом другого объекта
             return;
         }
 
-        tryToRemoveEnemy(other.GetComponentInParent<BaseObject>()); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
+        tryToRemoveObject(other.GetComponentInParent<BaseObject>()); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
 
     }
     #endregion
@@ -67,7 +66,7 @@ public class Radius : MonoBehaviour, IRadius {
     #region private methods
 
     // пытается добавить объект в список
-    private void tryToAddEnemy(BaseObject enteredObject) {
+    private void tryToAddObject(BaseObject enteredObject) {
 
         if (enteredObject != null) {
             ObjectsInside.Add(enteredObject);
@@ -75,16 +74,24 @@ public class Radius : MonoBehaviour, IRadius {
             if (enteredObject is IDeathSubject) { // подписываемся на смерть объекта если он смертный
                 ((IDeathSubject) enteredObject).Attach(this);
             }
+
+            foreach (IRadiusObserver observer in RadiusObservers) {
+                observer.onObjectEnter(enteredObject);
+            }
         }
     }
 
     // пытается убрать объект из списка
-    private void tryToRemoveEnemy(BaseObject exitedObject) {
+    private void tryToRemoveObject(BaseObject exitedObject) {
         if (exitedObject != null) {
             ObjectsInside.Remove(exitedObject);
 
             if(exitedObject is IDeathSubject) { // отписываемся от смерти объекта, если он смертный
                 ((IDeathSubject) exitedObject).Detach(this);
+            }
+
+            foreach(IRadiusObserver observer in RadiusObservers) {
+                observer.onObjectExit(exitedObject);
             }
         }
     }
@@ -99,24 +106,28 @@ public class Radius : MonoBehaviour, IRadius {
         RadiusCollider.radius = radiusSize;
         Owner = radiusOwner;
         IsSettedUp = true;
+
+        RadiusObservers = new List<IRadiusObserver>();
     }
 
-    // Ещё не тестировался
-    // ОСТОРОЖНО, ТЯЖЁЛЫЙ МЕТОД
-    public void updateEnemyList() {
-        Collider[] objectsInside = new Collider[GameConf.maxObjectsInsideRadiusAmount];
-        Physics.OverlapSphereNonAlloc(transform.position, RadiusCollider.radius, objectsInside);
-        ObjectsInside = new List<BaseObject>();
-
-        foreach (Collider other in objectsInside) {
-            if (other != null) {
-                tryToAddEnemy(other.GetComponentInParent<BaseObject>());
+    public bool HasEnemies() {
+        foreach(BaseObject objectInside in ObjectsInside) {
+            if(objectInside.ControllingPlayer != Owner) {
+                return true;
             }
         }
+
+        return false;
     }
 
-    public Vector3 getCenter() {
-        return transform.position;
+    public bool HasFriends() {
+        foreach (BaseObject objectInside in ObjectsInside) {
+            if (objectInside.ControllingPlayer == Owner) {
+                return true;
+            }
+        }
+
+        return false;
     }
     #endregion
 
@@ -124,10 +135,31 @@ public class Radius : MonoBehaviour, IRadius {
 
     public void onSubjectDeath(IDeathSubject subject) {
         if (subject is BaseObject) {
-            tryToRemoveEnemy((BaseObject) subject);
+            tryToRemoveObject((BaseObject) subject);
         } else {
             throw new WrongDeathSubsciptionException();
         }
     }
     #endregion
+
+    #region IRadiusSubject implementation
+
+    public void Attach(IRadiusObserver observer) {
+        RadiusObservers.Add(observer);
+    }
+
+    public void Detach(IRadiusObserver observer) {
+        RadiusObservers.Remove(observer);
+    }
+    #endregion
+}
+
+public interface IRadiusObserver {
+    void onObjectEnter(BaseObject enteredObject);
+    void onObjectExit(BaseObject enteredObject);
+}
+
+public interface IRadiusSubject {
+    void Attach(IRadiusObserver observer);
+    void Detach(IRadiusObserver observer);
 }

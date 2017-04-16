@@ -3,12 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+//systems
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(Energy))]
 [RequireComponent(typeof(CombatSystem))]
 [RequireComponent(typeof(Level))]
 [RequireComponent(typeof(Movement))]
-public class Suprime : BaseObject, IFightable, IDeathObserver {
+//spells
+[RequireComponent(typeof(Teleport))]
+[RequireComponent(typeof(CaptureCrystal))]
+public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region private fields
     [HeaderAttribute("Suprime Property")]
@@ -19,17 +23,19 @@ public class Suprime : BaseObject, IFightable, IDeathObserver {
     private Level level; //Уровень
     private Movement moveSystem; // Передвижение
     private List<Unit> units; //Юниты, прикреплённые к данному ВС
-    private Crystal curentCrystall; //текущий кристалл, в радиусе которого находится ВС
+    private Crystal currentCrystal; //текущий кристалл, в радиусе которого находится ВС
+
+    private SuprimeMagic teleport; //Телепорт к ближайшему кристаллу
+    private SuprimeMagic captureCrystal; //захват кристалла
 
     private List<IDeathObserver> deathObservers; //список наблюдателей
     #endregion
 
     #region getters and setters
-
-    //Вызывается кристаллом, при пересечении ВС радиуса кристалла
-    public Crystal CurentCrystall {
-        get { return curentCrystall; }
-        set { curentCrystall = value; }
+    
+    public Crystal CurrentCrystal {
+        get { return currentCrystal; }
+        set { currentCrystal = value; }
     }
 
     public Health HealthSystem {
@@ -78,6 +84,11 @@ public class Suprime : BaseObject, IFightable, IDeathObserver {
         if (ControllingPlayer == null) {
             throw new SuprimeHaveNoPlayerException();
         }
+
+        if (Input.GetKeyDown("space")) {
+            captureCrystal.cast();
+            // transform.position = new Vector3(0, 0, 0);
+        }
     }
     #endregion
 
@@ -113,6 +124,14 @@ public class Suprime : BaseObject, IFightable, IDeathObserver {
 
         units = new List<Unit>();
         DeathObservers = new List<IDeathObserver>();
+
+        //Инициализация магии
+        teleport = GetComponent<Teleport>();
+        teleport.setup(this, GameConf.TeleportCostEnergy, GameConf.TeleportCastTime);
+
+        captureCrystal = GetComponent<CaptureCrystal>();
+        captureCrystal.setup(this, GameConf.CrystalCaptureCostEnergy, GameConf.TeleportCastTime);
+
     }
 
     #endregion
@@ -165,4 +184,33 @@ public class Suprime : BaseObject, IFightable, IDeathObserver {
         }
     }
     #endregion
+
+    #region IRadiusObserver implememntation
+
+    #endregion
+    public void onObjectEnter(BaseObject enteredObject) {
+        //Если кристалл, то ставим как текущий
+        if (enteredObject is Crystal) {
+            Crystal crystal = (Crystal) enteredObject;
+            if (crystal != null) // можно узнать зачем эта проверка?
+                CurrentCrystal = crystal;
+        }
+
+        if (enteredObject is Suprime) {
+            Debug.Log("i saw an Suprime");
+        }
+    }
+
+    public void onObjectExit(BaseObject enteredObject) {
+        //Если кристалл, то убираем из текущего
+        if (enteredObject is Crystal) {
+            Crystal crystal = (Crystal) enteredObject;
+            if (crystal == CurrentCrystal)
+                CurrentCrystal = null;
+        }
+
+        if (enteredObject is Suprime) {
+            Debug.Log("i saw an Suprime");
+        }
+    }
 }

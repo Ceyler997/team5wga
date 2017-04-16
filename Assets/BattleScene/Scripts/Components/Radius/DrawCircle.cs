@@ -9,14 +9,15 @@ public class DrawCircle : MonoBehaviour {
 	int size;
     Radius drawRadius;
     LineRenderer line1;
-	
-	void Start() {
+
+    void Start() {
         drawRadius = GetComponent<Radius>();
-        line1 = createLine("radius1");
+        if (drawRadius.RadiusCollider != null)
+            line1 = createLine("radius1");
     }
 
 	void Update() {
-		if(drawRadius != null)
+		if(drawRadius.RadiusCollider != null)
 			DrawCrystallCircle(line1,drawRadius.RadiusCollider.radius);
 	}
 
