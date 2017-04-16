@@ -46,7 +46,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other is SphereCollider) { // если мы столкнулись с SphereCollider - мы столкнулись с радиусом другого объекта
+        if (other.GetType() == radiusCollider.GetType()) { // мы столкнулись с радиусом другого объекта
             return;
         }
 
@@ -54,7 +54,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
     }
 
     void OnTriggerExit(Collider other) {
-        if (other is SphereCollider) { // если мы столкнулись с SphereCollider - мы столкнулись с радиусом другого объекта
+        if (other.GetType() == radiusCollider.GetType()) { // мы столкнулись с радиусом другого объекта
             return;
         }
 
@@ -68,7 +68,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
     // пытается добавить объект в список
     private void tryToAddObject(BaseObject enteredObject) {
 
-        if (enteredObject != null && enteredObject.ControllingPlayer != Owner) {
+        if (enteredObject != null) {
             ObjectsInside.Add(enteredObject);
 
             if (enteredObject is IDeathSubject) { // подписываемся на смерть объекта если он смертный
@@ -83,7 +83,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
     // пытается убрать объект из списка
     private void tryToRemoveObject(BaseObject exitedObject) {
-        if (exitedObject != null && exitedObject.ControllingPlayer != Owner) {
+        if (exitedObject != null) {
             ObjectsInside.Remove(exitedObject);
 
             if(exitedObject is IDeathSubject) { // отписываемся от смерти объекта, если он смертный
