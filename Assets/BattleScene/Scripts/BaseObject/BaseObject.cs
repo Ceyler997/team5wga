@@ -33,7 +33,6 @@ public class BaseObject : MonoBehaviour {
 
     private bool IsSettedUp {
         get { return isSettedUp; }
-
         set { isSettedUp = value; }
     }
 

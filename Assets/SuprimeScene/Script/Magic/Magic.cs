@@ -1,14 +1,19 @@
-﻿using UnityEngine;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 public abstract class Magic: MonoBehaviour {
     float castEnergy; // кол-во необходимой энергии для каста
     float durationTime; // кулдаун
     float currentDurationTime; //текущее значение времени кулдауна
     bool isAbleToCast = false; // может ли кастовать, проверяется с цикле
-                                // может, стоит изменять по какому-то коллбеку?
 
-    public abstract void cast();
-    public abstract void decast();
+    public float DurationTime { get { return durationTime; } set { durationTime = value; } }
+    public float CastEnergy { get { return castEnergy; } set { castEnergy = value; } }
+    public float CurrentDurationTime { get { return currentDurationTime; } set { currentDurationTime = value; } }
+    public bool IsAbleToCast { get { return isAbleToCast; } set { isAbleToCast = value; } }
+
+    public abstract void cast(); //подготовка перед кастом, проверка всех условий
 
     // Инициализация
     public void setup(float castEnergy, float durationTime) {
@@ -16,10 +21,29 @@ public abstract class Magic: MonoBehaviour {
         this.durationTime = durationTime;
     }
 
-    public float DurationTime { get { return durationTime; } set { durationTime = value; } }
-    public float CastEnergy { get { return castEnergy; } set { castEnergy = value; } }
-    public float CurrentDurationTime { get { return currentDurationTime; } set { currentDurationTime = value; } }
-    public bool IsAbleToCast { get { return isAbleToCast; } set {isAbleToCast = value; } }
+    void Update() {
+        if (IsAbleToCast) {
+            castDelay();
+        }
+    }
+
+    // итоговый результат выполнения магии, для каждой магии своя реализация
+    protected abstract void CastMagic();
+
+    //Задержка перед кастом
+    void castDelay() {
+        CurrentDurationTime -= 1.0f * Time.deltaTime;
+        Debug.Log(CurrentDurationTime);
+        if (CurrentDurationTime <= 0) {
+            IsAbleToCast = false;
+            CastMagic();
+        }
+    }
+
+    protected void decast() {
+        IsAbleToCast = false;
+    }
+
 }
 
 public class BattleMagicColor { // TODO move to group magic

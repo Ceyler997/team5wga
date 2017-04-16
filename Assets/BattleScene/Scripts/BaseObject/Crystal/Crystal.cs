@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 [RequireComponent (typeof (Energy))]
 [RequireComponent (typeof (Level))]
@@ -32,8 +31,9 @@ public class Crystal : BaseObject, ILeveable {
 
         set {levelSystem = value;}
     }
+    #endregion
 
-    internal void setupCrystal(Player owner) {
+    public void setupCrystal(Player owner) {
         setupBaseObject(owner,
             GameConf.crysAlarmRadius,
             GameConf.crysDetectRadius);
@@ -48,10 +48,9 @@ public class Crystal : BaseObject, ILeveable {
 
         RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurentLevel);
     }
-    #endregion
 
     #region MonoBehaviours methods
-
+    
     new void Update() {
         base.Update();
         //Если кто-нибудь владеет кристалом то вырабатываем энергию

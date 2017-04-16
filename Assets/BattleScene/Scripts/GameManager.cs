@@ -57,12 +57,6 @@ public class GameManager : MonoBehaviour{
         foreach (Player player in players) {
             player.setupPlayer();
         }
-
-        //DEBUG
-        players[0].addCrystall(crystals[0]);
-        //players[0].addCrystall(crystalls[1]);
-        //players[0].addCrystall(crystalls[2]);
-        //DEBUG
     }
     #endregion
 }

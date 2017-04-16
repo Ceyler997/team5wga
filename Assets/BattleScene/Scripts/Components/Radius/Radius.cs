@@ -109,6 +109,26 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
         RadiusObservers = new List<IRadiusObserver>();
     }
+
+    public bool HasEnemies() {
+        foreach(BaseObject objectInside in ObjectsInside) {
+            if(objectInside.ControllingPlayer != Owner) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    public bool HasFriends() {
+        foreach (BaseObject objectInside in ObjectsInside) {
+            if (objectInside.ControllingPlayer == Owner) {
+                return true;
+            }
+        }
+
+        return false;
+    }
     #endregion
 
     #region IDeathObserver implementation
