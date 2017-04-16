@@ -7,7 +7,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
     #region private fields
 
     private SphereCollider radiusCollider;
-    public List<BaseObject> objectsInside; // TODO make private later
+    private List<BaseObject> objectsInside;
     private Player owner;
     private bool isSettedUp;
     #endregion

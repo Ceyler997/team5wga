@@ -135,7 +135,7 @@ public class LauncherManager : Photon.PunBehaviour {
         Debug.Log("Player " + newPlayer.NickName + " connected");
 
         progressMessage.text = LocalizationManager.getTextByKey("ready");
-        PhotonNetwork.LoadLevel(battleSceneName);//TODO: create this scene
+        PhotonNetwork.LoadLevel(battleSceneName);
     }
 
     public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) {//player left the room
