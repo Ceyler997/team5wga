@@ -1,7 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-
+﻿
 public abstract class SuprimeMagic : Magic {
     private Suprime suprime; // ВС который кастует
 	float castRadius; // максимальное расстояние до цели
