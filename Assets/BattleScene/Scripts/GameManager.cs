@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Класс с глобальными переменными и основными настройками игры
 // Singletone
-public class GameManager : MonoBehaviour, IUpdateObject {
+public class GameManager : MonoBehaviour{
 
     #region private fields
 
@@ -23,8 +23,7 @@ public class GameManager : MonoBehaviour, IUpdateObject {
             }
         }
     }
-
-    private List<IUpdateObserver> UpdateObsevers { get; set; }
+    
     #endregion
 
     #region public fields
@@ -50,7 +49,6 @@ public class GameManager : MonoBehaviour, IUpdateObject {
 
     public void Start() {
         Instance = this; // singletone
-        UpdateObsevers = new List<IUpdateObserver>();
 
         foreach(Crystal crystal in crystals) {
             crystal.setupCrystal(null);
@@ -66,43 +64,6 @@ public class GameManager : MonoBehaviour, IUpdateObject {
         //players[0].addCrystall(crystalls[2]);
         //DEBUG
     }
-
-    public void Update() {
-        foreach(IUpdateObserver observer in UpdateObsevers) {
-            observer.OnUpdate();
-        }
-    }
-
-    public void LateUpdate() {
-        foreach (IUpdateObserver observer in UpdateObsevers) {
-            observer.OnLateUpdate();
-        }
-    }
-    #endregion
-
-    #region IUpdateObject implementation
-
-    public void Attach(IUpdateObserver observer) {
-        UpdateObsevers.Add(observer);
-    }
-
-    public void Detach(IUpdateObserver observer) {
-        UpdateObsevers.Remove(observer);
-    }
     #endregion
 }
 
-#region Update observer
-
-public interface IUpdateObject {
-    void Attach(IUpdateObserver observer);
-    void Detach(IUpdateObserver observer);
-    void Update();
-    void LateUpdate();
-}
-
-public interface IUpdateObserver {
-    void OnUpdate();
-    void OnLateUpdate();
-}
-#endregion

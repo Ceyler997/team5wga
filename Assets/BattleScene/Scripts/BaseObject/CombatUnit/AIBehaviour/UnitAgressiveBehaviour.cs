@@ -1,21 +1,9 @@
 ﻿
 public class UnitAgressiveBehaviour : UnitAIBehaviour {
-
-    #region properties
-    CombatRadius UnitRadius { get; set; } // для быстрого доступа к радиусу цели защиты
-    #endregion
-
+    
     #region constructors
 
-    public UnitAgressiveBehaviour(Unit subject) : base(subject) {
-
-        if (Subject.DetectRadius is CombatRadius) { // чтобы не заворачивать радиус несколько раз при смене состояния
-            UnitRadius = (CombatRadius) Subject.DetectRadius;
-        } else {
-            UnitRadius = new CombatRadius(Subject.DetectRadius);
-            Subject.DetectRadius = UnitRadius;
-        }
-    }
+    public UnitAgressiveBehaviour(Unit subject) : base(subject) { }
     #endregion
 
     #region public methods

@@ -7,7 +7,7 @@ public class BaseObject : MonoBehaviour {
 
     private Player controllingPlayer; // игрок, который является владельцем объекта
     private float reactDistance; // на этом расстоянии происходит взаимодействие с объектом
-    private IRadius detectRadius; // радиус вокруг объекта, в котором будут видны объекты
+    private Radius detectRadius; // радиус вокруг объекта, в котором будут видны объекты
     private bool isSettedUp;
     #endregion
 
@@ -19,7 +19,6 @@ public class BaseObject : MonoBehaviour {
         set {
             controllingPlayer = value;
             DetectRadius.Owner = value;
-            DetectRadius.updateEnemyList();
         }
     }
 
@@ -27,7 +26,7 @@ public class BaseObject : MonoBehaviour {
         get { return reactDistance; }
     }
 
-    public IRadius DetectRadius {
+    public Radius DetectRadius {
         get { return detectRadius; }
         set { detectRadius = value; }
     }
@@ -48,12 +47,6 @@ public class BaseObject : MonoBehaviour {
     public void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
-        }
-    }
-
-    public void OnDestroy() {
-        if(DetectRadius is CombatRadius) {
-            GameManager.Instance.Detach((CombatRadius) DetectRadius);
         }
     }
     #endregion
