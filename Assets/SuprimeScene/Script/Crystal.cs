@@ -6,18 +6,17 @@ using UnityEngine;
 [RequireComponent (typeof (Energy))]
 [RequireComponent (typeof (Level))]
 [RequireComponent (typeof (Player))]
-[RequireComponent (typeof (Radius))]
 public class Crystal : BaseObject, ILeveable {
     private float regenSpeed = 0; //Скорость восстановления энергии
     private Energy energy; //Текущее кол-во энергии
     private Level level; //Уровень кристалла
 
     public void Setup(Player ownerPlayer) {
+        setPlayer(ownerPlayer);
         energy = GetComponent<Energy>();
         level = GetComponent<Level>();
         energy.setEnergy(GameConf.crysMaxEnergy, 0f);
         setupLevel();
-        setPlayer(ownerPlayer);
         Radius.Initialization(GameConf.crysDetectRadius, this);
     }
 	
@@ -36,9 +35,12 @@ public class Crystal : BaseObject, ILeveable {
         level.levelUp();
         regenSpeed = GameConf.getCrysRegenSpeed(level.curentLevel);
     }
-    
-    public override void EnemyCheck(BaseObject enemy) {
-        Debug.Log("Crystall has saw an enemy!");
+
+    public override void ObjectEnter(BaseObject baseObject) {
+        Debug.Log("Crystall has saw an baseObject!");
     }
-    
+
+    public override void ObjectExit(BaseObject baseObject) {
+        Debug.Log("Crystall: object is exit from radius!");
+    }
 }

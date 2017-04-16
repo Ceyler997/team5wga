@@ -5,17 +5,18 @@ using UnityEngine;
 
 // Все кто реализуют интерфейс и компонент класса, будут получать информацию о врагах
 interface IEnemyChecker {
-    void EnemyCheck(BaseObject enemy);
+    void ObjectEnter(BaseObject baseObject);
+    void ObjectExit(BaseObject baseObject);
 }
 
 public class Radius : MonoBehaviour {
     public SphereCollider radius; // Размер области видимости
-    public List<BaseObject> enemyList; // Список врагов, находящихся в области кристалла
+    public List<BaseObject> objectList; // Список врагов, находящихся в области кристалла
     BaseObject owner = null; // Объект у которого есть радиус
 
     // Конструктор кристалла 
     public void Initialization (float radiusSize, BaseObject ownerObject) {
-        enemyList = new List<BaseObject>();
+        objectList = new List<BaseObject>();
         radius = gameObject.AddComponent<SphereCollider>();
 		radius.radius = radiusSize; 	
 		radius.isTrigger = true;
@@ -24,22 +25,42 @@ public class Radius : MonoBehaviour {
 
     // Если враг зашел в область видимости
 	void OnTriggerEnter(Collider other) {
-        BaseObject enemy = other.GetComponent<BaseObject>();
-        if(enemy != null && other.GetType() != radius.GetType()) {
-            if(enemy != owner) {
-                enemyList.Add(enemy);
-                owner.EnemyCheck(enemy);
-            }
+        BaseObject baseObject = other.GetComponent<BaseObject>();
+        if(baseObject != null && other.GetType() != radius.GetType()) {
+            // if(enemy != owner) {
+                objectList.Add(baseObject);
+                owner.ObjectEnter(baseObject);
+           // }
         }
     }
 
     // Враг покидает область видимости
 	void OnTriggerExit(Collider other) {
-		BaseObject enemy = other.GetComponent<BaseObject>();
-        if(enemy != null && other.GetType() != radius.GetType()) {
-            if(enemy != owner) {
-                enemyList.Remove(enemy);
+		BaseObject baseObject = other.GetComponent<BaseObject>();
+        if(baseObject != null && other.GetType() != radius.GetType()) {
+            if(baseObject != owner) {
+                objectList.Remove(baseObject);
+                owner.ObjectExit(baseObject);
             }
         }
 	}
+
+    //Если владелец имеет хотя бы одиного врага
+    public bool HasEnemies() {
+        foreach (BaseObject enemy in objectList) {
+            if (enemy.ControllPlayer != owner.ControllPlayer) {
+                return true;
+            }
+        }
+        return false;
+    }
+    //Если владелец имеет хотя бы одиного союзника
+    public bool HasFriends() {
+        foreach (BaseObject friend in objectList) {
+            if (friend.ControllPlayer == owner.ControllPlayer) {
+                return true;
+            }
+        }
+        return false;
+    }
 }

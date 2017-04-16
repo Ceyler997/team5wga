@@ -9,14 +9,11 @@ public class GameManager : MonoBehaviour {
         
     void Start() {
         foreach(Player player in players) {
-            player.setManager(this); 
+            player.setup();
         }
         foreach(Crystal crystall in crystalls) {
             crystall.Setup(null);
         }
-        players[0].addCrystall(crystalls[0]);
-        players[0].addCrystall(crystalls[1]);
-        players[0].addCrystall(crystalls[2]);
     }
     public Player GetPlayer(int id) {
         if(id >= 0 && id < players.Count) {

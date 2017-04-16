@@ -137,6 +137,7 @@ GameObject:
   - component: {fileID: 114457296626834548}
   - component: {fileID: 114017429758312826}
   - component: {fileID: 114098877997359830}
+  - component: {fileID: 114609768240395882}
   m_Layer: 12
   m_Name: P_Suprime
   m_TagString: Unit
@@ -675,7 +676,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   radius: {fileID: 0}
-  enemyList: []
+  objectList: []
 --- !u!114 &114498732266143670
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -738,6 +739,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 0
   maxHealth: 0
+--- !u!114 &114609768240395882
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1721182958324250}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2fe46047e24f41409e779b24abbe6b2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &114789833510614870
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -752,7 +764,6 @@ MonoBehaviour:
   playerName: 
   suprimes: []
   crystalls: []
-  manager: {fileID: 0}
   P_Suprime: {fileID: 0}
 --- !u!119 &119258199936970038
 Projector:

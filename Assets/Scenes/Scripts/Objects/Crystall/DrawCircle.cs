@@ -11,11 +11,12 @@ public class DrawCircle : MonoBehaviour {
 	
 	void Start() {
         drawRadius = GetComponent<Radius>();
-        line1 = createLine("radius1");
+        if(drawRadius.radius != null)
+            line1 = createLine("radius1");
     }
 
 	void Update() {
-		if(drawRadius != null)
+		if(drawRadius.radius != null)
 			DrawCrystallCircle(line1,drawRadius.radius.radius);
 	}
 

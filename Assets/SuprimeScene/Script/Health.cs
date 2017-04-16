@@ -12,19 +12,23 @@ public class Health : MonoBehaviour {
         this.regenSpeed = regenSpeed;
         this.master = himself;
     }
+    
     //Получение урона
     public void takeDamage(float damage) {
         health -= damage;
         if(health <= 0) die();
     }
+    
     //Смерть юнита
     void die() {
         master.die();
     }
+    
     //Востановление жизней (запускать в апдейте)
     void regen(float deltaTime) {
         health += regenSpeed * Time.deltaTime;
     }
+
     //Изменение значения скорости регенерации
     void setRegenSpeed(float regenSpeed) {
         this.regenSpeed = regenSpeed;

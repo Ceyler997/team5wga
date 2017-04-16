@@ -7,28 +7,25 @@ public class Player : MonoBehaviour {
     public Suprime[] suprimes; //ВС, которыми владеет игрок
     private int countSuprime = 0; //Текущее кол-во ВС
     public List<Crystal> crystalls; //Кристалы, которыми владеет игрок
-    public GameManager manager;
+
     // Use this for initialization
     public GameObject P_Suprime;
-    void Initialization () {
-        suprimes = new Suprime[GameConf.maxSuprimeAmount];
-        crystalls = new List<Crystal>();
-        addSuprime(transform.position);
-    }
-	//возвращает имя игрока
+	// Возвращает имя игрока
     public string GetName { get {return name; } }
-	//Возвращает массив кристаллов принадлежавших игроку
+	// Возвращает массив кристаллов принадлежавших игроку
 	public Suprime[] GetSuprimes { get { return suprimes; } }
-    //Возвращает массив юнитов принадлежавших игроку
+    // Возвращает массив юнитов принадлежавших игроку
     public List<Crystal> GetCrystalls{ get {return crystalls;} }
     public string PlayerName { get{return name;}  set { name = value; } }
 
-    //Возвращает кол-во ВС под контролем игрока
+    // Возвращает кол-во ВС под контролем игрока
     public int getNumOfSuprime() { return countSuprime; }
-	//Добавляет ВС в массив suprimes
+
+	// Добавляет ВС в массив suprimes
 	public void addSuprime(Vector3 position) {
         if(getNumOfSuprime() < GameConf.maxSuprimeAmount) {
-            Suprime suprime = Instantiate(P_Suprime, position, Quaternion.identity).GetComponent<Suprime>();
+            GameObject gameObject = Instantiate(P_Suprime, position, Quaternion.identity);
+            Suprime suprime = gameObject.GetComponent<Suprime>();
             suprime.setPlayer(this);
             suprimes[getNumOfSuprime()] = suprime;
             countSuprime++;
@@ -38,15 +35,9 @@ public class Player : MonoBehaviour {
         crystalls.Add(crystall);
     }
 
-    public void setManager(GameManager manager) {
-        this.manager = manager;
-        Initialization();
+    public void setup() {
+        suprimes = new Suprime[GameConf.maxSuprimeAmount];
+        crystalls = new List<Crystal>();
+        addSuprime(transform.position);
     }
-
-    public GameManager getManager { get { return manager; } }
-
-    // Update is called once per frame
-    void Update () {
-		
-	}
 }

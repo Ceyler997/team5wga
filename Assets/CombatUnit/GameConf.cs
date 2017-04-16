@@ -67,10 +67,13 @@ static class GameConf {
     #endregion
 
     #region Magic Properties
-
+    // Телепорт
     public const float TeleportCastTime = 2.0f;
     public const float TeleportCostEnergy = 10.0f;
-    
+    // Захват кристалла
+    public const float CrystallCaptureCastTime = 10.0f;
+    public const float CrystallCaptureCostEnergy = 50.0f;
+
 
     #endregion
 

@@ -12,4 +12,8 @@ public abstract class SuprimeMagic : Magic {
         this.suprime = suprime;
     }
     
+    public void ChangeEnergy() {
+        // Отнимаем энергию
+        OwnerSuprime.EnergyComponent.changeEnergy(CastEnergy);
+    }
 }
