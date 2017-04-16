@@ -148,6 +148,8 @@ GameObject:
   - component: {fileID: 54128849902471878}
   - component: {fileID: 114989866226692916}
   - component: {fileID: 114561100372873796}
+  - component: {fileID: 114326809109268084}
+  - component: {fileID: 114233923111480028}
   m_Layer: 12
   m_Name: SuprimePrefab
   m_TagString: Untagged
@@ -578,6 +580,28 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6860cc355699de14bb880b6f5cc4b806, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114233923111480028
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1480251106586050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 06fc483692ab6314ab1eb70ce059c296, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &114326809109268084
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1480251106586050}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b2fe46047e24f41409e779b24abbe6b2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &114411844328936950

@@ -52,11 +52,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be1d36c3c2a63cb408ab1b46e2368e51, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  players:
-  - {fileID: 0}
-  - {fileID: 0}
-  crystals:
-  - {fileID: 0}
+  players: []
+  crystals: []
 --- !u!114 &114610640827357758
 MonoBehaviour:
   m_ObjectHideFlags: 1
