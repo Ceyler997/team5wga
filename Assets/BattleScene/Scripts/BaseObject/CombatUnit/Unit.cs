@@ -36,12 +36,30 @@ public class Unit : BaseObject, IFightable {
 
     public UnitAIBehaviour Behaviour {
         get { return behaviour; }
-        set { behaviour = value; }
+        set {
+            if (behaviour != null) {
+                behaviour.End();
+            }
+
+            if (value != null) {
+                value.Start();
+            } else {
+                throw new UnitHaveNoBehaviourException();
+            }
+
+            behaviour = value;
+        }
     }
 
     public Suprime Master {
-        get {return master;}
-        set {master = value;}
+        get { return master; }
+        set {
+            if (value == null) {
+                throw new UnitHaveNoMasterException();
+            }
+
+            master = value;
+        }
     }
 
     Vector3 IFightable.Position {
@@ -97,7 +115,8 @@ public class Unit : BaseObject, IFightable {
 
         DeathObservers = new List<IDeathObserver>();
 
-        Behaviour = new UnitProtectiveBehaviour(this, master);
+        //Behaviour = new UnitProtectiveBehaviour(this, master);
+        Behaviour = new UnitAgressiveBehaviour(this);
     }
     #endregion
 
