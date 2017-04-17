@@ -23,6 +23,7 @@ public class NicknameFieldManager : MonoBehaviour {
             if (PlayerPrefs.HasKey(playerNamePrefKey)) {//checking, if we have saved nickname
                 defaultName = PlayerPrefs.GetString(playerNamePrefKey);//setting it in field, if we have
                 nicknameField.text = defaultName;
+                PhotonNetwork.playerName = defaultName;
             }
         } else {
             Debug.LogError("No input field for nickname");
