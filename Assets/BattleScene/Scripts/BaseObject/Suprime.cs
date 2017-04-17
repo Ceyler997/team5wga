@@ -90,13 +90,30 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             // transform.position = new Vector3(0, 0, 0);
         }
     }
+
+    public void OnDestroy() {
+
+        while (DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список динамически изменяется
+            IDeathObserver observer = DeathObservers [0];
+            observer.onSubjectDeath(this);
+            Detach(observer); // При смерти объекта его подписчики от него отписываются
+        }
+
+        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
+
+        while (Units.Count != 0) {
+            Units [0].SubjectDeath(); // При смерти мастера его юниты умирают
+        }
+
+        ControllingPlayer.Suprimes.Remove(this);
+    }
     #endregion
 
     #region PunBehaviour methods
 
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
         Player owner;
-        GameManager.Instance.Players.TryGetValue(info.sender, out owner);
+        GameManager.Instance.Players.TryGetValue(info.sender.ID, out owner);
         setupSuprime(owner);
 
         owner.Suprimes.Add(this);
@@ -145,20 +162,18 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     }
 
-    #endregion
-
-    #region DEBUG
-
-    public GameObject UnitPrefab;
-
-    public void spawnUnit() {
-        Unit unit = Instantiate(UnitPrefab, transform.position + Vector3.left * 3, Quaternion.identity).GetComponent<Unit>();
-        unit.setupUnit(this);
-        //unit.Behaviour = new UnitAgressiveBehaviour(unit);
-        unit.Attach(this);
-
-        units.Add(unit);
+    public void addUnit(Vector3 position) {
+        PhotonNetwork.Instantiate("CombatUnitPrefab",
+            position,
+            Quaternion.identity,
+            0,
+            new object [] { photonView.viewID});
+        //unit.setupUnit(this); TODO move to unit
+        ////unit.Behaviour = new UnitAgressiveBehaviour(unit);
+        //unit.Attach(this);
+        //units.Add(unit);
     }
+
     #endregion
 
     #region IDeathSubject implementation
@@ -172,19 +187,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     }
 
     public void SubjectDeath() {
-        while (DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список динамически изменяется
-            IDeathObserver observer = DeathObservers [0];
-            observer.onSubjectDeath(this);
-            Detach(observer); // При смерти объекта его подписчики от него отписываются
-        }
-
-        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
-
-        while (Units.Count!=0) {
-            Units [0].SubjectDeath(); // При смерти юнит уходит из списка прикреплённых юнитов
-        }
-
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 
     public void onSubjectDeath(IDeathSubject subject) {

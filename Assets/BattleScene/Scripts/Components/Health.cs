@@ -1,6 +1,6 @@
-﻿using System;
-using UnityEngine;
-public class Health : MonoBehaviour {
+﻿using UnityEngine;
+
+public class Health : MonoBehaviour, IPunObservable {
 
     #region private fields
 
@@ -80,6 +80,17 @@ public class Health : MonoBehaviour {
     private void regen() {
         CurrentHealth += RegenSpeed * Time.deltaTime;
         CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
+    }
+    #endregion
+
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            stream.SendNext(CurrentHealth);
+        } else {
+            CurrentHealth = (float) stream.ReceiveNext();
+        }
     }
     #endregion
 }

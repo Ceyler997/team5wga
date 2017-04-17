@@ -1,12 +1,13 @@
 ﻿using UnityEngine;
 
-public class CombatSystem : MonoBehaviour, IDeathObserver {
+public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
 
     #region private variables
     // все поля в свойствах (см. геттеры и сеттеры)
 
     private float damage; // базовый урон юнита за удар
     private float critDamage; // дополнительный урон от крита
+    private float frameDamage; // урон, нанесённый за текущий кадр
 
     private float critChance; // базовая вероятность крита, от 0.0 до 1.0
     private BattleMagicColor currentMagicColor; // текущий цвет магии, наложенной на юнита
@@ -18,6 +19,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver {
 
     private IFightable target; // цель атаки
     private bool isUnderAttack; // атакуют ли цель
+    private bool isTargetChanged; // сигнал о смене цели
 
     private bool isSettedUp;
     #endregion
@@ -71,6 +73,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver {
                 value.Attach(this);
             }
 
+            isTargetChanged = true;
             target = value;
         }
     }
@@ -135,6 +138,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver {
         CritChance = critChance;
         AttackRadius = atkRadius;
         AttackSpeed = atkSpeed;
+        currentMagicColor = BattleMagicColor.NO_COLOR;
     }
 
     // Если юнита атакуют, то его цель меняется на атакующего
@@ -151,9 +155,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver {
                 // DEBUG
                 Debug.DrawLine(transform.position, Target.Position, Color.white, 0.2f);
 
-                float damageToTarger = Damage + getCrit(); // получение наносимого урона
-
-                Target.HealthSystem.getDamage(damageToTarger); // наносится урон цели
+                frameDamage = Damage + getCrit(); // получение наносимого урона
 
                 NextAttackTime = Time.time + AttackSpeed; // устанавливается откат
 
@@ -179,6 +181,59 @@ public class CombatSystem : MonoBehaviour, IDeathObserver {
         } else {
             throw new WrongDeathSubsciptionException();
         }
+    }
+    #endregion
+
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            stream.SendNext(currentMagicColor.MagicID);
+
+            stream.SendNext(isTargetChanged);
+
+            if (isTargetChanged) {
+                if(Target != null) {
+                    stream.SendNext(((BaseObject) Target).photonView.viewID);
+                } else {
+                    stream.SendNext(0);
+                }
+
+            }
+
+            stream.SendNext(frameDamage);
+            frameDamage = 0;
+        } else {
+            int magicId = (int) stream.ReceiveNext();
+            if(magicId != currentMagicColor.MagicID) {
+                currentMagicColor = BattleMagicColor.getMagicByID(magicId);
+            }
+
+            bool targerChanged = (bool) stream.ReceiveNext();
+
+            if (targerChanged) {
+                int targetID = (int) stream.ReceiveNext();
+                if(targetID == 0) {
+                    Target = null;
+                } else {
+                    PhotonView targetView = PhotonView.Find(targetID);
+                    if (targetView != null) {
+                        Target = targetView.GetComponent<IFightable>();
+                    } else {
+                        Target = null;
+                    }
+                }
+            }
+
+            float recievedDamage = (float) stream.ReceiveNext();
+            if(recievedDamage > 0) {
+                Target.HealthSystem.getDamage(recievedDamage);
+                // DEBUG
+                Debug.DrawLine(transform.position, Target.Position, Color.white, 0.2f);
+            }
+        }
+
+        isTargetChanged = false;
     }
     #endregion
 }

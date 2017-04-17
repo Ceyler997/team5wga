@@ -52,8 +52,8 @@ public class GameManager : Photon.PunBehaviour{
 
         PhotonNetwork.Instantiate("PlayerPrefab",
             startPositions [PhotonNetwork.player.ID - 1].Position, // позиция, соответвующая игроку (отсчёт ID начинается с мастера - 1)
-            Quaternion.identity, 
-            0).GetComponent<Player>();
+            Quaternion.identity,
+            0);
 
         foreach (Crystal crystal in crystals) {
             crystal.setupCrystal(null);

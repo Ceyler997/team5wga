@@ -46,7 +46,7 @@ public class Crystal : BaseObject, ILeveable {
         LevelSystem.setupSystem(GameConf.crysStartLevel,
             GameConf.crysMaxLevel);
 
-        RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurentLevel);
+        RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
 
     #region MonoBehaviours methods
@@ -63,7 +63,7 @@ public class Crystal : BaseObject, ILeveable {
 
     public void levelUp() {
         LevelSystem.levelUp();
-        RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurentLevel);
+        RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
 
     #endregion

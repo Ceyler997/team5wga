@@ -56,7 +56,7 @@ public class Player : Photon.PunBehaviour {
             PhotonNetwork.Instantiate("SuprimePrefab",
                 position,
                 Quaternion.identity,
-                0).GetComponent<Suprime>();
+                0);
         } else {
             throw new TooMuchSuprimesException();
         }

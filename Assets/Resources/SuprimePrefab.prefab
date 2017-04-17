@@ -594,11 +594,8 @@ MonoBehaviour:
   ownershipTransfer: 0
   ObservedComponents:
   - {fileID: 114110483362973262}
-  - {fileID: 114888894280442392}
+  - {fileID: 114911769599305296}
   - {fileID: 114216561623351446}
-  - {fileID: 114978623349125634}
-  - {fileID: 114911769599305296}
-  - {fileID: 114911769599305296}
   ObservedComponentsFoldoutOpen: 1
   viewIdField: 0
   instantiationId: -1
@@ -757,6 +754,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cd1591b5b24fc4db1295a32b10f6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  curHealth: 0
 --- !u!114 &114912943346800456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -768,7 +766,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce7c461342ba334a93da0c099b02762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  UnitPrefab: {fileID: 1869840471673688, guid: 8a654c756dfd13348b9fa01c6518c25e, type: 2}
 --- !u!114 &114978623349125634
 MonoBehaviour:
   m_ObjectHideFlags: 1
