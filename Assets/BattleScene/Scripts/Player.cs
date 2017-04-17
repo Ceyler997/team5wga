@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : Photon.PunBehaviour {
 
     #region private fields
 
@@ -10,8 +10,6 @@ public class Player : MonoBehaviour {
     private Suprime[] suprimes; //ВС, которыми владеет игрок
     private int suprimeCount; //Текущее кол-во ВС
     private List<Crystal> crystals; //Кристалы, которыми владеет игрок
-    // Use this for initialization
-    public GameObject SuprimePrefab;
     #endregion
 
     #region getters and setters
@@ -41,15 +39,22 @@ public class Player : MonoBehaviour {
     }
     #endregion
 
+    #region MonoBehaviour methods
+    public override void OnPhotonInstantiate(PhotonMessageInfo info) {
+        GameManager.Instance.Players.Add(info.sender, this);
+        setupPlayer(info.sender.NickName);
+    }
+    #endregion
+
     #region public methods
 
     //Добавляет ВС в массив suprimes
     public void addSuprime(Vector3 position) {
         if(SuprimeCount < GameConf.maxSuprimeAmount) {
-            Suprime suprime = Instantiate(SuprimePrefab, position, Quaternion.identity).GetComponent<Suprime>();
-            suprime.setupSuprime(this);
-            suprimes[SuprimeCount] = suprime;
-            ++SuprimeCount;
+            PhotonNetwork.Instantiate("SuprimePrefab",
+                position,
+                Quaternion.identity,
+                0).GetComponent<Suprime>();
         } else {
             throw new TooMuchSuprimesException();
         }
@@ -60,16 +65,14 @@ public class Player : MonoBehaviour {
         crystal.ControllingPlayer = this;
     }
 
-    public void setupPlayer() {
+    public void setupPlayer(String ownerName) {
         suprimes = new Suprime [GameConf.maxSuprimeAmount];
         crystals = new List<Crystal>();
-        addSuprime(transform.position);
-    }
-    #endregion
+        PlayerName = ownerName;
 
-    #region DEBUG
-    public void spawnUnit() {
-        Suprimes [0].spawnUnit();
+        if (photonView.isMine) {
+            addSuprime(transform.position);
+        }
     }
     #endregion
 }

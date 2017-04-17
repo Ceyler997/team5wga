@@ -34,7 +34,7 @@ public class CharactersController : MonoBehaviour
 
             if (Physics.Raycast(ray, out hit)) {
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
-                if (unit != null) {
+                if (unit != null && unit.photonView.isMine) {
                     unit.selectUnit();
                     SelectedUnit = unit;
                 }

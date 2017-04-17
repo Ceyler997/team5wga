@@ -97,6 +97,7 @@ public class LauncherManager : Photon.PunBehaviour {
 
         if (PhotonNetwork.isMasterClient) {//if we are first in room
             progressMessage.text = LocalizationManager.getTextByKey("waitingPlayer");
+            //PhotonNetwork.LoadLevel(battleSceneName);
         } else {//if not, master will load level
             progressMessage.text = LocalizationManager.getTextByKey("ready");
         }

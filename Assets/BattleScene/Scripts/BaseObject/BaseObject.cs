@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Radius))]
-public class BaseObject : MonoBehaviour {
+public class BaseObject : Photon.PunBehaviour {
 
     #region private fields
 

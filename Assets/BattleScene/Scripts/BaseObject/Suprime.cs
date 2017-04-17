@@ -79,6 +79,15 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region MonoBehaviour methods
 
+    public override void OnPhotonInstantiate(PhotonMessageInfo info) {
+        Player owner;
+        GameManager.Instance.Players.TryGetValue(info.sender, out owner);
+        setupSuprime(owner);
+
+        owner.Suprimes [owner.SuprimeCount] = this;
+        ++owner.SuprimeCount;
+    }
+
     new public void Update() {
         base.Update();
         if (ControllingPlayer == null) {
