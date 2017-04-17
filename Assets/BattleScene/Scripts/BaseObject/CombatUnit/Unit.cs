@@ -115,8 +115,7 @@ public class Unit : BaseObject, IFightable {
 
         DeathObservers = new List<IDeathObserver>();
 
-        //Behaviour = new UnitProtectiveBehaviour(this, master);
-        Behaviour = new UnitAgressiveBehaviour(this);
+        Behaviour = new UnitProtectiveBehaviour(this, master);
     }
     #endregion
 
