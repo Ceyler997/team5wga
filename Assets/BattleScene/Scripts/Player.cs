@@ -9,6 +9,7 @@ public class Player : Photon.PunBehaviour {
     public string playerName; //Имя игрока
     private List<Suprime> suprimes; //ВС, которыми владеет игрок
     private List<Crystal> crystals; //Кристалы, которыми владеет игрок
+    private bool isMe;
     #endregion
 
     #region getters and setters
@@ -30,12 +31,20 @@ public class Player : Photon.PunBehaviour {
         get { return crystals; }
         set { crystals = value; }
     }
+
+    public bool IsMe {
+        get { return isMe; }
+    }
+
+    public int ID { get; private set; }
     #endregion
 
     #region MonoBehaviour methods
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
-        GameManager.Instance.Players.Add(info.sender, this);
+        GameManager.Instance.Players.Add(info.sender.ID, this);
         setupPlayer(info.sender.NickName);
+        isMe = info.sender.IsLocal;
+        ID = info.sender.ID;
     }
     #endregion
 

@@ -14,7 +14,7 @@ public class GameManager : Photon.PunBehaviour{
     #region public fields
 
     [Tooltip("Все игроки подключенные к игре")]
-    private Dictionary<PhotonPlayer, Player> players; //Все игроки подключенные к игре
+    private Dictionary<int, Player> players; //Все игроки подключенные к игре
     [Tooltip("Все кристаллы на карте")]
     public Crystal[] crystals; //Все кристаллы на карте (при добавлении нового кристалла, обязательно добавить его сюда)
     #endregion
@@ -32,10 +32,10 @@ public class GameManager : Photon.PunBehaviour{
         }
     }
 
-    public Dictionary<PhotonPlayer, Player> Players {
+    public Dictionary<int, Player> Players {
         get {
             if (players == null) {
-                players = new Dictionary<PhotonPlayer, Player>();
+                players = new Dictionary<int, Player>();
             }
             return players;
         }
