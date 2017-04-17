@@ -79,15 +79,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region MonoBehaviour methods
 
-    public override void OnPhotonInstantiate(PhotonMessageInfo info) {
-        Player owner;
-        GameManager.Instance.Players.TryGetValue(info.sender, out owner);
-        setupSuprime(owner);
-
-        owner.Suprimes [owner.SuprimeCount] = this;
-        ++owner.SuprimeCount;
-    }
-
     new public void Update() {
         base.Update();
         if (ControllingPlayer == null) {
@@ -98,6 +89,17 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             captureCrystal.cast();
             // transform.position = new Vector3(0, 0, 0);
         }
+    }
+    #endregion
+
+    #region PunBehaviour methods
+
+    public override void OnPhotonInstantiate(PhotonMessageInfo info) {
+        Player owner;
+        GameManager.Instance.Players.TryGetValue(info.sender, out owner);
+        setupSuprime(owner);
+
+        owner.Suprimes.Add(this);
     }
     #endregion
 
@@ -196,7 +198,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region IRadiusObserver implememntation
 
-    #endregion
     public void onObjectEnter(BaseObject enteredObject) {
         //Если кристалл, то ставим как текущий
         if (enteredObject is Crystal) {
@@ -222,4 +223,5 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             Debug.Log("i saw an Suprime");
         }
     }
+    #endregion
 }

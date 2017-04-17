@@ -7,8 +7,7 @@ public class Player : Photon.PunBehaviour {
     #region private fields
 
     public string playerName; //Имя игрока
-    private Suprime[] suprimes; //ВС, которыми владеет игрок
-    private int suprimeCount; //Текущее кол-во ВС
+    private List<Suprime> suprimes; //ВС, которыми владеет игрок
     private List<Crystal> crystals; //Кристалы, которыми владеет игрок
     #endregion
 
@@ -21,15 +20,9 @@ public class Player : Photon.PunBehaviour {
     }
 
     //Возвращает массив кристаллов принадлежавших игроку
-    public Suprime [] Suprimes {
+    public List<Suprime> Suprimes {
         get { return suprimes; }
         set { suprimes = value; }
-    }
-
-    //Возвращает кол-во ВС под контролем игрока
-    public int SuprimeCount {
-        get { return suprimeCount; }
-        set { suprimeCount = value; }
     }
 
     //Возвращает массив кристаллов принадлежавших игроку
@@ -50,7 +43,7 @@ public class Player : Photon.PunBehaviour {
 
     //Добавляет ВС в массив suprimes
     public void addSuprime(Vector3 position) {
-        if(SuprimeCount < GameConf.maxSuprimeAmount) {
+        if(Suprimes.Count < GameConf.maxSuprimeAmount) {
             PhotonNetwork.Instantiate("SuprimePrefab",
                 position,
                 Quaternion.identity,
@@ -66,7 +59,7 @@ public class Player : Photon.PunBehaviour {
     }
 
     public void setupPlayer(String ownerName) {
-        suprimes = new Suprime [GameConf.maxSuprimeAmount];
+        suprimes = new List<Suprime>();
         crystals = new List<Crystal>();
         PlayerName = ownerName;
 
