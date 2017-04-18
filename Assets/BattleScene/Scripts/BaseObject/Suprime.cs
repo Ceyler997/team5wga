@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 //systems
@@ -168,10 +166,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             Quaternion.identity,
             0,
             new object [] { photonView.viewID});
-        //unit.setupUnit(this); TODO move to unit
-        ////unit.Behaviour = new UnitAgressiveBehaviour(unit);
-        //unit.Attach(this);
-        //units.Add(unit);
     }
 
     #endregion
