@@ -90,84 +90,7 @@ NavMeshSettings:
     manualCellSize: 0
     cellSize: 0.16666667
     accuratePlacement: 0
-  m_NavMeshData: {fileID: 23800000, guid: fb87cc063d062374691e4a6e1a74c725, type: 2}
---- !u!1001 &136563967
-Prefab:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 114794578794530246, guid: d2379326f8e1bec41968d8e15f20887d,
-        type: 2}
-      propertyPath: players.Array.size
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114794578794530246, guid: d2379326f8e1bec41968d8e15f20887d,
-        type: 2}
-      propertyPath: crystalls.Array.size
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756302807410788, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-      propertyPath: m_LocalPosition.x
-      value: -28.35
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756302807410788, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-      propertyPath: m_LocalPosition.y
-      value: 0.05
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756302807410788, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-      propertyPath: m_LocalPosition.z
-      value: -15.831165
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756302807410788, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756302807410788, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756302807410788, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756302807410788, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4756302807410788, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-      propertyPath: m_RootOrder
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 114794578794530246, guid: d2379326f8e1bec41968d8e15f20887d,
-        type: 2}
-      propertyPath: players.Array.data[0]
-      value: 
-      objectReference: {fileID: 1857569595}
-    - target: {fileID: 114794578794530246, guid: d2379326f8e1bec41968d8e15f20887d,
-        type: 2}
-      propertyPath: crystalls.Array.data[0]
-      value: 
-      objectReference: {fileID: 1712361734}
-    - target: {fileID: 114794578794530246, guid: d2379326f8e1bec41968d8e15f20887d,
-        type: 2}
-      propertyPath: players.Array.data[1]
-      value: 
-      objectReference: {fileID: 2095476966}
-    - target: {fileID: 114794578794530246, guid: d2379326f8e1bec41968d8e15f20887d,
-        type: 2}
-      propertyPath: crystalls.Array.data[1]
-      value: 
-      objectReference: {fileID: 1761361321}
-    - target: {fileID: 114794578794530246, guid: d2379326f8e1bec41968d8e15f20887d,
-        type: 2}
-      propertyPath: crystalls.Array.data[2]
-      value: 
-      objectReference: {fileID: 300697202}
-    m_RemovedComponents: []
-  m_ParentPrefab: {fileID: 100100000, guid: d2379326f8e1bec41968d8e15f20887d, type: 2}
-  m_IsPrefabParent: 0
+  m_NavMeshData: {fileID: 23800000, guid: 2cbead7fd446a1649ac82508c4c0e820, type: 2}
 --- !u!1 &300697196 stripped
 GameObject:
   m_PrefabParentObject: {fileID: 100000, guid: 5b22be6893caabc4285b6b4243a80ad3, type: 3}
@@ -194,8 +117,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c52e51514f0b64ebb61c5176f4c616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: {fileID: 0}
-  enemyList: []
 --- !u!114 &300697199
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -208,10 +129,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  suprimes: []
-  crystalls: []
-  manager: {fileID: 982309215}
-  P_Suprime: {fileID: 0}
+  SuprimePrefab: {fileID: 0}
 --- !u!114 &300697200
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -223,8 +141,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c954b5decdb3704386923521b2a6974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLevel: 0
-  curentLevel: 0
 --- !u!114 &300697201
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,7 +152,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e4c5c30b95a24aa4abc0d4c8dd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energy: 0
+  currentEnergy: 0
 --- !u!114 &300697202
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -332,8 +248,105 @@ Prefab:
       propertyPath: ZoomMax
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114921589455490942, guid: 596fcd5d354ea154585676aa5b0f0927,
+        type: 2}
+      propertyPath: xMax
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114921589455490942, guid: 596fcd5d354ea154585676aa5b0f0927,
+        type: 2}
+      propertyPath: xMin
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 114921589455490942, guid: 596fcd5d354ea154585676aa5b0f0927,
+        type: 2}
+      propertyPath: zMax
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: 114921589455490942, guid: 596fcd5d354ea154585676aa5b0f0927,
+        type: 2}
+      propertyPath: zMin
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 596fcd5d354ea154585676aa5b0f0927, type: 2}
+  m_IsPrefabParent: 0
+--- !u!1001 &510736886
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 114331623290147590, guid: 3d3f82bb4f663a34aa6434663177d417,
+        type: 2}
+      propertyPath: players.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 114331623290147590, guid: 3d3f82bb4f663a34aa6434663177d417,
+        type: 2}
+      propertyPath: crystals.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136763544654654, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
+      propertyPath: m_LocalPosition.x
+      value: -22.518188
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136763544654654, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: -0.47999996
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136763544654654, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
+      propertyPath: m_LocalPosition.z
+      value: 0.93177414
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136763544654654, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136763544654654, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136763544654654, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136763544654654, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4136763544654654, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 114331623290147590, guid: 3d3f82bb4f663a34aa6434663177d417,
+        type: 2}
+      propertyPath: players.Array.data[0]
+      value: 
+      objectReference: {fileID: 1857569595}
+    - target: {fileID: 114331623290147590, guid: 3d3f82bb4f663a34aa6434663177d417,
+        type: 2}
+      propertyPath: players.Array.data[1]
+      value: 
+      objectReference: {fileID: 2095476966}
+    - target: {fileID: 114331623290147590, guid: 3d3f82bb4f663a34aa6434663177d417,
+        type: 2}
+      propertyPath: crystals.Array.data[0]
+      value: 
+      objectReference: {fileID: 1712361734}
+    - target: {fileID: 114331623290147590, guid: 3d3f82bb4f663a34aa6434663177d417,
+        type: 2}
+      propertyPath: crystals.Array.data[1]
+      value: 
+      objectReference: {fileID: 1761361321}
+    - target: {fileID: 114331623290147590, guid: 3d3f82bb4f663a34aa6434663177d417,
+        type: 2}
+      propertyPath: crystals.Array.data[2]
+      value: 
+      objectReference: {fileID: 300697202}
+    m_RemovedComponents: []
+  m_ParentPrefab: {fileID: 100100000, guid: 3d3f82bb4f663a34aa6434663177d417, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &656987298
 Prefab:
@@ -388,7 +401,7 @@ Prefab:
         type: 2}
       propertyPath: manager
       value: 
-      objectReference: {fileID: 982309215}
+      objectReference: {fileID: 0}
     - target: {fileID: 114688054611984314, guid: 5b59aec01619f574d92fa0207b97568c,
         type: 2}
       propertyPath: playerName
@@ -398,6 +411,12 @@ Prefab:
       propertyPath: m_Name
       value: Player_2
       objectReference: {fileID: 0}
+    - target: {fileID: 114688054611984314, guid: 5b59aec01619f574d92fa0207b97568c,
+        type: 2}
+      propertyPath: SuprimePrefab
+      value: 
+      objectReference: {fileID: 1480251106586050, guid: 74c5f757994270245ae7ae3e72b1af87,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5b59aec01619f574d92fa0207b97568c, type: 2}
   m_IsPrefabParent: 0
@@ -533,12 +552,6 @@ Prefab:
     - {fileID: 9500000, guid: 5b22be6893caabc4285b6b4243a80ad3, type: 3}
   m_ParentPrefab: {fileID: 100100000, guid: 5b22be6893caabc4285b6b4243a80ad3, type: 3}
   m_IsPrefabParent: 0
---- !u!114 &982309215 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 114794578794530246, guid: d2379326f8e1bec41968d8e15f20887d,
-    type: 2}
-  m_PrefabInternal: {fileID: 136563967}
-  m_Script: {fileID: 11500000, guid: be1d36c3c2a63cb408ab1b46e2368e51, type: 3}
 --- !u!1001 &1034134669
 Prefab:
   m_ObjectHideFlags: 0
@@ -576,7 +589,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 400000, guid: 5b22be6893caabc4285b6b4243a80ad3, type: 3}
       propertyPath: m_RootOrder
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9500000, guid: 5b22be6893caabc4285b6b4243a80ad3, type: 3}
       propertyPath: m_Enabled
@@ -685,12 +698,18 @@ Prefab:
         type: 2}
       propertyPath: manager
       value: 
-      objectReference: {fileID: 982309215}
+      objectReference: {fileID: 0}
     - target: {fileID: 114688054611984314, guid: 5b59aec01619f574d92fa0207b97568c,
         type: 2}
       propertyPath: playerName
       value: Player_1
       objectReference: {fileID: 0}
+    - target: {fileID: 114688054611984314, guid: 5b59aec01619f574d92fa0207b97568c,
+        type: 2}
+      propertyPath: SuprimePrefab
+      value: 
+      objectReference: {fileID: 1480251106586050, guid: 74c5f757994270245ae7ae3e72b1af87,
+        type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 5b59aec01619f574d92fa0207b97568c, type: 2}
   m_IsPrefabParent: 0
@@ -720,7 +739,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e4c5c30b95a24aa4abc0d4c8dd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energy: 0
+  currentEnergy: 0
 --- !u!114 &1712361736
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -732,8 +751,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c954b5decdb3704386923521b2a6974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLevel: 0
-  curentLevel: 0
 --- !u!114 &1712361737
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -746,10 +763,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  suprimes: []
-  crystalls: []
-  manager: {fileID: 982309215}
-  P_Suprime: {fileID: 0}
+  SuprimePrefab: {fileID: 0}
 --- !u!114 &1712361738
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -761,8 +775,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c52e51514f0b64ebb61c5176f4c616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: {fileID: 0}
-  enemyList: []
 --- !u!136 &1712361742
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -824,8 +836,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c52e51514f0b64ebb61c5176f4c616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: {fileID: 0}
-  enemyList: []
 --- !u!114 &1761361324
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -838,10 +848,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   playerName: 
-  suprimes: []
-  crystalls: []
-  manager: {fileID: 982309215}
-  P_Suprime: {fileID: 0}
+  SuprimePrefab: {fileID: 0}
 --- !u!114 &1761361325
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -853,8 +860,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c954b5decdb3704386923521b2a6974, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxLevel: 0
-  curentLevel: 0
 --- !u!114 &1761361326
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -866,7 +871,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e4c5c30b95a24aa4abc0d4c8dd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  energy: 0
+  currentEnergy: 0
 --- !u!136 &1761361327
 CapsuleCollider:
   m_ObjectHideFlags: 0

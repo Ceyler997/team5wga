@@ -4,7 +4,7 @@ public class Energy : MonoBehaviour {
 
     #region private fields
 
-    private float currentEnergy; //Текущее кол-во энергии
+    public float currentEnergy; //Текущее кол-во энергии
     private float maxEnergy; //Максимальное кол-во энергии
     private bool isSettedUp;
     #endregion
