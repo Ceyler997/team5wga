@@ -106,7 +106,7 @@ public class Unit : BaseObject, IFightable {
             // Подписчик по своим внутренним алгоритмам может как отписаться, так и не отписаться
             // поэтому мы берём отдельного подписчика, а не обращаемся по индексу (первый объект может измениться)
             IDeathObserver observer = DeathObservers [0];
-            observer.onSubjectDeath(this);
+            observer.OnSubjectDeath(this);
             Detach(observer); // При смерти объекта отписываем его подписчиков
         }
 
@@ -131,7 +131,7 @@ public class Unit : BaseObject, IFightable {
             this);
 
         CombatSys = GetComponent<CombatSystem>();
-        CombatSys.setupSystem(GameConf.unitDamage,
+        CombatSys.SetupSystem(GameConf.unitDamage,
             GameConf.unitCritDamage,
             GameConf.unitBasicCritChance,
             GameConf.unitAttackRadius,

@@ -93,7 +93,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
         while (DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список динамически изменяется
             IDeathObserver observer = DeathObservers [0];
-            observer.onSubjectDeath(this);
+            observer.OnSubjectDeath(this);
             Detach(observer); // При смерти объекта его подписчики от него отписываются
         }
 
@@ -137,7 +137,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             GameConf.suprimeMaxEnergy);
 
         CombatSys = GetComponent<CombatSystem>();
-        CombatSys.setupSystem(GameConf.suprimeDamage,
+        CombatSys.SetupSystem(GameConf.suprimeDamage,
             GameConf.suprimeCritDamage,
             0,
             GameConf.suprimeAttackRadius,
@@ -185,7 +185,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         PhotonNetwork.Destroy(gameObject);
     }
 
-    public void onSubjectDeath(IDeathSubject subject) {
+    public void OnSubjectDeath(IDeathSubject subject) {
         if (subject is Unit) {
             Units.Remove((Unit) subject);
         } else {

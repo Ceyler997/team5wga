@@ -92,7 +92,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     #region private methods
 
     // рассчитывает добавочный крит в текущий момент
-    private float getCrit() {
+    private float GetCrit() {
         float curCritChance = CritChance;
 
         if (CurrentMagicColor == BattleMagicColor.NO_COLOR) {
@@ -131,7 +131,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     #region public methods
 
     // Функция для настройки системы после инициализации
-    public void setupSystem(float basicDmg, float critDmg, float critChance, float atkRadius, float atkSpeed) {
+    public void SetupSystem(float basicDmg, float critDmg, float critChance, float atkRadius, float atkSpeed) {
         isSettedUp = true;
         Damage = basicDmg;
         CritDamage = critDmg;
@@ -142,20 +142,20 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     }
 
     // Если юнита атакуют, то его цель меняется на атакующего
-    public void attacked(IFightable attacker) {
+    public void Attacked(IFightable attacker) {
         IsUnderAttack = true;
         Target = attacker;
     }
 
     // возвращает true, если цель МОЖЕТ атаковать текущую цель (т.е. не учитывая откат атаки)
-    public bool attack() {
+    public bool Attack() {
         if(Vector3.Distance(transform.position, Target.Position) < AttackRadius) { // проверка расстояния
 
             if (Time.time >= NextAttackTime) { // проверка отката
                 // DEBUG
                 Debug.DrawLine(transform.position, Target.Position, Color.white, 0.2f);
 
-                frameDamage = Damage + getCrit(); // получение наносимого урона
+                frameDamage = Damage + GetCrit(); // получение наносимого урона
 
                 NextAttackTime = Time.time + AttackSpeed; // устанавливается откат
 
@@ -166,7 +166,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     }
     
     // получение уведомление о доступной цели. Если цели нет, то устанавливается полученная
-    public void getTargetNotification(IFightable target) {
+    public void GetTargetNotification(IFightable target) {
         if(Target == null) {
             Target = target;
         }
@@ -175,7 +175,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
 
     #region IDeathObserver implementation
 
-    public void onSubjectDeath(IDeathSubject subject) {
+    public void OnSubjectDeath(IDeathSubject subject) {
         if(subject == Target) {
             Target = null;
         } else {
@@ -212,7 +212,10 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
             bool targerChanged = (bool) stream.ReceiveNext();
 
             if (targerChanged) {
+                print("Received from " + info.sender.NickName);
+                print("Target of " + name + " changed");
                 int targetID = (int) stream.ReceiveNext();
+                print("ID: " + targetID);
                 if(targetID == 0) {
                     Target = null;
                 } else {
@@ -245,7 +248,7 @@ public interface IFightable : IDeathSubject {
 }
 
 public interface IDeathObserver {
-    void onSubjectDeath(IDeathSubject subject);
+    void OnSubjectDeath(IDeathSubject subject);
 }
 
 public interface IDeathSubject {

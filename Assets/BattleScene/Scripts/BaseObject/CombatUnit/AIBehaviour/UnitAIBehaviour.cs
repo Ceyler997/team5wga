@@ -20,10 +20,10 @@ abstract public class UnitAIBehaviour {
         CombatSystem cs = Subject.CombatSys;
         
         // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
-        if (cs.attack()) {
+        if (cs.Attack()) {
             Subject.MovementAgent.stop();
             if (cs.Target != null)
-                cs.Target.CombatSys.attacked(Subject);
+                cs.Target.CombatSys.Attacked(Subject);
         } else {
             Subject.MovementAgent.moveTo(cs.Target.Position);
         }
