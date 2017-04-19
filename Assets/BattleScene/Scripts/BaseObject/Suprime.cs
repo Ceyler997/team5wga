@@ -99,8 +99,9 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
         CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
 
-        while (Units.Count != 0) {
-            Units [0].SubjectDeath(); // При смерти мастера его юниты умирают
+        // При смерти мастера все его юниты умирают
+        foreach (Unit unit in Units) {
+            unit.SubjectDeath(); // Список не модифицируется из-за особенностей работы сетевой части
         }
 
         ControllingPlayer.Suprimes.Remove(this);
