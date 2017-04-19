@@ -18,8 +18,8 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     private float nextAttackTime; // минимальное время начала следующей атаки
 
     private IFightable target; // цель атаки
+    private bool isTargetChanged; // маркер смены цели
     private bool isUnderAttack; // атакуют ли цель
-    private bool isTargetChanged; // сигнал о смене цели
 
     private bool isSettedUp;
     #endregion
@@ -64,17 +64,20 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     public IFightable Target {
         get { return target; }
         set {
-            if(target != null) {
-                target.Detach(this);
-                target.CombatSys.IsUnderAttack = false; // Указываем, что мы больше не атакуем текущую цель
-            }
+            if (target != value) {
+                isTargetChanged = true;
 
-            if (value != null) {
-                value.Attach(this);
-            }
+                if (target != null) {
+                    target.Detach(this);
+                    target.CombatSys.IsUnderAttack = false; // Указываем, что мы больше не атакуем текущую цель
+                }
 
-            isTargetChanged = true;
-            target = value;
+                if (value != null) {
+                    value.Attach(this);
+                }
+
+                target = value;
+            }
         }
     }
 
@@ -149,7 +152,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
 
     // возвращает true, если цель МОЖЕТ атаковать текущую цель (т.е. не учитывая откат атаки)
     public bool Attack() {
-        if(Vector3.Distance(transform.position, Target.Position) < AttackRadius) { // проверка расстояния
+        if (Vector3.Distance(transform.position, Target.Position) < AttackRadius) { // проверка расстояния
 
             if (Time.time >= NextAttackTime) { // проверка отката
                 // DEBUG
@@ -161,13 +164,13 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
 
             }
             return true;
-        }        
+        }
         return false;
     }
-    
+
     // получение уведомление о доступной цели. Если цели нет, то устанавливается полученная
     public void GetTargetNotification(IFightable target) {
-        if(Target == null) {
+        if (Target == null) {
             Target = target;
         }
     }
@@ -176,7 +179,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     #region IDeathObserver implementation
 
     public void OnSubjectDeath(IDeathSubject subject) {
-        if(subject == Target) {
+        if (subject == Target) {
             Target = null;
         } else {
             throw new WrongDeathSubsciptionException();
@@ -189,34 +192,30 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             stream.SendNext(currentMagicColor.MagicID);
-
             stream.SendNext(isTargetChanged);
 
             if (isTargetChanged) {
-                if(Target != null) {
-                    stream.SendNext(((BaseObject) Target).photonView.viewID);
+                if (Target != null) {
+                    stream.SendNext(Target.ID);
                 } else {
                     stream.SendNext(0);
                 }
-
             }
 
             stream.SendNext(frameDamage);
+
             frameDamage = 0;
+            isTargetChanged = false;
         } else {
             int magicId = (int) stream.ReceiveNext();
-            if(magicId != currentMagicColor.MagicID) {
+            if (magicId != currentMagicColor.MagicID) {
                 currentMagicColor = BattleMagicColor.getMagicByID(magicId);
             }
 
-            bool targerChanged = (bool) stream.ReceiveNext();
-
-            if (targerChanged) {
-                print("Received from " + info.sender.NickName);
-                print("Target of " + name + " changed");
+            bool targetChanged = (bool) stream.ReceiveNext();
+            if (targetChanged) {
                 int targetID = (int) stream.ReceiveNext();
-                print("ID: " + targetID);
-                if(targetID == 0) {
+                if (targetID == 0) {
                     Target = null;
                 } else {
                     PhotonView targetView = PhotonView.Find(targetID);
@@ -224,19 +223,18 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
                         Target = targetView.GetComponent<IFightable>();
                     } else {
                         Target = null;
+                        Debug.LogWarning("OLD DATA");
                     }
                 }
             }
 
             float recievedDamage = (float) stream.ReceiveNext();
-            if(recievedDamage > 0) {
+            if (recievedDamage > 0 && Target != null) {
                 Target.HealthSystem.getDamage(recievedDamage);
                 // DEBUG
                 Debug.DrawLine(transform.position, Target.Position, Color.white, 0.2f);
             }
         }
-
-        isTargetChanged = false;
     }
     #endregion
 }
@@ -245,6 +243,7 @@ public interface IFightable : IDeathSubject {
     CombatSystem CombatSys { get; }
     Vector3 Position { get; }
     Health HealthSystem { get; }
+    int ID { get; }
 }
 
 public interface IDeathObserver {

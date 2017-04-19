@@ -37,7 +37,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
             case UnitState.CALM:
 
                 if (cs.IsUnderAttack) {
-                    attack();
+                    Attack();
                     // Для предотвращения зацикливания атак между двумя защищающими юнитами
                     cs.IsUnderAttack = false;
                     return;
@@ -72,7 +72,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     cs.Target = closestEnemy;
                 }
 
-                attack();
+                Attack();
                 cs.IsUnderAttack = false; 
 
                 break;

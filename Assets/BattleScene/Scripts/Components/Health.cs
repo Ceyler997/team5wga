@@ -63,9 +63,11 @@ public class Health : MonoBehaviour, IPunObservable {
 
     //Получение урона
     public void getDamage(float damage) {
-        CurrentHealth -= damage;
-        if (CurrentHealth <= 0)
-            die();
+        if (CurrentHealth > 0) {
+            CurrentHealth -= damage;
+            if (CurrentHealth <= 0)
+                die();
+        }
     }
     #endregion
 

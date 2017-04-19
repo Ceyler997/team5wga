@@ -99,11 +99,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
         CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
 
-        // При смерти мастера все его юниты умирают
-        foreach (Unit unit in Units) {
-            unit.SubjectDeath(); // Список не модифицируется из-за особенностей работы сетевой части
-        }
-
         ControllingPlayer.Suprimes.Remove(this);
     }
     #endregion
@@ -113,7 +108,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
         Player owner;
         GameManager.Instance.Players.TryGetValue(info.sender.ID, out owner);
-        setupSuprime(owner);
+        SetupSuprime(owner);
 
         owner.Suprimes.Add(this);
     }
@@ -121,8 +116,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region public methods
 
-    public void setupSuprime(Player controller) {
-        setupBaseObject(controller,
+    public void SetupSuprime(Player controller) {
+        SetupBaseObject(controller,
             GameConf.suprimeReactRadius,
             GameConf.suprimeDetectRadius);
 
@@ -161,7 +156,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     }
 
-    public void addUnit(Vector3 position) {
+    public void AddUnit(Vector3 position) {
         PhotonNetwork.Instantiate("CombatUnitPrefab",
             position,
             Quaternion.identity,
@@ -182,6 +177,10 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     }
 
     public void SubjectDeath() {
+        foreach (Unit unit in Units) {
+            unit.SubjectDeath(); // Список не модифицируется из-за особенностей работы сетевой части
+        }
+
         PhotonNetwork.Destroy(gameObject);
     }
 

@@ -56,7 +56,7 @@ public class GameManager : Photon.PunBehaviour{
             0);
 
         foreach (Crystal crystal in crystals) {
-            crystal.setupCrystal(null);
+            crystal.SetupCrystal(null);
         }
     }
 

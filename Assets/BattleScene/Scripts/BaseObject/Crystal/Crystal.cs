@@ -33,8 +33,8 @@ public class Crystal : BaseObject, ILeveable {
     }
     #endregion
 
-    public void setupCrystal(Player owner) {
-        setupBaseObject(owner,
+    public void SetupCrystal(Player owner) {
+        SetupBaseObject(owner,
             GameConf.crysAlarmRadius,
             GameConf.crysDetectRadius);
 

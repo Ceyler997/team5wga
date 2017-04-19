@@ -16,14 +16,12 @@ abstract public class UnitAIBehaviour {
         get {return subject;}
     }
 
-    protected void attack() {
+    protected void Attack() {
         CombatSystem cs = Subject.CombatSys;
         
         // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
         if (cs.Attack()) {
             Subject.MovementAgent.stop();
-            if (cs.Target != null)
-                cs.Target.CombatSys.Attacked(Subject);
         } else {
             Subject.MovementAgent.moveTo(cs.Target.Position);
         }

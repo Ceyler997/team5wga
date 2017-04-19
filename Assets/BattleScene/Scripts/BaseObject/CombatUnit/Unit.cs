@@ -78,7 +78,7 @@ public class Unit : BaseObject, IFightable {
 	{
 		int masterID = (int)photonView.instantiationData [0];
 		Suprime unitMaster = PhotonView.Find (masterID).GetComponent<Suprime> ();
-		setupUnit(unitMaster);
+		SetupUnit(unitMaster);
 		//unit.Behaviour = new UnitAgressiveBehaviour(unit);
 		Attach(unitMaster);
 		unitMaster.Units.Add (this);
@@ -116,8 +116,8 @@ public class Unit : BaseObject, IFightable {
 
     #region public methods
 
-    public void setupUnit(Suprime master) {
-        base.setupBaseObject(master.ControllingPlayer,
+    public void SetupUnit(Suprime master) {
+        base.SetupBaseObject(master.ControllingPlayer,
             GameConf.unitReactRadius,
             GameConf.unitDetectRadius);
 

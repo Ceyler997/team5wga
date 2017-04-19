@@ -38,7 +38,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
             }
         }
 
-        attack();
+        Attack();
     }
 
     public override void End() {

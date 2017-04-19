@@ -64,7 +64,7 @@ public class CharactersController : MonoBehaviour
 	public void SpawnUnit() {
 		if(SelectedUnit != null){
 			Suprime selectedSuprime = SelectedUnit.GetComponent<Suprime>();
-			selectedSuprime.addUnit(selectedSuprime.transform.position + 3 * Vector3.left);
+			selectedSuprime.AddUnit(selectedSuprime.transform.position + 3 * Vector3.left);
 		}
 	}
 }
