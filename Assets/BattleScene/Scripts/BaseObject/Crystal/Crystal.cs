@@ -3,7 +3,7 @@
 [RequireComponent (typeof (Energy))]
 [RequireComponent (typeof (Level))]
 [RequireComponent (typeof (Radius))]
-public class Crystal : BaseObject, ILeveable {
+public class Crystal : BaseObject, ILeveable, IPunObservable {
 
     #region private fields
 
@@ -49,6 +49,12 @@ public class Crystal : BaseObject, ILeveable {
         RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
 
+    // метод для смены владельца, вызывается на стороне нового владельца
+    public void ChangeOwner(Player newOwner) {
+        ControllingPlayer = newOwner;
+        photonView.RequestOwnership();
+    }
+
     #region MonoBehaviours methods
     
     new void Update() {
@@ -56,6 +62,8 @@ public class Crystal : BaseObject, ILeveable {
         //Если кто-нибудь владеет кристалом то вырабатываем энергию
         if (ControllingPlayer != null)
             EnergySystem.changeEnergy(RegenSpeed * Time.deltaTime);
+
+        owner = ControllingPlayer;
     }
     #endregion
 
@@ -65,6 +73,25 @@ public class Crystal : BaseObject, ILeveable {
         LevelSystem.levelUp();
         RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
+    #endregion
 
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            if (ControllingPlayer != null) {
+                stream.SendNext(ControllingPlayer.ID);
+            } else {
+                stream.SendNext(-1);
+            }
+        } else {
+            int receivedID = (int) stream.ReceiveNext();
+            if (receivedID != -1 && (ControllingPlayer == null || receivedID != ControllingPlayer.ID)) {
+                Player newOwner;
+                GameManager.Instance.Players.TryGetValue(receivedID, out newOwner);
+                ControllingPlayer = newOwner;
+            }
+        }
+    }
     #endregion
 }
