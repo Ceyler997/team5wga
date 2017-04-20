@@ -79,7 +79,7 @@ public class Unit : BaseObject, IFightable {
 		int masterID = (int)photonView.instantiationData [0];
 		Suprime unitMaster = PhotonView.Find (masterID).GetComponent<Suprime> ();
 		SetupUnit(unitMaster);
-		//unit.Behaviour = new UnitAgressiveBehaviour(unit);
+		//Behaviour = new UnitAgressiveBehaviour(this);
 		Attach(unitMaster);
 		unitMaster.Units.Add (this);
 	}
@@ -131,7 +131,8 @@ public class Unit : BaseObject, IFightable {
             this);
 
         CombatSys = GetComponent<CombatSystem>();
-        CombatSys.SetupSystem(GameConf.unitDamage,
+        CombatSys.SetupSystem(this,
+            GameConf.unitDamage,
             GameConf.unitCritDamage,
             GameConf.unitBasicCritChance,
             GameConf.unitAttackRadius,

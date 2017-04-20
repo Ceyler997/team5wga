@@ -132,7 +132,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             GameConf.suprimeMaxEnergy);
 
         CombatSys = GetComponent<CombatSystem>();
-        CombatSys.SetupSystem(GameConf.suprimeDamage,
+        CombatSys.SetupSystem(this,
+            GameConf.suprimeDamage,
             GameConf.suprimeCritDamage,
             0,
             GameConf.suprimeAttackRadius,

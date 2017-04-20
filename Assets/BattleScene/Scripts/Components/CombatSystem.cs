@@ -18,13 +18,14 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     private float nextAttackTime; // минимальное время начала следующей атаки
 
     private IFightable target; // цель атаки
-    private bool isTargetChanged; // маркер смены цели
     private bool isUnderAttack; // атакуют ли цель
 
     private bool isSettedUp;
     #endregion
 
-    #region getters and setters
+    #region properties
+
+    private IFightable Subject { get; set; }
 
     public float Damage {
         get { return damage; }
@@ -65,7 +66,6 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
         get { return target; }
         set {
             if (target != value) {
-                isTargetChanged = true;
 
                 if (target != null) {
                     target.Detach(this);
@@ -114,6 +114,11 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
             return 0;
         }
     }
+
+    private void DealDamage(float damage) {
+        Target.HealthSystem.getDamage(damage);
+        Target.CombatSys.Attacked(Subject);
+    }
     #endregion
 
     #region MonoBehaviour methods
@@ -134,14 +139,19 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     #region public methods
 
     // Функция для настройки системы после инициализации
-    public void SetupSystem(float basicDmg, float critDmg, float critChance, float atkRadius, float atkSpeed) {
-        isSettedUp = true;
+    public void SetupSystem(IFightable subject, float basicDmg, float critDmg, float critChance, 
+        float atkRadius, float atkSpeed) {
+        Subject = subject;
+
         Damage = basicDmg;
         CritDamage = critDmg;
         CritChance = critChance;
+
         AttackRadius = atkRadius;
         AttackSpeed = atkSpeed;
+
         currentMagicColor = BattleMagicColor.NO_COLOR;
+        isSettedUp = true;
     }
 
     // Если юнита атакуют, то его цель меняется на атакующего
@@ -192,45 +202,37 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
         if (stream.isWriting) {
             stream.SendNext(currentMagicColor.MagicID);
-            stream.SendNext(isTargetChanged);
 
-            if (isTargetChanged) {
-                if (Target != null) {
-                    stream.SendNext(Target.ID);
-                } else {
-                    stream.SendNext(0);
-                }
+            if (Target != null) {
+                stream.SendNext(Target.ID);
+            } else {
+                stream.SendNext(0);
             }
 
             stream.SendNext(frameDamage);
 
             frameDamage = 0;
-            isTargetChanged = false;
         } else {
             int magicId = (int) stream.ReceiveNext();
             if (magicId != currentMagicColor.MagicID) {
                 currentMagicColor = BattleMagicColor.getMagicByID(magicId);
             }
 
-            bool targetChanged = (bool) stream.ReceiveNext();
-            if (targetChanged) {
-                int targetID = (int) stream.ReceiveNext();
-                if (targetID == 0) {
-                    Target = null;
+            int receivedID = (int) stream.ReceiveNext();
+            if (receivedID == 0) {
+                Target = null;
+            } else if (Target == null || Target.ID != receivedID) {
+                PhotonView targetView = PhotonView.Find(receivedID);
+                if (targetView != null) {
+                    Target = targetView.GetComponent<IFightable>();
                 } else {
-                    PhotonView targetView = PhotonView.Find(targetID);
-                    if (targetView != null) {
-                        Target = targetView.GetComponent<IFightable>();
-                    } else {
-                        Target = null;
-                        Debug.LogWarning("OLD DATA");
-                    }
+                    Target = null;
                 }
             }
 
-            float recievedDamage = (float) stream.ReceiveNext();
-            if (recievedDamage > 0 && Target != null) {
-                Target.HealthSystem.getDamage(recievedDamage);
+            float receivedDamage = (float) stream.ReceiveNext();
+            if (receivedDamage > 0 && Target != null) {
+                DealDamage(receivedDamage);
                 // DEBUG
                 Debug.DrawLine(transform.position, Target.Position, Color.white, 0.2f);
             }
