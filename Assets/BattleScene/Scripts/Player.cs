@@ -2,16 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Player : MonoBehaviour {
+public class Player : Photon.PunBehaviour {
 
     #region private fields
 
     public string playerName; //Имя игрока
-    private Suprime[] suprimes; //ВС, которыми владеет игрок
-    private int suprimeCount; //Текущее кол-во ВС
+    private List<Suprime> suprimes; //ВС, которыми владеет игрок
     private List<Crystal> crystals; //Кристалы, которыми владеет игрок
-    // Use this for initialization
-    public GameObject SuprimePrefab;
+    private bool isMe;
     #endregion
 
     #region getters and setters
@@ -23,15 +21,9 @@ public class Player : MonoBehaviour {
     }
 
     //Возвращает массив кристаллов принадлежавших игроку
-    public Suprime [] Suprimes {
+    public List<Suprime> Suprimes {
         get { return suprimes; }
         set { suprimes = value; }
-    }
-
-    //Возвращает кол-во ВС под контролем игрока
-    public int SuprimeCount {
-        get { return suprimeCount; }
-        set { suprimeCount = value; }
     }
 
     //Возвращает массив кристаллов принадлежавших игроку
@@ -39,17 +31,39 @@ public class Player : MonoBehaviour {
         get { return crystals; }
         set { crystals = value; }
     }
+
+    public bool IsMe {
+        get { return isMe; }
+    }
+
+    public int ID { get; private set; }
+    #endregion
+
+    #region MonoBehaviour methods
+    public override void OnPhotonInstantiate(PhotonMessageInfo info) {
+        GameManager.Instance.Players.Add(info.sender.ID, this);
+        setupPlayer(info.sender.NickName);
+        isMe = info.sender.IsLocal;
+        ID = info.sender.ID;
+    }
     #endregion
 
     #region public methods
 
     //Добавляет ВС в массив suprimes
     public void addSuprime(Vector3 position) {
-        if(SuprimeCount < GameConf.maxSuprimeAmount) {
-            Suprime suprime = Instantiate(SuprimePrefab, position, Quaternion.identity).GetComponent<Suprime>();
-            suprime.setupSuprime(this);
-            suprimes[SuprimeCount] = suprime;
-            ++SuprimeCount;
+        if (Suprimes.Count < GameConf.maxSuprimeAmount) {
+            if (PhotonNetwork.connected) {
+                PhotonNetwork.Instantiate("SuprimePrefab",
+                    position,
+                    Quaternion.identity,
+                    0);
+            } else if (OfflineGameManager.Instance != null) {
+                Suprime newSuprime = Instantiate(OfflineGameManager.Instance.suprimePrefab, position, Quaternion.identity).GetComponent<Suprime>();
+                newSuprime.SetupSuprime(this);
+            } else {
+                Debug.LogError("Trying to run offline without OfflineGameManager");
+            }
         } else {
             throw new TooMuchSuprimesException();
         }
@@ -60,16 +74,14 @@ public class Player : MonoBehaviour {
         crystal.ControllingPlayer = this;
     }
 
-    public void setupPlayer() {
-        suprimes = new Suprime [GameConf.maxSuprimeAmount];
+    public void setupPlayer(String ownerName) {
+        suprimes = new List<Suprime>();
         crystals = new List<Crystal>();
-        addSuprime(transform.position);
-    }
-    #endregion
+        PlayerName = ownerName;
 
-    #region DEBUG
-    public void spawnUnit() {
-        Suprimes [0].spawnUnit();
+        if (photonView.isMine) {
+            addSuprime(transform.position);
+        }
     }
     #endregion
 }

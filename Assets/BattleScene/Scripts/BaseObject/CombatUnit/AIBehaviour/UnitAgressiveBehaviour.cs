@@ -38,7 +38,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
             }
         }
 
-        attack();
+        Attack();
     }
 
     public override void End() {
@@ -51,7 +51,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
     public void onObjectEnter(BaseObject enteredObject) {
         if (enteredObject.ControllingPlayer != Subject.ControllingPlayer 
             && enteredObject is IFightable) {
-            Subject.CombatSys.getTargetNotification((IFightable) enteredObject);
+            Subject.CombatSys.GetTargetNotification((IFightable) enteredObject);
             notifyUnitsAboutTarget();
         }
     }
@@ -64,7 +64,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
     // уведомляет всех юнитов у мастера о цели
     private void notifyUnitsAboutTarget() {
         foreach (Unit unit in Subject.Master.Units) {
-            unit.CombatSys.getTargetNotification(Subject.CombatSys.Target);
+            unit.CombatSys.GetTargetNotification(Subject.CombatSys.Target);
         }
     }
     #endregion

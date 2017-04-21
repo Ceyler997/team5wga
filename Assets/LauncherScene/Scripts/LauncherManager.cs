@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.UI;
 
 public class LauncherManager : Photon.PunBehaviour {
@@ -95,9 +93,9 @@ public class LauncherManager : Photon.PunBehaviour {
     public override void OnJoinedRoom() {
         Debug.Log("Joined to room");
 
-        if (PhotonNetwork.isMasterClient) {//if we are first in room
+        if (PhotonNetwork.isMasterClient) { // if we are first in room
             progressMessage.text = LocalizationManager.getTextByKey("waitingPlayer");
-        } else {//if not, master will load level
+        } else { // if not, master will load level
             progressMessage.text = LocalizationManager.getTextByKey("ready");
         }
     }

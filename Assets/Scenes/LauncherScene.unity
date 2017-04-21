@@ -970,7 +970,7 @@ GameObject:
   - component: {fileID: 813727993}
   - component: {fileID: 813727994}
   m_Layer: 0
-  m_Name: GameManager
+  m_Name: LauncherManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -1005,7 +1005,7 @@ MonoBehaviour:
   popUp: {fileID: 1918680962}
   logLevel: 0
   gameVersion: 1
-  battleSceneName: SuprimeScene
+  battleSceneName: BattleScene
 --- !u!1 &821504152
 GameObject:
   m_ObjectHideFlags: 0

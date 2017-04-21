@@ -133,7 +133,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
     #region IDeathObserver implementation
 
-    public void onSubjectDeath(IDeathSubject subject) {
+    public void OnSubjectDeath(IDeathSubject subject) {
         if (subject is BaseObject) {
             tryToRemoveObject((BaseObject) subject);
         } else {

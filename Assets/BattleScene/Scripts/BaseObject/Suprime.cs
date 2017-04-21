@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using UnityEngine;
 
 //systems
@@ -90,12 +88,36 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             // transform.position = new Vector3(0, 0, 0);
         }
     }
+
+    public void OnDestroy() {
+
+        while (DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список динамически изменяется
+            IDeathObserver observer = DeathObservers [0];
+            observer.OnSubjectDeath(this);
+            Detach(observer); // При смерти объекта его подписчики от него отписываются
+        }
+
+        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
+
+        ControllingPlayer.Suprimes.Remove(this);
+    }
+    #endregion
+
+    #region PunBehaviour methods
+
+    public override void OnPhotonInstantiate(PhotonMessageInfo info) {
+        Player owner;
+        GameManager.Instance.Players.TryGetValue(info.sender.ID, out owner);
+        SetupSuprime(owner);
+
+        owner.Suprimes.Add(this);
+    }
     #endregion
 
     #region public methods
 
-    public void setupSuprime(Player controller) {
-        setupBaseObject(controller,
+    public void SetupSuprime(Player controller) {
+        SetupBaseObject(controller,
             GameConf.suprimeReactRadius,
             GameConf.suprimeDetectRadius);
 
@@ -110,7 +132,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             GameConf.suprimeMaxEnergy);
 
         CombatSys = GetComponent<CombatSystem>();
-        CombatSys.setupSystem(GameConf.suprimeDamage,
+        CombatSys.SetupSystem(this,
+            GameConf.suprimeDamage,
             GameConf.suprimeCritDamage,
             0,
             GameConf.suprimeAttackRadius,
@@ -134,20 +157,21 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     }
 
-    #endregion
-
-    #region DEBUG
-
-    public GameObject UnitPrefab;
-
-    public void spawnUnit() {
-        Unit unit = Instantiate(UnitPrefab, transform.position + Vector3.left * 3, Quaternion.identity).GetComponent<Unit>();
-        unit.setupUnit(this);
-        //unit.Behaviour = new UnitAgressiveBehaviour(unit);
-        unit.Attach(this);
-
-        units.Add(unit);
+    public void AddUnit(Vector3 position) {
+        if (PhotonNetwork.connected) {
+            PhotonNetwork.Instantiate("CombatUnitPrefab",
+            position,
+            Quaternion.identity,
+            0,
+            new object [] { photonView.viewID });
+        } else if (OfflineGameManager.Instance != null) {
+            Unit newUnit = Instantiate(OfflineGameManager.Instance.unitPrefab, position, Quaternion.identity).GetComponent<Unit>();
+            newUnit.SetupUnit(this);
+        } else {
+            Debug.LogError("Trying to run offline without OfflineGameManager");
+        }
     }
+
     #endregion
 
     #region IDeathSubject implementation
@@ -161,22 +185,14 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     }
 
     public void SubjectDeath() {
-        while (DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список динамически изменяется
-            IDeathObserver observer = DeathObservers [0];
-            observer.onSubjectDeath(this);
-            Detach(observer); // При смерти объекта его подписчики от него отписываются
+        foreach (Unit unit in Units) {
+            unit.SubjectDeath(); // Список не модифицируется из-за особенностей работы сетевой части
         }
 
-        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
-
-        while (Units.Count!=0) {
-            Units [0].SubjectDeath(); // При смерти юнит уходит из списка прикреплённых юнитов
-        }
-
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
 
-    public void onSubjectDeath(IDeathSubject subject) {
+    public void OnSubjectDeath(IDeathSubject subject) {
         if (subject is Unit) {
             Units.Remove((Unit) subject);
         } else {
@@ -187,7 +203,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region IRadiusObserver implememntation
 
-    #endregion
     public void onObjectEnter(BaseObject enteredObject) {
         //Если кристалл, то ставим как текущий
         if (enteredObject is Crystal) {
@@ -213,4 +228,5 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             Debug.Log("i saw an Suprime");
         }
     }
+    #endregion
 }

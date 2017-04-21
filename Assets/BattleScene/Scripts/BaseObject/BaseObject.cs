@@ -1,7 +1,8 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 [RequireComponent(typeof(Radius))]
-public class BaseObject : MonoBehaviour {
+public class BaseObject : Photon.PunBehaviour {
 
     #region private fields
 
@@ -39,6 +40,8 @@ public class BaseObject : MonoBehaviour {
     public Vector3 Position {
         get { return transform.position; }
     }
+
+    public int ID { get; set; }
     #endregion
 
     #region MonoBehaviour methods
@@ -52,11 +55,12 @@ public class BaseObject : MonoBehaviour {
 
     #region protected methods
 
-    protected void setupBaseObject(Player controllingPlayer, float reactDistance, float detectRadius) {
+    protected void SetupBaseObject(Player controllingPlayer, float reactDistance, float detectRadius) {
         this.controllingPlayer = controllingPlayer;
         this.reactDistance = reactDistance;
         this.detectRadius = GetComponent<Radius>();
         this.detectRadius.setupSystem(detectRadius, controllingPlayer);
+        ID = photonView.viewID;
         IsSettedUp = true;
     }
     #endregion

@@ -46,4 +46,6 @@ public class TooMuchSuprimesException : Exception { } // Исключение п
 public class AttemptToManagerReassignmentException : Exception { } // Исключение при попытке переназначить менеджера
 
 public class WrongDeathSubsciptionException : Exception { } // Исключение при неправильной подписке или попытке подписаться на null
+
+public class UnknownMagicException : Exception { } // Исключение при получении неизвестного MagicID
 #endregion
