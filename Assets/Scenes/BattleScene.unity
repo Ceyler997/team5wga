@@ -391,12 +391,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5465802828cc80144b04359322e423fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: []
-  meshFilter: {fileID: 0}
-  linkedToClones: 0
-  generateRim: 0
-  rimWidth: 0.7
-  rimFadeModifier: 1.5
 --- !u!23 &512315726
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -946,12 +940,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5465802828cc80144b04359322e423fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  points: []
-  meshFilter: {fileID: 0}
-  linkedToClones: 0
-  generateRim: 0
-  rimWidth: 0.7
-  rimFadeModifier: 1.5
 --- !u!23 &1283489251
 MeshRenderer:
   m_ObjectHideFlags: 0
