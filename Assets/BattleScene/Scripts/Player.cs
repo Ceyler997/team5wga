@@ -52,11 +52,18 @@ public class Player : Photon.PunBehaviour {
 
     //Добавляет ВС в массив suprimes
     public void addSuprime(Vector3 position) {
-        if(Suprimes.Count < GameConf.maxSuprimeAmount) {
-            PhotonNetwork.Instantiate("SuprimePrefab",
-                position,
-                Quaternion.identity,
-                0);
+        if (Suprimes.Count < GameConf.maxSuprimeAmount) {
+            if (PhotonNetwork.connected) {
+                PhotonNetwork.Instantiate("SuprimePrefab",
+                    position,
+                    Quaternion.identity,
+                    0);
+            } else if (OfflineGameManager.Instance != null) {
+                Suprime newSuprime = Instantiate(OfflineGameManager.Instance.suprimePrefab, position, Quaternion.identity).GetComponent<Suprime>();
+                newSuprime.SetupSuprime(this);
+            } else {
+                Debug.LogError("Trying to run offline without OfflineGameManager");
+            }
         } else {
             throw new TooMuchSuprimesException();
         }
