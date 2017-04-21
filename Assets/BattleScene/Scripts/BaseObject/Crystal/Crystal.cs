@@ -49,7 +49,7 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
 
-    // метод для смены владельца, вызывается на стороне нового владельца
+    // Метод для смены владельца, вызывается на стороне нового владельца
     public void ChangeOwner(Player newOwner) {
         ControllingPlayer = newOwner;
         photonView.RequestOwnership();
@@ -59,11 +59,9 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
     
     new void Update() {
         base.Update();
-        //Если кто-нибудь владеет кристалом то вырабатываем энергию
+        // Если кто-нибудь владеет кристалом то вырабатываем энергию
         if (ControllingPlayer != null)
             EnergySystem.changeEnergy(RegenSpeed * Time.deltaTime);
-
-        owner = ControllingPlayer;
     }
     #endregion
 
