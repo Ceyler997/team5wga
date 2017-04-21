@@ -52,7 +52,9 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
     // Метод для смены владельца, вызывается на стороне нового владельца
     public void ChangeOwner(Player newOwner) {
         ControllingPlayer = newOwner;
-        photonView.RequestOwnership();
+        if (PhotonNetwork.connected) {
+            photonView.RequestOwnership();
+        }
     }
 
     #region MonoBehaviours methods
@@ -90,6 +92,14 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
                 ControllingPlayer = newOwner;
             }
         }
+    }
+    #endregion
+
+    #region DEBUG
+    public Player owner;
+
+    public void SetOwner() {
+        ChangeOwner(owner);
     }
     #endregion
 }
