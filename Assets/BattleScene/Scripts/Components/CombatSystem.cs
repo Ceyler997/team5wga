@@ -169,6 +169,10 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
                 Debug.DrawLine(transform.position, Target.Position, Color.white, 0.2f);
 
                 frameDamage = Damage + GetCrit(); // получение наносимого урона
+                
+                if(!PhotonNetwork.connected && OfflineGameManager.Instance != null) {
+                    DealDamage(frameDamage);
+                }
 
                 NextAttackTime = Time.time + AttackSpeed; // устанавливается откат
 

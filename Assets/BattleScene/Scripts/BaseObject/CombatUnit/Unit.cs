@@ -80,8 +80,6 @@ public class Unit : BaseObject, IFightable {
 		Suprime unitMaster = PhotonView.Find (masterID).GetComponent<Suprime> ();
 		SetupUnit(unitMaster);
 		//Behaviour = new UnitAgressiveBehaviour(this);
-		Attach(unitMaster);
-		unitMaster.Units.Add (this);
 	}
 	#endregion
 
@@ -96,7 +94,7 @@ public class Unit : BaseObject, IFightable {
         if (Behaviour == null) {
             throw new UnitHaveNoBehaviourException();
         }
-		if(photonView.isMine){
+		if(photonView.isMine || OfflineGameManager.Instance != null){
 			Behaviour.UpdateState();
 		}
     }
@@ -143,6 +141,9 @@ public class Unit : BaseObject, IFightable {
         DeathObservers = new List<IDeathObserver>();
 
         Behaviour = new UnitProtectiveBehaviour(this, master);
+
+        Attach(master); // подписываем мастера на свою смерть
+        master.Units.Add(this); // добавляемся в список юнитов
     }
     #endregion
 
@@ -156,7 +157,7 @@ public class Unit : BaseObject, IFightable {
         DeathObservers.Remove(observer);
     }
 
-    public void SubjectDeath() {		
+    public void SubjectDeath() {
         PhotonNetwork.Destroy(gameObject);
     }
     #endregion

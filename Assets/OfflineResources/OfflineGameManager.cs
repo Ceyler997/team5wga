@@ -56,6 +56,10 @@ public class OfflineGameManager : MonoBehaviour {
     public void Start() {
         Instance = this; // singletone
 
+        if (GameManager.Instance != null) {
+            Debug.LogError("Both online and offline managers is turned on!");
+        }
+
         foreach (Crystal crystal in crystals) {
             crystal.SetupCrystal(null);
         }

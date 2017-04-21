@@ -47,6 +47,9 @@ public class GameManager : Photon.PunBehaviour{
 
     public void Start() {
         Instance = this; // singletone
+        if(OfflineGameManager.Instance != null) {
+            Debug.LogError("Both online and offline managers is turned on!");
+        }
 
         StartPosition [] startPositions = GetComponentsInChildren<StartPosition>(); // получаем все стартовые позиции
 
