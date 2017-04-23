@@ -7,7 +7,7 @@ public class BaseObject : MonoBehaviour {
 
     private Player controllingPlayer; // игрок, который является владельцем объекта
     private float reactDistance; // на этом расстоянии происходит взаимодействие с объектом
-    private Radius detectRadius; // радиус вокруг объекта, в котором будут видны объекты
+    protected Radius detectRadius; // радиус вокруг объекта, в котором будут видны объекты
     private bool isSettedUp;
     #endregion
 

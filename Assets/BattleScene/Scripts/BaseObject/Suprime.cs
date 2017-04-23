@@ -9,9 +9,11 @@ using UnityEngine;
 [RequireComponent(typeof(CombatSystem))]
 [RequireComponent(typeof(Level))]
 [RequireComponent(typeof(Movement))]
+
 //spells
 [RequireComponent(typeof(Teleport))]
 [RequireComponent(typeof(CaptureCrystal))]
+
 public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region private fields
@@ -24,7 +26,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     private Movement moveSystem; // Передвижение
     private List<Unit> units; //Юниты, прикреплённые к данному ВС
     private Crystal currentCrystal; //текущий кристалл, в радиусе которого находится ВС
-
     private SuprimeMagic teleport; //Телепорт к ближайшему кристаллу
     private SuprimeMagic captureCrystal; //захват кристалла
 
@@ -125,6 +126,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         units = new List<Unit>();
         DeathObservers = new List<IDeathObserver>();
 
+        detectRadius.Attach(this);
+
         //Инициализация магии
         teleport = GetComponent<Teleport>();
         teleport.setup(this, GameConf.TeleportCostEnergy, GameConf.TeleportCastTime);
@@ -189,11 +192,10 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #endregion
     public void onObjectEnter(BaseObject enteredObject) {
+        Crystal crystal = (Crystal)enteredObject;
         //Если кристалл, то ставим как текущий
         if (enteredObject is Crystal) {
-            Crystal crystal = (Crystal) enteredObject;
-            if (crystal != null) // можно узнать зачем эта проверка?
-                CurrentCrystal = crystal;
+            CurrentCrystal = crystal;
         }
 
         if (enteredObject is Suprime) {
