@@ -72,6 +72,17 @@ public class Unit : BaseObject, IFightable {
     }
     #endregion
 
+	#region PunBehaviour methods
+
+	public override void OnPhotonInstantiate (PhotonMessageInfo info)
+	{
+		int masterID = (int)photonView.instantiationData [0];
+		Suprime unitMaster = PhotonView.Find (masterID).GetComponent<Suprime> ();
+		SetupUnit(unitMaster);
+		//Behaviour = new UnitAgressiveBehaviour(this);
+	}
+	#endregion
+
     #region MonoBehaviour methods
 
     new public void Update() { // Проверяем, есть ли мастер у юнита
@@ -83,15 +94,28 @@ public class Unit : BaseObject, IFightable {
         if (Behaviour == null) {
             throw new UnitHaveNoBehaviourException();
         }
-
-        Behaviour.UpdateState();
+		if(photonView.isMine || OfflineGameManager.Instance != null){
+			Behaviour.UpdateState();
+		}
     }
+
+    public void OnDestroy() {
+		while(DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список изменяется в процессе обхода
+            // Подписчик по своим внутренним алгоритмам может как отписаться, так и не отписаться
+            // поэтому мы берём отдельного подписчика, а не обращаемся по индексу (первый объект может измениться)
+            IDeathObserver observer = DeathObservers [0];
+            observer.OnSubjectDeath(this);
+            Detach(observer); // При смерти объекта отписываем его подписчиков
+        }
+
+        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
+	}
     #endregion
 
     #region public methods
 
-    public void setupUnit(Suprime master) {
-        base.setupBaseObject(master.ControllingPlayer,
+    public void SetupUnit(Suprime master) {
+        base.SetupBaseObject(master.ControllingPlayer,
             GameConf.unitReactRadius,
             GameConf.unitDetectRadius);
 
@@ -105,7 +129,8 @@ public class Unit : BaseObject, IFightable {
             this);
 
         CombatSys = GetComponent<CombatSystem>();
-        CombatSys.setupSystem(GameConf.unitDamage,
+        CombatSys.SetupSystem(this,
+            GameConf.unitDamage,
             GameConf.unitCritDamage,
             GameConf.unitBasicCritChance,
             GameConf.unitAttackRadius,
@@ -115,8 +140,10 @@ public class Unit : BaseObject, IFightable {
 
         DeathObservers = new List<IDeathObserver>();
 
-        //Behaviour = new UnitProtectiveBehaviour(this, master);
-        Behaviour = new UnitAgressiveBehaviour(this);
+        Behaviour = new UnitProtectiveBehaviour(this, master);
+
+        Attach(master); // подписываем мастера на свою смерть
+        master.Units.Add(this); // добавляемся в список юнитов
     }
     #endregion
 
@@ -131,17 +158,7 @@ public class Unit : BaseObject, IFightable {
     }
 
     public void SubjectDeath() {
-        while(DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список изменяется в процессе обхода
-            // Подписчик по своим внутренним алгоритмам может как отписаться, так и не отписаться
-            // поэтому мы берём отдельного подписчика, а не обращаемся по индексу (первый объект может измениться)
-            IDeathObserver observer = DeathObservers [0];
-            observer.onSubjectDeath(this);
-            Detach(observer); // При смерти объекта отписываем его подписчиков
-        }
-
-        CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
-
-        Destroy(gameObject);
+        PhotonNetwork.Destroy(gameObject);
     }
     #endregion
 }

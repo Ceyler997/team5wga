@@ -27,14 +27,15 @@ public class CharactersController : MonoBehaviour
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (SelectedUnit != null) {
-                SelectedUnit.deselectUnit();
-                SelectedUnit = null;
-            }
-
             if (Physics.Raycast(ray, out hit)) {
+			
+				if (SelectedUnit != null) {
+					SelectedUnit.deselectUnit();
+					SelectedUnit = null;
+				}
+
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
-                if (unit != null) {
+                if (unit != null && (unit.photonView.isMine || OfflineGameManager.Instance != null)) {
                     unit.selectUnit();
                     SelectedUnit = unit;
                 }
@@ -59,4 +60,11 @@ public class CharactersController : MonoBehaviour
     //    else return false;
 
     //}
+
+	public void SpawnUnit() {
+		if(SelectedUnit != null){
+			Suprime selectedSuprime = SelectedUnit.GetComponent<Suprime>();
+			selectedSuprime.AddUnit(selectedSuprime.transform.position + 3 * Vector3.left);
+		}
+	}
 }

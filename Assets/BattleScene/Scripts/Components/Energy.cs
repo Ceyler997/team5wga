@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-public class Energy : MonoBehaviour {
+public class Energy : MonoBehaviour, IPunObservable {
 
     #region private fields
 
@@ -13,19 +13,16 @@ public class Energy : MonoBehaviour {
 
     public float CurrentEnergy {
         get { return currentEnergy; }
-
         set { currentEnergy = value; }
     }
 
     private float MaxEnergy {
         get { return maxEnergy; }
-
         set { maxEnergy = value; }
     }
 
     private bool IsSettedUp {
         get { return isSettedUp; }
-
         set { isSettedUp = value; }
     }
     #endregion
@@ -48,6 +45,17 @@ public class Energy : MonoBehaviour {
     private void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
+        }
+    }
+    #endregion
+
+    #region IPunObservable implementation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            stream.SendNext(CurrentEnergy);
+        } else {
+            CurrentEnergy = (float) stream.ReceiveNext();
         }
     }
     #endregion

@@ -1,15 +1,22 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 
 public class Teleport : SuprimeMagic {
 
     public override void cast() {
         int lenght = OwnerSuprime.ControllingPlayer.Crystals.Count;
-        if (OwnerSuprime.EnergySystem.CurrentEnergy >= CastEnergy && lenght > 0) {
-            //Установка начальныйх значений времени каста
-            CurrentDurationTime = GameConf.TeleportCastTime;
-            //Запуск таймера
-            IsAbleToCast = true;
-        }
+        // если мы уже кастуем, то ничего не меняем
+        if (!IsAbleToCast)
+            if (OwnerSuprime.EnergySystem.CurrentEnergy >= CastEnergy && lenght > 0) {
+                //Установка начальныйх значений времени каста
+                CurrentDurationTime = GameConf.TeleportCastTime;
+                //Запуск таймера
+                IsAbleToCast = true;
+            }
+    }
+
+    protected override bool CastCondition() {
+        return canNotRun();
     }
 
     protected override void CastMagic() {

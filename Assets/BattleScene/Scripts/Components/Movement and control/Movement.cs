@@ -18,6 +18,9 @@ public class Movement : MonoBehaviour {
         get {return navigationAgent;}
         set {navigationAgent = value;}
     }
+    public bool IsFinishedMovement {
+        get { return NavigationAgent.remainingDistance < DESTINATION_EPS; }
+    }
 
     public bool IsSettedUp {
         get { return isSettedUp; }
@@ -30,7 +33,7 @@ public class Movement : MonoBehaviour {
     public void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
-        }
+        }      
     }
     #endregion
 

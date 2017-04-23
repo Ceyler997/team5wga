@@ -30,8 +30,9 @@ public abstract class Magic: MonoBehaviour {
     // итоговый результат выполнения магии, для каждой магии своя реализация
     protected abstract void CastMagic();
 
-    //Задержка перед кастом
+    // Задержка перед выполнением заклинания
     void castDelay() {
+        if (CastCondition()) decast();
         CurrentDurationTime -= 1.0f * Time.deltaTime;
         Debug.Log(CurrentDurationTime);
         if (CurrentDurationTime <= 0) {
@@ -39,6 +40,10 @@ public abstract class Magic: MonoBehaviour {
             CastMagic();
         }
     }
+    
+
+    // условия, которые должны выполнятся при произнесении заклинания
+    protected abstract bool CastCondition();
 
     protected void decast() {
         IsAbleToCast = false;
@@ -47,20 +52,37 @@ public abstract class Magic: MonoBehaviour {
 }
 
 public class BattleMagicColor { // TODO move to group magic
-    public static readonly BattleMagicColor NO_COLOR = new BattleMagicColor(NO_COLOR);
-    public static readonly BattleMagicColor WHITE = new BattleMagicColor(BLACK);
-    public static readonly BattleMagicColor RED = new BattleMagicColor(WHITE);
-    public static readonly BattleMagicColor BLACK = new BattleMagicColor(RED);
-
-    private BattleMagicColor counterMagic;
-
+    public static readonly BattleMagicColor NO_COLOR = new BattleMagicColor(NO_COLOR, 0);
+    public static readonly BattleMagicColor WHITE = new BattleMagicColor(BLACK, 1);
+    public static readonly BattleMagicColor RED = new BattleMagicColor(WHITE, 2);
+    public static readonly BattleMagicColor BLACK = new BattleMagicColor(RED, 3);
+    
     public BattleMagicColor CounterMagic {
-        get {
-            return counterMagic;
-        }
+        get;
+        private set;
     }
 
-    private BattleMagicColor(BattleMagicColor counterMagic) {
-        this.counterMagic = counterMagic;
+    public int MagicID {
+        get;
+        private set;
+    }
+
+    private BattleMagicColor(BattleMagicColor counterMagic, int ID) {
+        CounterMagic = counterMagic;
+        MagicID = ID;
+    }
+
+    public static BattleMagicColor getMagicByID(int ID) {
+        if(ID == NO_COLOR.MagicID) {
+            return NO_COLOR;
+        } else if (ID == WHITE.MagicID) {
+            return WHITE;
+        } else if(ID== RED.MagicID) {
+            return RED;
+        } else if (ID == BLACK.MagicID) {
+            return BLACK;
+        } else {
+            throw new UnknownMagicException();
+        }
     }
 }

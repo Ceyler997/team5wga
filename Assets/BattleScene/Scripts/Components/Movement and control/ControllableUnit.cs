@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.AI;
 
 [RequireComponent(typeof(Movement))]
-public class ControllableUnit : MonoBehaviour {
+public class ControllableUnit : Photon.PunBehaviour {
 
     #region private fields
     
@@ -55,7 +55,9 @@ public class ControllableUnit : MonoBehaviour {
     }
 
     private void OnMouseEnter() {
-        HighLight(true);
+        if (photonView.isMine) {
+            HighLight(true);
+        }
     }
 
     private void OnMouseExit() {

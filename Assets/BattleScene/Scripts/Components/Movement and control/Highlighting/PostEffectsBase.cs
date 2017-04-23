@@ -93,7 +93,7 @@ namespace UnityStandardAssets.ImageEffects {
             supportDX11 = SystemInfo.graphicsShaderLevel >= 50 && SystemInfo.supportsComputeShaders;
 
             // SystemInfo.supportsRenderTextures' is obsolete: supportsRenderTextures always returns true, no need to call it
-            if (!SystemInfo.supportsImageEffects || !SystemInfo.supportsRenderTextures) 
+            if (!SystemInfo.supportsImageEffects) 
             {
                 NotSupported ();
                 return false;
