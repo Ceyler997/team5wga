@@ -104,6 +104,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
         RadiusCollider = gameObject.AddComponent<SphereCollider>();
         RadiusCollider.isTrigger = true;
         RadiusCollider.radius = radiusSize;
+        RadiusCollider.center = Vector3.zero;
         Owner = radiusOwner;
         IsSettedUp = true;
 
