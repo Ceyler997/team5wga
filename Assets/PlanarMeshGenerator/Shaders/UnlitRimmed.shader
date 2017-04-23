@@ -1,4 +1,6 @@
-﻿Shader "2DMeshGen/Unlit_Rimmed"
+﻿// Upgrade NOTE: replaced 'mul(UNITY_MATRIX_MVP,*)' with 'UnityObjectToClipPos(*)'
+
+Shader "2DMeshGen/Unlit_Rimmed"
 {
 	Properties{
 		_EdgeTexture ("EdgeTexture", 2D) = "white" {}
@@ -46,7 +48,7 @@
 			
 			v2f vert (appdata v){
 				v2f o;
-				o.vertex = mul(UNITY_MATRIX_MVP, v.vertex);
+				o.vertex = UnityObjectToClipPos(v.vertex);
 				o.edgeUV = TRANSFORM_TEX(v.uv, _EdgeTexture);
 				o.centerUV = TRANSFORM_TEX(v.uv, _CenterTexture);
 				o.normal = normalize(float2(v.normal.x, v.normal.y));

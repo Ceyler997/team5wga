@@ -31,7 +31,7 @@ public class DrawCircle : MonoBehaviour {
 		float sizeValue = (2.0f * Mathf.PI) / ThetaScale;
 		size = (int)sizeValue; 
 		size++;
-		lineRender.numPositions = size;
+		lineRender.positionCount = size;
 		return lineRender;
 	}
 	public void DrawCrystallCircle(LineRenderer lineRenderer,float circleRadius)  {
