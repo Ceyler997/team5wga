@@ -54,7 +54,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                 }
 
                 // Если в агро радиусе никого нет и юнита никто не атакует - следуем за целью
-                Subject.MovementAgent.follow(ProtectTarget);
+                Subject.MovementAgent.Follow(ProtectTarget);
                 break;
             #endregion
 

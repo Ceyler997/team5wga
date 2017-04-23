@@ -18,6 +18,9 @@ public class Movement : MonoBehaviour {
         get {return navigationAgent;}
         set {navigationAgent = value;}
     }
+    public bool IsFinishedMovement {
+        get { return NavigationAgent.remainingDistance < DESTINATION_EPS; }
+    }
 
     public bool IsSettedUp {
         get { return isSettedUp; }
@@ -30,33 +33,33 @@ public class Movement : MonoBehaviour {
     public void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
-        }
+        }      
     }
     #endregion
 
     #region public methods
 
     // Передвижение к точке
-    public void moveTo(Vector3 targetPosition) {
+    public void MoveTo(Vector3 targetPosition) {
         NavigationAgent.SetDestination(targetPosition);
     }
 
     // Следование за целью
-    public void follow(BaseObject target) { // TODO Can be improved with target movement interpolation
+    public void Follow(BaseObject target) { // TODO Can be improved with target movement interpolation
         // Если мы пришли к точке, взять новую в окружности радиусом FollowRadius вокруг цели
-        if (NavigationAgent.remainingDistance < DESTINATION_EPS) {
+        if (IsFinishedMovement) {
             Vector2 shift = Random.insideUnitCircle * target.ReactDistance;
-            moveTo(target.Position + new Vector3(shift.x, 0, shift.y));
+            MoveTo(target.Position + new Vector3(shift.x, 0, shift.y));
         }
     }
 
     // Остановка движения сбросом пути
     // ВНИМАНИЕ follow будет считать, что цель достигнута и возьмёт новую точку
-    public void stop() {
+    public void Stop() {
         NavigationAgent.ResetPath();
     }
 
-    public void setupSystem(float maxSpeed) {
+    public void SetupSystem(float maxSpeed) {
         NavigationAgent = GetComponent<NavMeshAgent>();
         NavigationAgent.speed = maxSpeed;
         IsSettedUp = true;

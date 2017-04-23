@@ -2,6 +2,16 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public interface IRadiusObserver {
+    void OnObjectEnter(BaseObject enteredObject);
+    void OnObjectExit(BaseObject enteredObject);
+}
+
+public interface IRadiusSubject {
+    void Attach(IRadiusObserver observer);
+    void Detach(IRadiusObserver observer);
+}
+
 public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
     #region private fields
@@ -46,52 +56,55 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
     }
 
     void OnTriggerEnter(Collider other) {
-        if (other.GetType() == radiusCollider.GetType()) { // мы столкнулись с радиусом другого объекта
+        // столкновение с радиусом другого объекта
+        if (other.GetType() == radiusCollider.GetType()) { 
             return;
         }
-
-        tryToAddObject(other.GetComponentInParent<BaseObject>()); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
+        // ищем объект
+        TryToAddObject(other.GetComponentInParent<BaseObject>()); 
     }
 
     void OnTriggerExit(Collider other) {
-        if (other.GetType() == radiusCollider.GetType()) { // мы столкнулись с радиусом другого объекта
+        // покидание радиуса другого объекта
+        if (other.GetType() == radiusCollider.GetType()) {
             return;
         }
-
-        tryToRemoveObject(other.GetComponentInParent<BaseObject>()); // ищем объект в родителе т.к. мы столкнулись с самой моделью, а модель - сын объекта
+        // ищем объект в родителе 
+        TryToRemoveObject(other.GetComponentInParent<BaseObject>()); 
 
     }
     #endregion
 
     #region private methods
 
-    // пытается добавить объект в список
-    private void tryToAddObject(BaseObject enteredObject) {
 
+    private void TryToAddObject(BaseObject enteredObject) {
+        // добавляем объект в список
         if (enteredObject != null) {
             ObjectsInside.Add(enteredObject);
-
-            if (enteredObject is IDeathSubject) { // подписываемся на смерть объекта если он смертный
+            // подписываемся на смерть объекта если он смертный
+            if (enteredObject is IDeathSubject) { 
                 ((IDeathSubject) enteredObject).Attach(this);
             }
-
+            // рассылаем уведомления
             foreach (IRadiusObserver observer in RadiusObservers) {
-                observer.onObjectEnter(enteredObject);
+                observer.OnObjectEnter(enteredObject);
             }
         }
     }
 
-    // пытается убрать объект из списка
-    private void tryToRemoveObject(BaseObject exitedObject) {
+    // убраем объект из списка
+    private void TryToRemoveObject(BaseObject exitedObject) {
         if (exitedObject != null) {
             ObjectsInside.Remove(exitedObject);
 
-            if(exitedObject is IDeathSubject) { // отписываемся от смерти объекта, если он смертный
+            // отписываемся от смерти объекта, если он смертный
+            if (exitedObject is IDeathSubject) { 
                 ((IDeathSubject) exitedObject).Detach(this);
             }
 
             foreach(IRadiusObserver observer in RadiusObservers) {
-                observer.onObjectExit(exitedObject);
+                observer.OnObjectExit(exitedObject);
             }
         }
     }
@@ -99,7 +112,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
     #region public methods
 
-    public void setupSystem(float radiusSize, Player radiusOwner) {
+    public void SetupSystem(float radiusSize, Player radiusOwner) {
         ObjectsInside = new List<BaseObject>();
         RadiusCollider = gameObject.AddComponent<SphereCollider>();
         RadiusCollider.isTrigger = true;
@@ -136,7 +149,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
     public void OnSubjectDeath(IDeathSubject subject) {
         if (subject is BaseObject) {
-            tryToRemoveObject((BaseObject) subject);
+            TryToRemoveObject((BaseObject) subject);
         } else {
             throw new WrongDeathSubsciptionException();
         }
@@ -155,12 +168,3 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
     #endregion
 }
 
-public interface IRadiusObserver {
-    void onObjectEnter(BaseObject enteredObject);
-    void onObjectExit(BaseObject enteredObject);
-}
-
-public interface IRadiusSubject {
-    void Attach(IRadiusObserver observer);
-    void Detach(IRadiusObserver observer);
-}

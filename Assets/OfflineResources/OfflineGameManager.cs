@@ -7,12 +7,11 @@ using UnityEngine;
 public class OfflineGameManager : GameManager {
 
     #region public fields
-
+    [Tooltip("Префаб супрайма для создания")]
     public GameObject suprimePrefab;
-    public GameObject unitPrefab;
-    #endregion
 
-    #region public fields
+    [Tooltip("Префаб юнита для создания")]
+    public GameObject unitPrefab;
 
     [Tooltip("Все игроки подключенные к игре")]
     public List<Player> players; //Все игроки подключенные к игре
@@ -28,8 +27,8 @@ public class OfflineGameManager : GameManager {
         }
 
         foreach (Player player in players) {
-            player.setupPlayer(player.name);
-            player.addSuprime(player.transform.position);
+            player.SetupPlayer(player.name);
+            player.AddSuprime(player.transform.position);
         }
     }
     #endregion

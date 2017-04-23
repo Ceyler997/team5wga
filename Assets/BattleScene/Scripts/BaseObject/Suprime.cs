@@ -7,9 +7,11 @@ using UnityEngine;
 [RequireComponent(typeof(CombatSystem))]
 [RequireComponent(typeof(Level))]
 [RequireComponent(typeof(Movement))]
+
 //spells
 [RequireComponent(typeof(Teleport))]
 [RequireComponent(typeof(CaptureCrystal))]
+
 public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region private fields
@@ -22,7 +24,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     private Movement moveSystem; // Передвижение
     private List<Unit> units; //Юниты, прикреплённые к данному ВС
     private Crystal currentCrystal; //текущий кристалл, в радиусе которого находится ВС
-
     private SuprimeMagic teleport; //Телепорт к ближайшему кристаллу
     private SuprimeMagic captureCrystal; //захват кристалла
 
@@ -143,10 +144,12 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         Level.setupSystem(GameConf.suprimeStartLevel, GameConf.suprimeMaxLevel);
 
         MoveSystem = GetComponent<Movement>();
-        MoveSystem.setupSystem(GameConf.suprimeMoveSpeed);
+        MoveSystem.SetupSystem(GameConf.suprimeMoveSpeed);
 
         units = new List<Unit>();
         DeathObservers = new List<IDeathObserver>();
+
+        DetectRadius.Attach(this);
 
         //Инициализация магии
         teleport = GetComponent<Teleport>();
@@ -203,12 +206,11 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region IRadiusObserver implememntation
 
-    public void onObjectEnter(BaseObject enteredObject) {
+    public void OnObjectEnter(BaseObject enteredObject) {
         //Если кристалл, то ставим как текущий
         if (enteredObject is Crystal) {
-            Crystal crystal = (Crystal) enteredObject;
-            if (crystal != null) // можно узнать зачем эта проверка?
-                CurrentCrystal = crystal;
+            Crystal crystal = (Crystal) enteredObject; // необходимо кастовать после проверки
+            CurrentCrystal = crystal;
         }
 
         if (enteredObject is Suprime) {
@@ -216,7 +218,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         }
     }
 
-    public void onObjectExit(BaseObject enteredObject) {
+    public void OnObjectExit(BaseObject enteredObject) {
         //Если кристалл, то убираем из текущего
         if (enteredObject is Crystal) {
             Crystal crystal = (Crystal) enteredObject;

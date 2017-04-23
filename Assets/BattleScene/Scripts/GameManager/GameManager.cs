@@ -49,7 +49,7 @@ public class GameManager : Photon.PunBehaviour{
         Instance = this; // singletone
 
         StartPosition [] startPositions = GetComponentsInChildren<StartPosition>(); // получаем все стартовые позиции
-
+        
         PhotonNetwork.Instantiate("PlayerPrefab",
             startPositions [PhotonNetwork.player.ID - 1].Position, // позиция, соответвующая игроку (отсчёт ID начинается с мастера - 1)
             Quaternion.identity,
@@ -85,6 +85,21 @@ public class GameManager : Photon.PunBehaviour{
         LoadLoginScreen();
     }
     #endregion
+
+    //Изменяет владельцев кристалла (пока временная реализация, изменить на что-то прекрасное :D )
+    // - отказаться от хранения списков кристаллов у каждого игрока, перенести список в менеджер
+    public void SwapCrystals(Player player, Crystal crystal) {
+        // Добавляем игроку кристалл
+        player.AddCrystal(crystal);
+
+        // Если не нейтрал, то удаляем у игрока противоположной комманты кристалл 
+        if (crystal.ControllingPlayer != null) {
+            crystal.ControllingPlayer.Crystals.Remove(crystal);
+        }
+
+        //Захватываем кристалл
+        crystal.ChangeOwner(player);
+    }
 
     private void LoadLoginScreen() {
         PhotonNetwork.LoadLevel(0); // go to load screen

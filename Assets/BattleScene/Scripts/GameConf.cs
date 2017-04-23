@@ -36,7 +36,7 @@ static class GameConf {
     #endregion
 
     #region Crystall Properties
-    public static readonly float crysStartEnergy = 100.0f;
+    public static readonly float crysStartEnergy = 0.0f;
     public static readonly float crysMaxEnergy = 100.0f;
     public static readonly int crysStartLevel = 1;
     public static readonly int crysMaxLevel = 3;

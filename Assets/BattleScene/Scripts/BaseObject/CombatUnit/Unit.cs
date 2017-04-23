@@ -120,7 +120,7 @@ public class Unit : BaseObject, IFightable {
             GameConf.unitDetectRadius);
 
         MovementAgent = GetComponent<Movement>();
-        MovementAgent.setupSystem(GameConf.unitMoveSpeed);
+        MovementAgent.SetupSystem(GameConf.unitMoveSpeed);
 
         HealthSystem = GetComponent<Health>();
         HealthSystem.setupSystem(GameConf.unitStartHealth,

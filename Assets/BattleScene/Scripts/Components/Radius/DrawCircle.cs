@@ -14,12 +14,20 @@ public class DrawCircle : MonoBehaviour {
         drawRadius = GetComponent<Radius>();
         if (drawRadius.RadiusCollider != null)
             line1 = createLine("radius1");
+        else
+            Debug.Log("null draw RadiusCollider start");
     }
 
 	void Update() {
+        if(line1 == null) {
+            if (drawRadius.RadiusCollider != null)
+                line1 = createLine("radius1");
+        }
 		if(drawRadius.RadiusCollider != null)
 			DrawCrystallCircle(line1,drawRadius.RadiusCollider.radius);
-	}
+        else
+            Debug.Log("null draw RadiusCollider");
+    }
 
 	private LineRenderer createLine(string name) {
 		GameObject gameObj = new GameObject(name);

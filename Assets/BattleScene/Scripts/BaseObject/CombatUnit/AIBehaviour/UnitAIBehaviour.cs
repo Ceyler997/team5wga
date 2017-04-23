@@ -21,9 +21,9 @@ abstract public class UnitAIBehaviour {
         
         // если получилось атаковать, остановиться и сообщить об атаке, иначе подойти к атакующему
         if (cs.Attack()) {
-            Subject.MovementAgent.stop();
+            Subject.MovementAgent.Stop();
         } else {
-            Subject.MovementAgent.moveTo(cs.Target.Position);
+            Subject.MovementAgent.MoveTo(cs.Target.Position);
         }
     }
 

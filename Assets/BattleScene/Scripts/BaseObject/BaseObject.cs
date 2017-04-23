@@ -9,7 +9,7 @@ public class BaseObject : Photon.PunBehaviour {
     private Player controllingPlayer; // игрок, который является владельцем объекта
     private float reactDistance; // на этом расстоянии происходит взаимодействие с объектом
     private Radius detectRadius; // радиус вокруг объекта, в котором будут видны объекты
-    private bool isSettedUp;
+    private bool isSettedUp; // для предотвращения использования ненастроенного объекта
     #endregion
 
     #region getters and setters
@@ -17,7 +17,7 @@ public class BaseObject : Photon.PunBehaviour {
     public Player ControllingPlayer {
         get { return controllingPlayer; }
 
-        set {
+        protected set {
             controllingPlayer = value;
             DetectRadius.Owner = value;
         }
@@ -59,7 +59,7 @@ public class BaseObject : Photon.PunBehaviour {
         this.controllingPlayer = controllingPlayer;
         this.reactDistance = reactDistance;
         this.detectRadius = GetComponent<Radius>();
-        this.detectRadius.setupSystem(detectRadius, controllingPlayer);
+        this.detectRadius.SetupSystem(detectRadius, controllingPlayer);
         ID = photonView.viewID;
         IsSettedUp = true;
     }

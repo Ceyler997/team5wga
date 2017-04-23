@@ -94,12 +94,4 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         }
     }
     #endregion
-
-    #region DEBUG
-    public Player owner;
-
-    public void SetOwner() {
-        ChangeOwner(owner);
-    }
-    #endregion
 }

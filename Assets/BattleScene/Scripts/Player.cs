@@ -7,8 +7,8 @@ public class Player : Photon.PunBehaviour {
     #region private fields
 
     public string playerName; //Имя игрока
-    private List<Suprime> suprimes; //ВС, которыми владеет игрок
-    private List<Crystal> crystals; //Кристалы, которыми владеет игрок
+    private List<Suprime> suprimes; // ВС, которыми владеет игрок
+    private List<Crystal> crystals; // Кристалы, которыми владеет игрок
     private bool isMe;
     #endregion
 
@@ -42,7 +42,7 @@ public class Player : Photon.PunBehaviour {
     #region MonoBehaviour methods
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
         GameManager.Instance.Players.Add(info.sender.ID, this);
-        setupPlayer(info.sender.NickName);
+        SetupPlayer(info.sender.NickName);
         isMe = info.sender.IsLocal;
         ID = info.sender.ID;
     }
@@ -51,7 +51,7 @@ public class Player : Photon.PunBehaviour {
     #region public methods
 
     //Добавляет ВС в массив suprimes
-    public void addSuprime(Vector3 position) {
+    public void AddSuprime(Vector3 position) {
         if (Suprimes.Count < GameConf.maxSuprimeAmount) {
             if (PhotonNetwork.connected) {
                 PhotonNetwork.Instantiate("SuprimePrefab",
@@ -69,18 +69,19 @@ public class Player : Photon.PunBehaviour {
         }
     }
 
-    public void addCrystall(Crystal crystal) {
-        Crystals.Add(crystal);
-        crystal.ControllingPlayer = this;
+    // Тут немного несостыковка получается. Мы юзаем AddSuprime и AddUnit для того, чтобы создать новый объект на позиции
+    // А тут логики почти нет, но единообразие методов нарушается, т.к. он ничего не создаёт
+    public void AddCrystal(Crystal crystal) {
+        Crystals.Add(crystal);    
     }
 
-    public void setupPlayer(String ownerName) {
+    public void SetupPlayer(String ownerName) {
         suprimes = new List<Suprime>();
         crystals = new List<Crystal>();
         PlayerName = ownerName;
 
         if (photonView.isMine) {
-            addSuprime(transform.position);
+            AddSuprime(transform.position);
         }
     }
     #endregion

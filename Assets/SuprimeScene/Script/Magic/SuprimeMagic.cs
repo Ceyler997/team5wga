@@ -8,7 +8,14 @@ public abstract class SuprimeMagic : Magic {
         base.setup(castEnergy, durationTime);
         this.suprime = suprime;
     }
-    
+
+    protected bool canNotRun() {
+        // Если суприм побежал, то сбрасываем каст
+        if (!OwnerSuprime.MoveSystem.IsFinishedMovement) {
+            return true;
+        }
+        return false;
+    }
     public void ChangeEnergy() {
         // Отнимаем энергию
         OwnerSuprime.EnergySystem.changeEnergy(CastEnergy);

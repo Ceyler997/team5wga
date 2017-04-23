@@ -360,6 +360,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23112986211525022
 MeshRenderer:
@@ -391,6 +392,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23489195042509074
 MeshRenderer:
@@ -422,6 +424,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23516482150668524
 MeshRenderer:
@@ -453,6 +456,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23664117163037604
 MeshRenderer:
@@ -484,6 +488,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!23 &23940716465340162
 MeshRenderer:
@@ -515,6 +520,7 @@ MeshRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
 --- !u!33 &33292771312747856
 MeshFilter:
@@ -710,13 +716,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c52e51514f0b64ebb61c5176f4c616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  objectsInside: []
 --- !u!114 &114561100372873796
 MonoBehaviour:
   m_ObjectHideFlags: 1
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1480251106586050}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a9974d6d6cdd1940b3853ba0a516b84, type: 3}
   m_Name: 
@@ -754,7 +761,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f6cd1591b5b24fc4db1295a32b10f6ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHealth: 0
 --- !u!114 &114912943346800456
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -777,6 +783,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e4c5c30b95a24aa4abc0d4c8dd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentEnergy: 0
 --- !u!114 &114989866226692916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -827,11 +834,12 @@ NavMeshAgent:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1480251106586050}
   m_Enabled: 1
+  m_AgentTypeID: 0
   m_Radius: 0.5
   m_Speed: 3.5
-  m_Acceleration: 8
+  m_Acceleration: 500
   avoidancePriority: 1
-  m_AngularSpeed: 120
+  m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
@@ -870,8 +878,13 @@ SpriteRenderer:
   m_AutoUVMaxAngle: 89
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
+  m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
   m_Color: {r: 0, g: 1, b: 0.21379304, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+  m_DrawMode: 0
+  m_Size: {x: 1, y: 1}
+  m_AdaptiveModeThreshold: 0.5
+  m_SpriteTileMode: 0

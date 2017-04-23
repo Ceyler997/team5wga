@@ -30,8 +30,9 @@ public abstract class Magic: MonoBehaviour {
     // итоговый результат выполнения магии, для каждой магии своя реализация
     protected abstract void CastMagic();
 
-    //Задержка перед кастом
+    // Задержка перед выполнением заклинания
     void castDelay() {
+        if (CastCondition()) decast();
         CurrentDurationTime -= 1.0f * Time.deltaTime;
         Debug.Log(CurrentDurationTime);
         if (CurrentDurationTime <= 0) {
@@ -39,6 +40,10 @@ public abstract class Magic: MonoBehaviour {
             CastMagic();
         }
     }
+    
+
+    // условия, которые должны выполнятся при произнесении заклинания
+    protected abstract bool CastCondition();
 
     protected void decast() {
         IsAbleToCast = false;

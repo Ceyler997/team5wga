@@ -47,7 +47,7 @@ public class CharactersController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit, MoveRaycastMask) && SelectedUnit != null) {
-                SelectedUnit.UnitMoveSystem.moveTo(hit.point);
+                SelectedUnit.UnitMoveSystem.MoveTo(hit.point);
             }
         }
     }

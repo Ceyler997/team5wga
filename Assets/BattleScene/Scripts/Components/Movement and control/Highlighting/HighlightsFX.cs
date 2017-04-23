@@ -81,7 +81,8 @@ public class HighlightsFX : MonoBehaviour
 
 	private void ClearCommandBuffers()
 	{
-		m_renderBuffer.Clear();
+        if(m_renderBuffer != null)
+		    m_renderBuffer.Clear();
 	}
 	
 	private void CreateMaterials()

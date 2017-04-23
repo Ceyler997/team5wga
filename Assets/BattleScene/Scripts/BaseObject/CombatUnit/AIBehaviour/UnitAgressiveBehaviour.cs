@@ -20,7 +20,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
             IFightable closestEnemy = getClosestEnemyInRadius();
             if (closestEnemy == null) {
                 // если юнит никого не видит, он следует за мастером
-                Subject.MovementAgent.follow(Subject.Master);
+                Subject.MovementAgent.Follow(Subject.Master);
                 return;
             } else {
                 // если нет цели, но юнит кого-то видит, то он берёт ближайшую цель и уведомляет о ней остальных
@@ -48,7 +48,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
 
     #region IRadius observer implementation
 
-    public void onObjectEnter(BaseObject enteredObject) {
+    public void OnObjectEnter(BaseObject enteredObject) {
         if (enteredObject.ControllingPlayer != Subject.ControllingPlayer 
             && enteredObject is IFightable) {
             Subject.CombatSys.GetTargetNotification((IFightable) enteredObject);
@@ -56,7 +56,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
         }
     }
 
-    public void onObjectExit(BaseObject enteredObject) { }
+    public void OnObjectExit(BaseObject enteredObject) { }
     #endregion
 
     #region private methods
