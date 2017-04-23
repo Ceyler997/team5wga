@@ -94,7 +94,7 @@ public class Unit : BaseObject, IFightable {
         if (Behaviour == null) {
             throw new UnitHaveNoBehaviourException();
         }
-		if(photonView.isMine || OfflineGameManager.Instance != null){
+		if(photonView.isMine || !PhotonNetwork.connected){
 			Behaviour.UpdateState();
 		}
     }

@@ -4,7 +4,7 @@ using UnityEngine;
 
 //Класс с глобальными переменными и основными настройками игры
 // Singletone
-public class OfflineGameManager : MonoBehaviour {
+public class OfflineGameManager : GameManager {
 
     #region public fields
 
@@ -12,53 +12,16 @@ public class OfflineGameManager : MonoBehaviour {
     public GameObject unitPrefab;
     #endregion
 
-    #region private fields
-
-    private static OfflineGameManager instance;
-    #endregion
-
-    #region properties
-
-    public static OfflineGameManager Instance {
-        get { return instance; }
-        set {
-            if (instance == null) {
-                instance = value;
-            } else {
-                throw new AttemptToManagerReassignmentException();
-            }
-        }
-    }
-
-    #endregion
-
     #region public fields
 
     [Tooltip("Все игроки подключенные к игре")]
     public List<Player> players; //Все игроки подключенные к игре
-    [Tooltip("Все кристаллы на карте")]
-    public Crystal [] crystals; //Все кристаллы на карте (при добавлении нового кристалла, обязательно добавить его сюда)
-    #endregion
-
-    #region public methods
-
-    public Player GetPlayer(int id) {
-        if (id >= 0 && id < players.Count) {
-            return players [id];
-        } else {
-            throw new PlayerNotExistingException();
-        }
-    }
     #endregion
 
     #region MonoBehaviour methods
 
-    public void Start() {
+    new public void Start() {
         Instance = this; // singletone
-
-        if (GameManager.Instance != null) {
-            Debug.LogError("Both online and offline managers is turned on!");
-        }
 
         foreach (Crystal crystal in crystals) {
             crystal.SetupCrystal(null);

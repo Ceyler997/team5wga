@@ -35,7 +35,7 @@ public class CharactersController : MonoBehaviour
 				}
 
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
-                if (unit != null && (unit.photonView.isMine || OfflineGameManager.Instance != null)) {
+                if (unit != null && (unit.photonView.isMine || !PhotonNetwork.connected)) {
                     unit.selectUnit();
                     SelectedUnit = unit;
                 }

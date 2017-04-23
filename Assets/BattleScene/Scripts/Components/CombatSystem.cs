@@ -170,7 +170,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
 
                 frameDamage = Damage + GetCrit(); // получение наносимого урона
                 
-                if(!PhotonNetwork.connected && OfflineGameManager.Instance != null) {
+                if(!PhotonNetwork.connected) {
                     DealDamage(frameDamage);
                 }
 

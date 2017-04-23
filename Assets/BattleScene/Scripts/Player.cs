@@ -58,11 +58,11 @@ public class Player : Photon.PunBehaviour {
                     position,
                     Quaternion.identity,
                     0);
-            } else if (OfflineGameManager.Instance != null) {
-                Suprime newSuprime = Instantiate(OfflineGameManager.Instance.suprimePrefab, position, Quaternion.identity).GetComponent<Suprime>();
-                newSuprime.SetupSuprime(this);
             } else {
-                Debug.LogError("Trying to run offline without OfflineGameManager");
+                Suprime newSuprime = Instantiate(((OfflineGameManager) GameManager.Instance).suprimePrefab, 
+                    position, 
+                    Quaternion.identity).GetComponent<Suprime>();
+                newSuprime.SetupSuprime(this);
             }
         } else {
             throw new TooMuchSuprimesException();

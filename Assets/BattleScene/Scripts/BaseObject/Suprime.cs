@@ -164,11 +164,11 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             Quaternion.identity,
             0,
             new object [] { photonView.viewID });
-        } else if (OfflineGameManager.Instance != null) {
-            Unit newUnit = Instantiate(OfflineGameManager.Instance.unitPrefab, position, Quaternion.identity).GetComponent<Unit>();
-            newUnit.SetupUnit(this);
         } else {
-            Debug.LogError("Trying to run offline without OfflineGameManager");
+            Unit newUnit = Instantiate(((OfflineGameManager) GameManager.Instance).unitPrefab, 
+                position, 
+                Quaternion.identity).GetComponent<Unit>();
+            newUnit.SetupUnit(this);
         }
     }
 
