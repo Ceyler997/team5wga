@@ -7,7 +7,7 @@ public class Health : MonoBehaviour, IPunObservable {
     private float curHealth; //Текущее кол-во здоровья
     private float maxHealth; //Максимальное кол-во здоровья
     private float regenSpeed; //Скорость востановления здоровья
-    private IDeathSubject subject;
+    private IDeathSubject subject; // Объект, за здоровье которого компоненто отвечает
     private bool isSettedUp;
     #endregion
 

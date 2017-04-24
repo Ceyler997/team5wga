@@ -9,12 +9,11 @@ public class GameManager : Photon.PunBehaviour{
     #region private fields
 
     private static GameManager instance;
+    private Dictionary<int, Player> players; // Все игроки подключенные к игре в паре ID - Player
     #endregion
 
     #region public fields
 
-    [Tooltip("Все игроки подключенные к игре")]
-    private Dictionary<int, Player> players; //Все игроки подключенные к игре
     [Tooltip("Все кристаллы на карте")]
     public Crystal[] crystals; //Все кристаллы на карте (при добавлении нового кристалла, обязательно добавить его сюда)
     #endregion
