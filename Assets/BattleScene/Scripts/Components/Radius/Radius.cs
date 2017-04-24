@@ -8,8 +8,8 @@ public interface IRadiusObserver {
 }
 
 public interface IRadiusSubject {
-    void Attach(IRadiusObserver observer);
-    void Detach(IRadiusObserver observer);
+    void RadiusAttach(IRadiusObserver observer);
+    void RadiusDetach(IRadiusObserver observer);
 }
 
 public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
@@ -84,7 +84,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
             ObjectsInside.Add(enteredObject);
             // подписываемся на смерть объекта если он смертный
             if (enteredObject is IDeathSubject) { 
-                ((IDeathSubject) enteredObject).Attach(this);
+                ((IDeathSubject) enteredObject).DeathAttach(this);
             }
             // рассылаем уведомления
             foreach (IRadiusObserver observer in RadiusObservers) {
@@ -100,7 +100,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
             // отписываемся от смерти объекта, если он смертный
             if (exitedObject is IDeathSubject) { 
-                ((IDeathSubject) exitedObject).Detach(this);
+                ((IDeathSubject) exitedObject).DeathDetach(this);
             }
 
             foreach(IRadiusObserver observer in RadiusObservers) {
@@ -158,11 +158,11 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
     #region IRadiusSubject implementation
 
-    public void Attach(IRadiusObserver observer) {
+    public void RadiusAttach(IRadiusObserver observer) {
         RadiusObservers.Add(observer);
     }
 
-    public void Detach(IRadiusObserver observer) {
+    public void RadiusDetach(IRadiusObserver observer) {
         RadiusObservers.Remove(observer);
     }
     #endregion

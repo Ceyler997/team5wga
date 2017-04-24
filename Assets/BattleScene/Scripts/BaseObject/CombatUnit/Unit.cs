@@ -105,7 +105,7 @@ public class Unit : BaseObject, IFightable {
             // поэтому мы берём отдельного подписчика, а не обращаемся по индексу (первый объект может измениться)
             IDeathObserver observer = DeathObservers [0];
             observer.OnSubjectDeath(this);
-            Detach(observer); // При смерти объекта отписываем его подписчиков
+            DeathDetach(observer); // При смерти объекта отписываем его подписчиков
         }
 
         CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
@@ -142,18 +142,18 @@ public class Unit : BaseObject, IFightable {
 
         Behaviour = new UnitProtectiveBehaviour(this, master);
 
-        Attach(master); // подписываем мастера на свою смерть
+        DeathAttach(master); // подписываем мастера на свою смерть
         master.Units.Add(this); // добавляемся в список юнитов
     }
     #endregion
 
     #region IDeathSubject implementation
 
-    public void Attach(IDeathObserver observer) {
+    public void DeathAttach(IDeathObserver observer) {
         DeathObservers.Add(observer);
     }
 
-    public void Detach(IDeathObserver observer) {
+    public void DeathDetach(IDeathObserver observer) {
         DeathObservers.Remove(observer);
     }
 

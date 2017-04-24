@@ -95,7 +95,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         while (DeathObservers.Count != 0) { // Используется такая конструкция, т.к. список динамически изменяется
             IDeathObserver observer = DeathObservers [0];
             observer.OnSubjectDeath(this);
-            Detach(observer); // При смерти объекта его подписчики от него отписываются
+            DeathDetach(observer); // При смерти объекта его подписчики от него отписываются
         }
 
         CombatSys.Target = null; // Убираем цель, оповещая, что мы больше не атакуем предыдущую цель
@@ -149,7 +149,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         units = new List<Unit>();
         DeathObservers = new List<IDeathObserver>();
 
-        DetectRadius.Attach(this);
+        DetectRadius.RadiusAttach(this);
 
         //Инициализация магии
         teleport = GetComponent<Teleport>();
@@ -179,11 +179,11 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region IDeathSubject implementation
 
-    public void Attach(IDeathObserver observer) {
+    public void DeathAttach(IDeathObserver observer) {
         DeathObservers.Add(observer);
     }
 
-    public void Detach(IDeathObserver observer) {
+    public void DeathDetach(IDeathObserver observer) {
         DeathObservers.Remove(observer);
     }
 

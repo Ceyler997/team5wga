@@ -68,12 +68,12 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
             if (target != value) {
 
                 if (target != null) {
-                    target.Detach(this);
+                    target.DeathDetach(this);
                     target.CombatSys.IsUnderAttack = false; // Указываем, что мы больше не атакуем текущую цель
                 }
 
                 if (value != null) {
-                    value.Attach(this);
+                    value.DeathAttach(this);
                 }
 
                 target = value;
@@ -257,7 +257,7 @@ public interface IDeathObserver {
 }
 
 public interface IDeathSubject {
-    void Attach(IDeathObserver observer);
-    void Detach(IDeathObserver observer);
+    void DeathAttach(IDeathObserver observer);
+    void DeathDetach(IDeathObserver observer);
     void SubjectDeath();
 }

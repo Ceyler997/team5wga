@@ -9,7 +9,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
     #region public methods
 
     public override void Start() {
-        Subject.DetectRadius.Attach(this);
+        Subject.DetectRadius.RadiusAttach(this);
     }
 
     public override void UpdateState() {
@@ -42,7 +42,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
     }
 
     public override void End() {
-        Subject.DetectRadius.Detach(this);
+        Subject.DetectRadius.RadiusDetach(this);
     }
     #endregion
 
