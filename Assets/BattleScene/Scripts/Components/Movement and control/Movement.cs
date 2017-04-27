@@ -5,6 +5,7 @@ using UnityEngine.AI;
 public class Movement : MonoBehaviour {
 
     private static readonly float DESTINATION_EPS = 3.0f; // дистанция, при которой считается, что цель достигнута
+    private static readonly float SPEED_EPS = 2f; // скорость, при которой считается, что цель достигнута
 
     #region private fields
 
@@ -18,8 +19,9 @@ public class Movement : MonoBehaviour {
         get {return navigationAgent;}
         set {navigationAgent = value;}
     }
+
     public bool IsFinishedMovement {
-        get { return NavigationAgent.remainingDistance < DESTINATION_EPS; }
+        get { return NavigationAgent.remainingDistance < DESTINATION_EPS || NavigationAgent.velocity.magnitude < SPEED_EPS; }
     }
 
     public bool IsSettedUp {
@@ -47,7 +49,7 @@ public class Movement : MonoBehaviour {
     // Следование за целью
     public void Follow(BaseObject target) { // TODO Can be improved with target movement interpolation
         // Если мы пришли к точке, взять новую в окружности радиусом FollowRadius вокруг цели
-        if (IsFinishedMovement) {
+        if (IsFinishedMovement || Vector3.Distance(target.Position, NavigationAgent.destination) > target.ReactDistance) {
             Vector2 shift = Random.insideUnitCircle * target.ReactDistance;
             MoveTo(target.Position + new Vector3(shift.x, 0, shift.y));
         }
@@ -62,6 +64,7 @@ public class Movement : MonoBehaviour {
     public void SetupSystem(float maxSpeed) {
         NavigationAgent = GetComponent<NavMeshAgent>();
         NavigationAgent.speed = maxSpeed;
+        NavigationAgent.stoppingDistance = DESTINATION_EPS;
         IsSettedUp = true;
     }
     #endregion

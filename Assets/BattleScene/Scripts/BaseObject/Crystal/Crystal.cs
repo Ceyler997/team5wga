@@ -51,9 +51,12 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
 
     // Метод для смены владельца, вызывается на стороне нового владельца
     public void ChangeOwner(Player newOwner) {
-        ControllingPlayer = newOwner;
-        if (PhotonNetwork.connected) {
-            photonView.RequestOwnership();
+        if (ControllingPlayer != newOwner) {
+            ControllingPlayer = newOwner;
+
+            if (PhotonNetwork.connected) {
+                photonView.RequestOwnership();
+            }
         }
     }
 

@@ -716,7 +716,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c52e51514f0b64ebb61c5176f4c616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsInside: []
 --- !u!114 &114561100372873796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -783,7 +782,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e4c5c30b95a24aa4abc0d4c8dd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentEnergy: 0
 --- !u!114 &114989866226692916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -836,7 +834,7 @@ NavMeshAgent:
   m_Enabled: 1
   m_AgentTypeID: 0
   m_Radius: 0.5
-  m_Speed: 3.5
+  m_Speed: 0
   m_Acceleration: 500
   avoidancePriority: 1
   m_AngularSpeed: 500
