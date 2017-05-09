@@ -43,7 +43,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                     return;
                 }
 
-               closestEnemy  = getClosestEnemyInRadius(); // берём ближайшего к цели юнита
+               closestEnemy  = GetClosestEnemyInRadius(); // берём ближайшего к цели юнита
 
                 // если этот юнит есть и в агро радиусе, переходим в встревоженное состояние
                 if (closestEnemy != null 
@@ -54,13 +54,13 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
                 }
 
                 // Если в агро радиусе никого нет и юнита никто не атакует - следуем за целью
-                Subject.MovementAgent.Follow(ProtectTarget);
+                Follow(ProtectTarget);
                 break;
             #endregion
 
             #region ALARMED STATE
             case UnitState.ALARMED:
-                closestEnemy = getClosestEnemyInRadius();
+                closestEnemy = GetClosestEnemyInRadius();
 
                 if(closestEnemy == null) {
                     CurrentUnitState = UnitState.CALM;

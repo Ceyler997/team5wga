@@ -70,6 +70,9 @@ public class Unit : BaseObject, IFightable {
         get {return deathObservers;}
         set {deathObservers = value;}
     }
+    
+    // Дистанция, на которой юнит будет следовать за целью
+    public float FollowDistance { get; set; }
     #endregion
 
 	#region PunBehaviour methods
@@ -141,6 +144,8 @@ public class Unit : BaseObject, IFightable {
         DeathObservers = new List<IDeathObserver>();
 
         Behaviour = new UnitProtectiveBehaviour(this, master);
+
+        FollowDistance = GameConf.unitFollowDistance;
 
         DeathAttach(master); // подписываем мастера на свою смерть
         master.Units.Add(this); // добавляемся в список юнитов

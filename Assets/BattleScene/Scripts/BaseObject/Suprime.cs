@@ -214,7 +214,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         }
 
         if (enteredObject is Suprime) {
-            Debug.Log("i saw an Suprime");
+            Debug.Log("I see the Suprime");
         }
     }
 
@@ -227,7 +227,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         }
 
         if (enteredObject is Suprime) {
-            Debug.Log("i saw an Suprime");
+            Debug.Log("I saw the Suprime");
         }
     }
     #endregion

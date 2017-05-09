@@ -247,7 +247,7 @@ MonoBehaviour:
   group: 0
   OwnerShipWasTransfered: 0
   prefixBackup: -1
-  synchronization: 3
+  synchronization: 1
   onSerializeTransformOption: 3
   onSerializeRigidBodyOption: 2
   ownershipTransfer: 0
@@ -306,7 +306,7 @@ NavMeshAgent:
   m_Radius: 2.5
   m_Speed: 0
   m_Acceleration: 500
-  avoidancePriority: 50
+  avoidancePriority: 3
   m_AngularSpeed: 500
   m_StoppingDistance: 0
   m_AutoTraverseOffMeshLink: 1

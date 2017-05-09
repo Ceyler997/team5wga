@@ -17,10 +17,10 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
         bool isTargetClosest = cs.IsUnderAttack; // определяем, нужно ли проверять на расстояние до цели
 
         if (cs.Target == null) {
-            IFightable closestEnemy = getClosestEnemyInRadius();
+            IFightable closestEnemy = GetClosestEnemyInRadius();
             if (closestEnemy == null) {
                 // если юнит никого не видит, он следует за мастером
-                Subject.MovementAgent.Follow(Subject.Master);
+                Follow(Subject.Master);
                 return;
             } else {
                 // если нет цели, но юнит кого-то видит, то он берёт ближайшую цель и уведомляет о ней остальных
@@ -32,7 +32,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
 
         // если юнит кого-то видит и не проверял расстояние - взять ближайшую
         if (!isTargetClosest) {
-            IFightable closestEnemy = getClosestEnemyInRadius();
+            IFightable closestEnemy = GetClosestEnemyInRadius();
             if(closestEnemy != null) {
                 cs.Target = closestEnemy;
             }

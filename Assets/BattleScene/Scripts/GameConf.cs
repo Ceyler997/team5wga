@@ -15,6 +15,7 @@ static class GameConf {
     public static readonly float unitMoveSpeed =15.0f;
     public static readonly float unitReactRadius = 5.0f;
     public static readonly float unitDetectRadius = 20.0f;
+    public static readonly float unitFollowDistance = 20.0f;
     #endregion
 
     #region Suprime Properties
