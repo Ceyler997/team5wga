@@ -31,7 +31,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     #endregion
 
     #region getters and setters
-    
+
     public Crystal CurrentCrystal {
         get { return currentCrystal; }
         set { currentCrystal = value; }
@@ -168,8 +168,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             0,
             new object [] { photonView.viewID });
         } else {
-            Unit newUnit = Instantiate(((OfflineGameManager) GameManager.Instance).unitPrefab, 
-                position, 
+            Unit newUnit = Instantiate(((OfflineGameManager) GameManager.Instance).unitPrefab,
+                position,
                 Quaternion.identity).GetComponent<Unit>();
             newUnit.SetupUnit(this);
         }
@@ -193,6 +193,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         if (Units.Count > 0) {
             if (ControllingPlayer.Crystals.Count > 0) {
                 List<Crystal>.Enumerator enumerator = ControllingPlayer.Crystals.GetEnumerator();
+                enumerator.MoveNext();
+
                 Crystal closestCrystal = enumerator.Current;
                 float distanceToClosest = Vector3.Distance(Position, closestCrystal.Position);
 
@@ -205,7 +207,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
                     }
                 }
 
-                foreach(Unit unit in Units) {
+                foreach (Unit unit in Units) {
                     unit.Behaviour = new UnitProtectiveBehaviour(unit, closestCrystal);
                     unit.Master = null;
                 }
@@ -238,9 +240,9 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             CurrentCrystal = crystal;
         }
 
-        if (enteredObject is Suprime) {
-            Debug.Log("I see the Suprime");
-        }
+        //if (enteredObject is Suprime) {
+        //    Debug.Log("I see the Suprime");
+        //}
     }
 
     public void OnObjectExit(BaseObject enteredObject) {
@@ -251,9 +253,9 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
                 CurrentCrystal = null;
         }
 
-        if (enteredObject is Suprime) {
-            Debug.Log("I saw the Suprime");
-        }
+        //if (enteredObject is Suprime) {
+        //    Debug.Log("I saw the Suprime");
+        //}
     }
     #endregion
 }
