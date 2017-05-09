@@ -47,7 +47,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         set { energySystem = value; }
     }
 
-    private Level Level {
+    public Level LevelSystem {
         get { return level; }
         set { level = value; }
     }
@@ -140,8 +140,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             GameConf.suprimeAttackRadius,
             GameConf.suprimeAttackSpeed);
 
-        Level = GetComponent<Level>();
-        Level.setupSystem(GameConf.suprimeStartLevel, GameConf.suprimeMaxLevel);
+        LevelSystem = GetComponent<Level>();
+        LevelSystem.setupSystem(GameConf.suprimeStartLevel, GameConf.suprimeMaxLevel);
 
         MoveSystem = GetComponent<Movement>();
         MoveSystem.SetupSystem(GameConf.suprimeMoveSpeed);
@@ -239,10 +239,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             Crystal crystal = (Crystal) enteredObject;
             CurrentCrystal = crystal;
         }
-
-        //if (enteredObject is Suprime) {
-        //    Debug.Log("I see the Suprime");
-        //}
     }
 
     public void OnObjectExit(BaseObject enteredObject) {
@@ -252,10 +248,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             if (crystal == CurrentCrystal)
                 CurrentCrystal = null;
         }
-
-        //if (enteredObject is Suprime) {
-        //    Debug.Log("I saw the Suprime");
-        //}
     }
     #endregion
 }

@@ -1,16 +1,21 @@
 ﻿using System;
 using System.Collections.Generic;
+using UnityEngine;
 
+//Должен идти как отдельный объект
+[RequireComponent(typeof(Level))]
 abstract public class GroupMagic : Magic {
 
-    protected bool IsActive { get; set; }
-    protected float SpellDurationTime { get; set; }
-    protected Suprime Caster { get; set; }
+    protected static bool IsActive { get; set; }
 
-    public void Setup(Suprime caster, float castEnergy, float castTime, float durationTime) {
-        base.setup(castEnergy, castTime);
-        SpellDurationTime = durationTime;
+    protected Suprime Caster { get; set; }
+    protected List<Unit> Units { get; set; }
+    protected Level LevelSystem { get; set; }
+
+    protected void Setup(Suprime caster, float castEnergy, float durationTime) {
+        base.setup(castEnergy, durationTime);
         Caster = caster;
+        Units = caster.Units;
     }
 
     public override void cast() {
@@ -27,7 +32,9 @@ abstract public class GroupMagic : Magic {
 
     // возвращает true, если маг не может колдовать (в движении или не хватает маны)
     protected override bool CastCondition() {
-        return !Caster.MoveSystem.IsFinishedMovement || Caster.EnergySystem.CurrentEnergy < CastEnergy;
+        return !Caster.MoveSystem.IsFinishedMovement 
+            || Caster.EnergySystem.CurrentEnergy < CastEnergy
+            || IsActive;
     }
 }
 

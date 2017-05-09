@@ -1,8 +1,7 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public interface ILeveable {
-    void levelUp();
+    void LevelUp();
 }
 
 //Скрипт реализует прокачку уровня для ВС, Магии и Кристалла

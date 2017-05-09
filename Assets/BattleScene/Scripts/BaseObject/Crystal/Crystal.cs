@@ -46,7 +46,7 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         LevelSystem.setupSystem(GameConf.crysStartLevel,
             GameConf.crysMaxLevel);
 
-        RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
+        RegenSpeed = GameConf.GetCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
 
     // Метод для смены владельца, вызывается на стороне нового владельца
@@ -72,9 +72,9 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
 
     #region ILevelable implementation
 
-    public void levelUp() {
+    public void LevelUp() {
         LevelSystem.levelUp();
-        RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
+        RegenSpeed = GameConf.GetCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
     #endregion
 

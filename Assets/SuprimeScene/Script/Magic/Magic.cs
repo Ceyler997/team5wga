@@ -39,7 +39,7 @@ public abstract class Magic : MonoBehaviour {
         if (CastCondition())
             decast();
 
-        CurrentDurationTime -= 1.0f * Time.deltaTime; // зачем умножать?
+        CurrentDurationTime -= Time.deltaTime;
         if (CurrentDurationTime <= 0) {
             IsAbleToCast = false;
             CastMagic();

@@ -46,7 +46,7 @@ static class GameConf {
 
 
 
-    public static float getCrysRegenSpeed(int curentLevel) {
+    public static float GetCrysRegenSpeed(int curentLevel) {
         switch (curentLevel) {
             case 1:
                 return 5.0f;
@@ -68,10 +68,21 @@ static class GameConf {
     #region Magic Properties
 
     // Телепорт
-    public const float TeleportCastTime = 2.0f;
-    public const float TeleportCostEnergy = 10.0f;
+    public static readonly float TeleportCastTime = 2.0f;
+    public static readonly float TeleportCostEnergy = 10.0f;
     // Захват кристалла
-    public const float CrystalCaptureCastTime = 10.0f;
-    public const float CrystalCaptureCostEnergy = 50.0f;
+    public static readonly float CrystalCaptureCastTime = 10.0f;
+    public static readonly float CrystalCaptureCostEnergy = 50.0f;
+
+    #region Group Magic
+
+    public static readonly float healCastEnergy = 50.0f;
+    public static readonly float healCastTime = 1.0f;
+    public static readonly float healDuration = 20.0f;
+    
+    public static float GetHealRegenSpeed(int level) {
+        return ((0.1f + level/10.0f) * unitMaxHealth) / healDuration;
+    }
+    #endregion
     #endregion
 }
