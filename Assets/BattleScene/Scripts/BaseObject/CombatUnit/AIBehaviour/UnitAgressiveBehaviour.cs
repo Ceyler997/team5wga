@@ -20,12 +20,15 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
             IFightable closestEnemy = GetClosestEnemyInRadius();
             if (closestEnemy == null) {
                 // если юнит никого не видит, он следует за мастером
+                if(Subject.Master == null) {
+                    throw new UnitHaveNoMasterException();
+                }
                 Follow(Subject.Master);
                 return;
             } else {
                 // если нет цели, но юнит кого-то видит, то он берёт ближайшую цель и уведомляет о ней остальных
                 cs.Target = closestEnemy;
-                notifyUnitsAboutTarget();
+                NotifyUnitsAboutTarget();
                 isTargetClosest = true;
             }
         }
@@ -52,7 +55,7 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
         if (enteredObject.ControllingPlayer != Subject.ControllingPlayer 
             && enteredObject is IFightable) {
             Subject.CombatSys.GetTargetNotification((IFightable) enteredObject);
-            notifyUnitsAboutTarget();
+            NotifyUnitsAboutTarget();
         }
     }
 
@@ -62,7 +65,11 @@ public class UnitAgressiveBehaviour : UnitAIBehaviour, IRadiusObserver {
     #region private methods
 
     // уведомляет всех юнитов у мастера о цели
-    private void notifyUnitsAboutTarget() {
+    private void NotifyUnitsAboutTarget() {
+        if(Subject.Master == null) {
+            throw new UnitHaveNoMasterException();
+        }
+
         foreach (Unit unit in Subject.Master.Units) {
             unit.CombatSys.GetTargetNotification(Subject.CombatSys.Target);
         }

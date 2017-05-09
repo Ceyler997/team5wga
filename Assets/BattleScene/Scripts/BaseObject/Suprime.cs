@@ -187,9 +187,34 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         DeathObservers.Remove(observer);
     }
 
+    // Если у игрока есть кристаллы, то юниты отправляются защищать ближайший к умершему суприму
+    // Если кристаллов нет - юниты умирают
     public void SubjectDeath() {
-        foreach (Unit unit in Units) {
-            unit.SubjectDeath(); // Список не модифицируется из-за особенностей работы сетевой части
+        if (Units.Count > 0) {
+            if (ControllingPlayer.Crystals.Count > 0) {
+                List<Crystal>.Enumerator enumerator = ControllingPlayer.Crystals.GetEnumerator();
+                Crystal closestCrystal = enumerator.Current;
+                float distanceToClosest = Vector3.Distance(Position, closestCrystal.Position);
+
+                while (enumerator.MoveNext()) {
+                    float distanceToCurrent = Vector3.Distance(Position, enumerator.Current.Position);
+
+                    if (distanceToCurrent < distanceToClosest) {
+                        closestCrystal = enumerator.Current;
+                        distanceToClosest = distanceToCurrent;
+                    }
+                }
+
+                foreach(Unit unit in Units) {
+                    unit.Behaviour = new UnitProtectiveBehaviour(unit, closestCrystal);
+                    unit.Master = null;
+                }
+            } else {
+                Debug.LogWarning("Player have no crystals!");
+                foreach (Unit unit in Units) {
+                    unit.SubjectDeath(); // Список не модифицируется из-за особенностей работы сетевой части
+                }
+            }
         }
 
         PhotonNetwork.Destroy(gameObject);
@@ -209,7 +234,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     public void OnObjectEnter(BaseObject enteredObject) {
         //Если кристалл, то ставим как текущий
         if (enteredObject is Crystal) {
-            Crystal crystal = (Crystal) enteredObject; // необходимо кастовать после проверки
+            Crystal crystal = (Crystal) enteredObject;
             CurrentCrystal = crystal;
         }
 
