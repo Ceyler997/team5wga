@@ -23,7 +23,7 @@ abstract public class GroupMagic : Magic {
             && !IsActive
             && Caster.EnergySystem.CurrentEnergy >= CastEnergy
             && Caster.Units.Count > 0) {
-
+            
             CurrentDurationTime = DurationTime;
             Caster.MoveSystem.Stop();
             IsAbleToCast = true;

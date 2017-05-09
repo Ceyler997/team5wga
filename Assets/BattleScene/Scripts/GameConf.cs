@@ -6,7 +6,7 @@ static class GameConf {
 
     public static readonly float unitStartHealth = 100.0f;
     public static readonly float unitMaxHealth = 100.0f;
-    public static readonly float unitBasicRegenSpeed = 5.0f;
+    public static readonly float unitBasicRegenSpeed = 0.0f;
     public static readonly float unitDamage = 30.0f;
     public static readonly float unitCritDamage = 5.0f;
     public static readonly float unitAttackRadius = 5.0f;
@@ -23,7 +23,7 @@ static class GameConf {
     public static readonly float suprimeStartHealth = 100.0f;
     public static readonly float suprimeMaxHealth = 100.0f;
     public static readonly float suprimeBasicRegenSpeed = 5.0f;
-    public static readonly float suprimeStartEnergy = 0.0f;
+    public static readonly float suprimeStartEnergy = 100.0f;
     public static readonly float suprimeMaxEnergy = 100.0f;
     public static readonly int suprimeStartLevel = 0;
     public static readonly int suprimeMaxLevel = 10;

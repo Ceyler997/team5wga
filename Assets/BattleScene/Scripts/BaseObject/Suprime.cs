@@ -11,7 +11,7 @@ using UnityEngine;
 //spells
 [RequireComponent(typeof(Teleport))]
 [RequireComponent(typeof(CaptureCrystal))]
-
+[RequireComponent(typeof(HealMagic))]
 public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region private fields
@@ -26,6 +26,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     private Crystal currentCrystal; //текущий кристалл, в радиусе которого находится ВС
     private SuprimeMagic teleport; //Телепорт к ближайшему кристаллу
     private SuprimeMagic captureCrystal; //захват кристалла
+
+    private HealMagic healMagic; // лечение
 
     private List<IDeathObserver> deathObservers; //список наблюдателей
     #endregion
@@ -158,6 +160,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         captureCrystal = GetComponent<CaptureCrystal>();
         captureCrystal.setup(this, GameConf.CrystalCaptureCostEnergy, GameConf.TeleportCastTime);
 
+        healMagic = GetComponent<HealMagic>();
+        healMagic.Setup(this);
     }
 
     public void AddUnit(Vector3 position) {
