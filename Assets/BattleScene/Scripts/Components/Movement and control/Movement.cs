@@ -13,7 +13,14 @@ public class Movement : MonoBehaviour {
     private bool IsSettedUp { get; set; }
 
     public bool IsFinishedMovement {
-        get { return NavigationAgent.remainingDistance < DESTINATION_EPS || NavigationAgent.velocity.magnitude < SPEED_EPS; }
+        get {
+            bool isFinished = NavigationAgent.remainingDistance < DESTINATION_EPS 
+                || NavigationAgent.velocity.magnitude < SPEED_EPS;
+            if (isFinished) {
+                Stop();
+            }
+            return isFinished;
+        }
     }
 
     public Vector3 Destination {
@@ -39,7 +46,7 @@ public class Movement : MonoBehaviour {
     }
 
     // Остановка движения сбросом пути
-    // ВНИМАНИЕ follow будет считать, что цель достигнута и возьмёт новую точку
+    // ВНИМАНИЕ! follow будет считать, что цель достигнута и возьмёт новую точку
     public void Stop() {
         NavigationAgent.ResetPath();
     }

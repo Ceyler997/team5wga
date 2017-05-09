@@ -219,7 +219,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
         } else {
             int magicId = (int) stream.ReceiveNext();
             if (magicId != currentMagicColor.MagicID) {
-                currentMagicColor = BattleMagicColor.getMagicByID(magicId);
+                currentMagicColor = BattleMagicColor.GetMagicByID(magicId);
             }
 
             int receivedID = (int) stream.ReceiveNext();
