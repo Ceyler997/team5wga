@@ -14,15 +14,10 @@ public class HealMagic : GroupMagic {
             GameConf.healCastTime);
     }
 
-    protected override void CastMagic() {
-        Caster.EnergySystem.changeEnergy(-CastEnergy);
-
-        List<Unit>.Enumerator unitEnum = Units.GetEnumerator();
-        unitEnum.MoveNext();
-        OldRegen = unitEnum.Current.HealthSystem.RegenSpeed;
-
-        IsAbleToCast = false;
-        IsActive = true;
+    protected override void ApplyMagic() {
+        base.ApplyMagic();
+        
+        OldRegen = Units[0].HealthSystem.RegenSpeed;
 
         StartCoroutine(ApplyRegen());
     }
@@ -39,7 +34,7 @@ public class HealMagic : GroupMagic {
         }
     }
 
-    protected override void decast() {
+    protected override void CancelCast() {
         IsActive = false;
     }
 }

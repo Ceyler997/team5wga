@@ -87,7 +87,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         }
 
         if (Input.GetKeyDown("space")) {
-            captureCrystal.cast();
+            captureCrystal.TryCast();
             // transform.position = new Vector3(0, 0, 0);
         }
     }
@@ -154,11 +154,13 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         DetectRadius.RadiusAttach(this);
 
         //Инициализация магии
-        teleport = GetComponent<Teleport>();
-        teleport.setup(this, GameConf.TeleportCostEnergy, GameConf.TeleportCastTime);
+        Teleport teleport = GetComponent<Teleport>();
+        teleport.Setup(this);
+        this.teleport = teleport; // Зачем ты расширяешь класс магию?
 
-        captureCrystal = GetComponent<CaptureCrystal>();
-        captureCrystal.setup(this, GameConf.CrystalCaptureCostEnergy, GameConf.TeleportCastTime);
+        CaptureCrystal captureCrystal = GetComponent<CaptureCrystal>();
+        captureCrystal.Setup(this);
+        this.captureCrystal = captureCrystal;
 
         healMagic = GetComponent<HealMagic>();
         healMagic.Setup(this);

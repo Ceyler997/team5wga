@@ -68,11 +68,12 @@ static class GameConf {
     #region Magic Properties
 
     // Телепорт
-    public static readonly float TeleportCastTime = 2.0f;
-    public static readonly float TeleportCostEnergy = 10.0f;
+    public static readonly float teleportCastTime = 2.0f;
+    public static readonly float teleportCastEnergy = 10.0f;
+    public static readonly float teleportSpawnRadius = 10.0f;
     // Захват кристалла
-    public static readonly float CrystalCaptureCastTime = 10.0f;
-    public static readonly float CrystalCaptureCostEnergy = 50.0f;
+    public static readonly float crystalCaptureCastTime = 10.0f;
+    public static readonly float crystalCaptureEnergyCost = 50.0f;
 
     #region Group Magic
 

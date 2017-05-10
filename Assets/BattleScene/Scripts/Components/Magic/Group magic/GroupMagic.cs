@@ -2,39 +2,39 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-//Должен идти как отдельный объект
 [RequireComponent(typeof(Level))]
 abstract public class GroupMagic : Magic {
 
-    protected static bool IsActive { get; set; }
+    protected bool IsActive { get; set; } // активен ли эффект, должно быть возможен только один эффект на мага
+    
+    protected List<Unit> Units { get; set; } // Юниты, к которым применяется эффект
+    protected Level LevelSystem { get; set; } // уровень заклинания (уровень мага или уровень заклинания для боевых)
 
-    protected Suprime Caster { get; set; }
-    protected List<Unit> Units { get; set; }
-    protected Level LevelSystem { get; set; }
-
-    protected void Setup(Suprime caster, float castEnergy, float durationTime) {
-        base.setup(castEnergy, durationTime);
-        Caster = caster;
+    override protected void Setup(Suprime caster, float castEnergy, float durationTime) {
+        base.Setup(caster, castEnergy, durationTime);
         Units = caster.Units;
     }
 
-    public override void cast() {
-        if (!IsAbleToCast 
+    protected override void ApplyMagic() {
+        base.ApplyMagic();
+        IsActive = true;
+    }
+
+    public override void TryCast() {
+        if (!IsCasting 
             && !IsActive
             && Caster.EnergySystem.CurrentEnergy >= CastEnergy
             && Caster.Units.Count > 0) {
-            
-            CurrentDurationTime = DurationTime;
-            Caster.MoveSystem.Stop();
-            IsAbleToCast = true;
+            base.TryCast();
         }
     }
 
-    // возвращает true, если маг не может колдовать (в движении или не хватает маны)
-    protected override bool CastCondition() {
-        return !Caster.MoveSystem.IsFinishedMovement 
-            || Caster.EnergySystem.CurrentEnergy < CastEnergy
-            || IsActive;
+    // возвращает true, если маг может кастовать (в движении или не хватает маны)
+    protected override bool IsAbleToCast() {
+        return Caster.MoveSystem.IsFinishedMovement
+            && !IsActive
+            && Caster.EnergySystem.CurrentEnergy >= CastEnergy
+            && Caster.Units.Count > 0;
     }
 }
 

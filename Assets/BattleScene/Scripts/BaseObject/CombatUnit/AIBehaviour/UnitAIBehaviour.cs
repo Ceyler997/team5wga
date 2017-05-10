@@ -62,7 +62,7 @@ abstract public class UnitAIBehaviour {
             || Vector3.Distance(target.Position, Subject.MovementAgent.Destination) > Subject.FollowDistance) {
 
             Vector2 shift = Random.insideUnitCircle * Subject.FollowDistance;
-            Subject.MovementAgent.MoveTo(target.Position + new Vector3(shift.x, 0, shift.y));
+            Subject.MovementAgent.MoveTo(target.Position + new Vector3(shift.x, shift.y));
         }
     }
     #endregion

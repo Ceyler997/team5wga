@@ -3,52 +3,67 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Magic : MonoBehaviour {
-    float castEnergy; // кол-во необходимой энергии для каста
-    float durationTime; // кулдаун
-    float currentDurationTime; //текущее значение времени кулдауна
-    bool isAbleToCast = false; // может ли кастовать, проверяется с цикле
-    // Судя по действию, переменная говорит, когда идёт каст, а не когда каст возможен. Переименуй, если так (IsCasting, например)
 
-    public float DurationTime { get { return durationTime; } set { durationTime = value; } }
-    public float CastEnergy { get { return castEnergy; } set { castEnergy = value; } }
-    public float CurrentDurationTime { get { return currentDurationTime; } set { currentDurationTime = value; } }
-    public bool IsAbleToCast { get { return isAbleToCast; } set { isAbleToCast = value; } }
-    
-    public abstract void cast(); //подготовка перед кастом, проверка всех условий
+    public Suprime Caster { get; private set; }
+    public float CastEnergy { get; private set; }
+    public float CastTime { get; private set; }
+    public float CurrentCastTime { get; private set; }
+    public bool IsCasting { get; private set; }
 
-    // итоговый результат выполнения магии, для каждой магии своя реализация
-    protected abstract void CastMagic();
+    private bool IsSettedUp { get; set; }
 
     // условия, которые должны выполнятся при произнесении заклинания
-    protected abstract bool CastCondition();
+    // true если залинание может быть применено
+    protected abstract bool IsAbleToCast();
 
     // Инициализация
-    public void setup(float castEnergy, float durationTime) {
+    virtual protected void Setup(Suprime caster, float castEnergy, float castTime) {
+        Caster = caster;
         CastEnergy = castEnergy;
-        DurationTime = durationTime;
+        CastTime = castTime;
+        IsSettedUp = true;
     }
 
     void Update() {
-        if (IsAbleToCast) {
-            castDelay();
+        if (!IsSettedUp) {
+            throw new SystemIsNotSettedUpException();
         }
+
+        if (IsCasting) {
+            CastDelay();
+        }
+    }
+
+    //подготовка перед кастом, проверка всех условий, расширяется в потомках, общие действия в базе
+    public virtual void TryCast() {
+        //Остановка мага
+        Caster.MoveSystem.Stop();
+        //Установка начальныйх значений времени каста
+        CurrentCastTime = CastTime;
+        //Запуск таймера
+        IsCasting = true;
     }
 
     // Задержка перед выполнением заклинания
-    void castDelay() {
-        if (CastCondition())
-            decast();
+    void CastDelay() {
+        if (!IsAbleToCast())
+            CancelCast();
 
-        CurrentDurationTime -= Time.deltaTime;
-        if (CurrentDurationTime <= 0) {
-            IsAbleToCast = false;
-            CastMagic();
+        CurrentCastTime -= Time.deltaTime;
+        if (CurrentCastTime <= 0) {
+            ApplyMagic();
         }
 
-        Debug.Log(CurrentDurationTime);
+        Debug.Log(CurrentCastTime);
     }
 
-    virtual protected void decast() {
-        IsAbleToCast = false;
+    // итоговый результат выполнения магии, для каждой магии своя реализация, общие действия в базе
+    protected virtual void ApplyMagic() {
+        IsCasting = false;
+        Caster.EnergySystem.changeEnergy(-CastEnergy);
+    }
+
+    virtual protected void CancelCast() {
+        IsCasting = false;
     }
 }
