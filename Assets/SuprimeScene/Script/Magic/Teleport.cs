@@ -4,15 +4,16 @@ using UnityEngine;
 public class Teleport : SuprimeMagic {
 
     public void Setup(Suprime caster) {
-        base.Setup(caster, GameConf.teleportCastEnergy, GameConf.teleportCastTime);
+        base.Setup(caster, GameConf.teleportEnergyCost, GameConf.teleportCastTime);
     }
 
     public override void TryCast() {
+        base.TryCast();
         int lenght = Caster.ControllingPlayer.Crystals.Count;
         // если мы уже кастуем, то ничего не меняем
         if (!IsCasting)
-            if (Caster.EnergySystem.CurrentEnergy >= CastEnergy && lenght > 0) {
-                base.TryCast();
+            if (Caster.EnergySystem.CurrentEnergy >= EnergyCost && lenght > 0) {
+                base.StartCasting();
             }
     }
 

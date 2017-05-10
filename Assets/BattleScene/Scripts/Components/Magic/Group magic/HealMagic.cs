@@ -10,7 +10,7 @@ public class HealMagic : GroupMagic {
 
     public void Setup(Suprime caster) {
         base.Setup(caster,
-            GameConf.healCastEnergy,
+            GameConf.healEnergyCost,
             GameConf.healCastTime);
     }
 
@@ -28,13 +28,13 @@ public class HealMagic : GroupMagic {
         }
 
         yield return new WaitForSeconds(Duration);
+        CancelMagic();
+    }
 
+    protected override void CancelMagic() {
+        base.CancelMagic();
         foreach (Unit unit in Units) {
             unit.HealthSystem.RegenSpeed = OldRegen;
         }
-    }
-
-    protected override void CancelCast() {
-        IsActive = false;
     }
 }

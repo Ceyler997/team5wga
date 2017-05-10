@@ -14,12 +14,8 @@ public class Movement : MonoBehaviour {
 
     public bool IsFinishedMovement {
         get {
-            bool isFinished = NavigationAgent.remainingDistance < DESTINATION_EPS 
+            return NavigationAgent.remainingDistance < DESTINATION_EPS 
                 || NavigationAgent.velocity.magnitude < SPEED_EPS;
-            if (isFinished) {
-                Stop();
-            }
-            return isFinished;
         }
     }
 

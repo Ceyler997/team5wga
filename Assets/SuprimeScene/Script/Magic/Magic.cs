@@ -5,7 +5,7 @@ using UnityEngine;
 public abstract class Magic : MonoBehaviour {
 
     public Suprime Caster { get; private set; }
-    public float CastEnergy { get; private set; }
+    public float EnergyCost { get; private set; }
     public float CastTime { get; private set; }
     public float CurrentCastTime { get; private set; }
     public bool IsCasting { get; private set; }
@@ -17,9 +17,9 @@ public abstract class Magic : MonoBehaviour {
     protected abstract bool IsAbleToCast();
 
     // Инициализация
-    virtual protected void Setup(Suprime caster, float castEnergy, float castTime) {
+    virtual protected void Setup(Suprime caster, float energyCost, float castTime) {
         Caster = caster;
-        CastEnergy = castEnergy;
+        EnergyCost = energyCost;
         CastTime = castTime;
         IsSettedUp = true;
     }
@@ -38,6 +38,9 @@ public abstract class Magic : MonoBehaviour {
     public virtual void TryCast() {
         //Остановка мага
         Caster.MoveSystem.Stop();
+    }
+
+    protected virtual void StartCasting() {
         //Установка начальныйх значений времени каста
         CurrentCastTime = CastTime;
         //Запуск таймера
@@ -60,7 +63,7 @@ public abstract class Magic : MonoBehaviour {
     // итоговый результат выполнения магии, для каждой магии своя реализация, общие действия в базе
     protected virtual void ApplyMagic() {
         IsCasting = false;
-        Caster.EnergySystem.changeEnergy(-CastEnergy);
+        Caster.EnergySystem.changeEnergy(-EnergyCost);
     }
 
     virtual protected void CancelCast() {

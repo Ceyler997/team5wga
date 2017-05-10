@@ -6,12 +6,13 @@ public class CaptureCrystal : SuprimeMagic {
     }
 
     public override void TryCast() {
+        base.TryCast();
         // если мы уже кастуем и не бежим, то ничего не меняем
         if (!IsCasting && !CanNotRun())
             if (Caster.CurrentCrystal != null) {
                 // Если не имеем врагов в пределах видимости радиуса
                 if (!Caster.CurrentCrystal.DetectRadius.HasFriends()) {
-                    base.TryCast();
+                    base.StartCasting();
                 }
             }
     }

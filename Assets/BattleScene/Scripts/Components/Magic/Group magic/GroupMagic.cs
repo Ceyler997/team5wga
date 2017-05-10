@@ -10,8 +10,8 @@ abstract public class GroupMagic : Magic {
     protected List<Unit> Units { get; set; } // Юниты, к которым применяется эффект
     protected Level LevelSystem { get; set; } // уровень заклинания (уровень мага или уровень заклинания для боевых)
 
-    override protected void Setup(Suprime caster, float castEnergy, float durationTime) {
-        base.Setup(caster, castEnergy, durationTime);
+    override protected void Setup(Suprime caster, float energyCost, float durationTime) {
+        base.Setup(caster, energyCost, durationTime);
         Units = caster.Units;
     }
 
@@ -21,19 +21,24 @@ abstract public class GroupMagic : Magic {
     }
 
     public override void TryCast() {
+        base.TryCast();
         if (!IsCasting 
             && !IsActive
-            && Caster.EnergySystem.CurrentEnergy >= CastEnergy
+            && Caster.EnergySystem.CurrentEnergy >= EnergyCost
             && Caster.Units.Count > 0) {
-            base.TryCast();
+            base.StartCasting();
         }
+    }
+
+    protected virtual void CancelMagic() {
+        IsActive = false;
     }
 
     // возвращает true, если маг может кастовать (в движении или не хватает маны)
     protected override bool IsAbleToCast() {
         return Caster.MoveSystem.IsFinishedMovement
             && !IsActive
-            && Caster.EnergySystem.CurrentEnergy >= CastEnergy
+            && Caster.EnergySystem.CurrentEnergy >= EnergyCost
             && Caster.Units.Count > 0;
     }
 }
