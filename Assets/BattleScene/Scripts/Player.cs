@@ -34,7 +34,7 @@ public class Player : Photon.PunBehaviour {
     public int ID { get; private set; } // ID игрока, выставляется в соответствии с Photon ID
     #endregion
 
-    #region MonoBehaviour methods
+    #region PunBehaviour methods
     public override void OnPhotonInstantiate(PhotonMessageInfo info) {
         GameManager.Instance.Players.Add(info.sender.ID, this);
         SetupPlayer(info.sender.NickName);
