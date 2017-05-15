@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class Teleport : SuprimeMagic {
 
@@ -7,7 +6,7 @@ public class Teleport : SuprimeMagic {
         base.Setup(caster, GameConf.teleportEnergyCost, GameConf.teleportCastTime);
     }
 
-    public override void TryCast() {
+    new public void TryCast() {
         base.TryCast();
         int lenght = Caster.ControllingPlayer.Crystals.Count;
         // если мы уже кастуем, то ничего не меняем
@@ -25,7 +24,7 @@ public class Teleport : SuprimeMagic {
         base.ApplyMagic();
         float lenght = Caster.ControllingPlayer.Crystals.Count;
         if (lenght > 0) {
-            int randIndex = (int)UnityEngine.Random.Range(0, lenght);
+            int randIndex = (int) UnityEngine.Random.Range(0, lenght);
             Crystal crystal = Caster.ControllingPlayer.Crystals [randIndex];
             // Отниманем энергию за использование нашей услуги доставки ВС к кристаллу
             // отнимается в базе

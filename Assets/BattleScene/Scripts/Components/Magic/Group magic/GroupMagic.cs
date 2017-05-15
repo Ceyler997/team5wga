@@ -1,12 +1,19 @@
-﻿using System;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using System.Collections.Generic;
 
-[RequireComponent(typeof(Level))]
 abstract public class GroupMagic : Magic {
 
-    protected bool IsActive { get; set; } // активен ли эффект, должно быть возможен только один эффект на мага
-    
+    protected bool IsActive {
+        get {
+            return Caster.Magic.IsActive;
+        }
+        set {
+            Caster.Magic.IsActive = value;
+        }
+    }
+    protected bool IsCasting {
+        get { return Caster.Magic.IsCasting; }
+    }
+
     protected List<Unit> Units { get; set; } // Юниты, к которым применяется эффект
     protected Level LevelSystem { get; set; } // уровень заклинания (уровень мага или уровень заклинания для боевых)
 
@@ -15,14 +22,14 @@ abstract public class GroupMagic : Magic {
         Units = caster.Units;
     }
 
-    protected override void ApplyMagic() {
+    override protected void ApplyMagic() {
         base.ApplyMagic();
         IsActive = true;
     }
 
-    public override void TryCast() {
+    new public void TryCast() {
         base.TryCast();
-        if (!IsCasting 
+        if (!Caster.Magic.IsCasting
             && !IsActive
             && Caster.EnergySystem.CurrentEnergy >= EnergyCost
             && Caster.Units.Count > 0) {
@@ -30,12 +37,12 @@ abstract public class GroupMagic : Magic {
         }
     }
 
-    protected virtual void CancelMagic() {
+    virtual protected void CancelMagic() {
         IsActive = false;
     }
 
     // возвращает true, если маг может кастовать (в движении или не хватает маны)
-    protected override bool IsAbleToCast() {
+    override protected bool IsAbleToCast() {
         return Caster.MoveSystem.IsFinishedMovement
             && !IsActive
             && Caster.EnergySystem.CurrentEnergy >= EnergyCost

@@ -5,7 +5,7 @@ public class CaptureCrystal : SuprimeMagic {
         base.Setup(caster, GameConf.crystalCaptureEnergyCost, GameConf.crystalCaptureCastTime);
     }
 
-    public override void TryCast() {
+    new public void TryCast() {
         base.TryCast();
         // если мы уже кастуем и не бежим, то ничего не меняем
         if (!IsCasting && !CanNotRun())

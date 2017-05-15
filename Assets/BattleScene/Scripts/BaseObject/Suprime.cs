@@ -7,11 +7,7 @@ using UnityEngine;
 [RequireComponent(typeof(CombatSystem))]
 [RequireComponent(typeof(Level))]
 [RequireComponent(typeof(Movement))]
-
-//spells
-[RequireComponent(typeof(Teleport))]
-[RequireComponent(typeof(CaptureCrystal))]
-[RequireComponent(typeof(HealMagic))]
+[RequireComponent(typeof(MagicManager))]
 public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     #region private fields
@@ -24,10 +20,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     private Movement moveSystem; // Передвижение
     private List<Unit> units; //Юниты, прикреплённые к данному ВС
     private Crystal currentCrystal; //текущий кристалл, в радиусе которого находится ВС
-    private SuprimeMagic teleport; //Телепорт к ближайшему кристаллу
-    private SuprimeMagic captureCrystal; //захват кристалла
-
-    private HealMagic healMagic; // лечение
+    private MagicManager magicManager; // Менеджер магии
 
     private List<IDeathObserver> deathObservers; //список наблюдателей
     #endregion
@@ -76,6 +69,11 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         get { return deathObservers; }
         set { deathObservers = value; }
     }
+
+    public MagicManager Magic {
+        get { return magicManager; }
+        set { magicManager = value; }
+    }
     #endregion
 
     #region MonoBehaviour methods
@@ -87,8 +85,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         }
 
         if (Input.GetKeyDown("space")) {
-            captureCrystal.TryCast();
-            // transform.position = new Vector3(0, 0, 0);
+            Magic.Teleport.TryCast();
         }
     }
 
@@ -112,8 +109,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         Player owner;
         GameManager.Instance.Players.TryGetValue(info.sender.ID, out owner);
         SetupSuprime(owner);
-
-        owner.Suprimes.Add(this);
     }
     #endregion
 
@@ -123,6 +118,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         SetupBaseObject(controller,
             GameConf.suprimeReactRadius,
             GameConf.suprimeDetectRadius);
+        controller.Suprimes.Add(this);
 
         HealthSystem = GetComponent<Health>();
         HealthSystem.setupSystem(GameConf.suprimeStartHealth,
@@ -154,16 +150,8 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         DetectRadius.RadiusAttach(this);
 
         //Инициализация магии
-        Teleport teleport = GetComponent<Teleport>();
-        teleport.Setup(this);
-        this.teleport = teleport; // Зачем ты расширяешь класс магию?
-
-        CaptureCrystal captureCrystal = GetComponent<CaptureCrystal>();
-        captureCrystal.Setup(this);
-        this.captureCrystal = captureCrystal;
-
-        healMagic = GetComponent<HealMagic>();
-        healMagic.Setup(this);
+        Magic = GetComponent<MagicManager>();
+        Magic.Setup(this);
     }
 
     public void AddUnit(Vector3 position) {

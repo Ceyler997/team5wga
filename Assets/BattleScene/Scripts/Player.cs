@@ -47,6 +47,7 @@ public class Player : Photon.PunBehaviour {
     //Добавляет ВС в массив suprimes
     public void AddSuprime(Vector3 position) {
         if (Suprimes.Count < GameConf.maxSuprimeAmount) {
+
             if (PhotonNetwork.connected) {
                 PhotonNetwork.Instantiate("SuprimePrefab",
                     position,
@@ -58,6 +59,7 @@ public class Player : Photon.PunBehaviour {
                     Quaternion.identity).GetComponent<Suprime>();
                 newSuprime.SetupSuprime(this);
             }
+
         } else {
             throw new TooMuchSuprimesException();
         }
