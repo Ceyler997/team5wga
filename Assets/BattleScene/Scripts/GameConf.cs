@@ -80,9 +80,19 @@ static class GameConf {
     public static readonly float healEnergyCost = 50.0f;
     public static readonly float healCastTime = 1.0f;
     public static readonly float healDuration = 20.0f;
-    
+
     public static float GetHealRegenSpeed(int level) {
-        return ((0.1f + level/10.0f) * unitMaxHealth) / healDuration;
+        return ((0.1f + level / 10.0f) * unitMaxHealth) / healDuration;
+    }
+
+    public static readonly float colorEnergyCost = 50.0f;
+    public static readonly float colorCastTime = 1.0f;
+    public static readonly float colorDuration = 20.0f;
+    public static readonly int colorStartLevel = 0;
+    public static readonly int colorMaxLevel = 10;
+
+    public static float GetCritChance(int level) {
+        return (0.1f + ((float) level / (colorMaxLevel - colorStartLevel)) * 0.4f);
     }
     #endregion
     #endregion

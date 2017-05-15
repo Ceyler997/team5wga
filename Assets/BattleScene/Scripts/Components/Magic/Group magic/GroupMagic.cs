@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
 
 abstract public class GroupMagic : Magic {
 
@@ -14,12 +16,14 @@ abstract public class GroupMagic : Magic {
         get { return Caster.Magic.IsCasting; }
     }
 
-    protected List<Unit> Units { get; set; } // Юниты, к которым применяется эффект
+    protected List<Unit> Units { get; private set; } // Юниты, к которым применяется эффект
     protected Level LevelSystem { get; set; } // уровень заклинания (уровень мага или уровень заклинания для боевых)
+    private float Duration { get; set; } // продолжительность эффекта
 
-    override protected void Setup(Suprime caster, float energyCost, float durationTime) {
-        base.Setup(caster, energyCost, durationTime);
+     virtual protected void Setup(Suprime caster, float energyCost, float castTime, float durationTime) {
+        base.Setup(caster, energyCost, castTime);
         Units = caster.Units;
+        Duration = durationTime;
     }
 
     override protected void ApplyMagic() {
@@ -37,11 +41,16 @@ abstract public class GroupMagic : Magic {
         }
     }
 
+    protected IEnumerator WaitForEffect() {
+        yield return new WaitForSeconds(Duration);
+        CancelMagic();
+    }
+
     virtual protected void CancelMagic() {
         IsActive = false;
     }
 
-    // возвращает true, если маг может кастовать (в движении или не хватает маны)
+    // возвращает true, если маг может кастовать (не в движении, хватает маны и есть юниты)
     override protected bool IsAbleToCast() {
         return Caster.MoveSystem.IsFinishedMovement
             && !IsActive

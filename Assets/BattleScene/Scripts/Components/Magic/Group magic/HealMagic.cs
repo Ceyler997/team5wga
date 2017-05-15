@@ -1,16 +1,13 @@
-﻿using System.Collections;
-using UnityEngine;
-
-public class HealMagic : GroupMagic {
-
-    private float Duration { get { return GameConf.healDuration; } }
+﻿public class HealMagic : GroupMagic {
+    
     private float OldRegen { get; set; }
 
     public void Setup(Suprime caster) {
         
         base.Setup(caster,
             GameConf.healEnergyCost,
-            GameConf.healCastTime);
+            GameConf.healCastTime,
+            GameConf.healDuration);
     }
 
     protected override void ApplyMagic() {
@@ -18,17 +15,12 @@ public class HealMagic : GroupMagic {
         
         OldRegen = Units[0].HealthSystem.RegenSpeed;
 
-        StartCoroutine(ApplyRegen());
-    }
-
-    private IEnumerator ApplyRegen() {
         float regenSpeed = GameConf.GetHealRegenSpeed(Caster.LevelSystem.CurrentLevel);
         foreach (Unit unit in Units) {
             unit.HealthSystem.RegenSpeed = regenSpeed;
         }
 
-        yield return new WaitForSeconds(Duration);
-        CancelMagic();
+        StartCoroutine(WaitForEffect());
     }
 
     protected override void CancelMagic() {
