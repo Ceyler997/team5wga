@@ -1,7 +1,7 @@
 ﻿using UnityEngine;
 
 [RequireComponent(typeof(Level))]
-public class ColorMagic : GroupMagic {
+abstract public class ColorMagic : GroupMagic {
 
     private BattleMagicColor Color { get; set; }
     private float OldCritChance { get; set; }

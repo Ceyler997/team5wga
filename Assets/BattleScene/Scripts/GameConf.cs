@@ -25,7 +25,7 @@ static class GameConf {
     public static readonly float suprimeBasicRegenSpeed = 5.0f;
     public static readonly float suprimeStartEnergy = 100.0f;
     public static readonly float suprimeMaxEnergy = 100.0f;
-    public static readonly int suprimeStartLevel = 0;
+    public static readonly int suprimeStartLevel = 1;
     public static readonly int suprimeMaxLevel = 10;
     public static readonly float suprimeDamage = 20.0f;
     public static readonly float suprimeCritDamage = 5.0f;
@@ -88,7 +88,7 @@ static class GameConf {
     public static readonly float colorEnergyCost = 50.0f;
     public static readonly float colorCastTime = 1.0f;
     public static readonly float colorDuration = 20.0f;
-    public static readonly int colorStartLevel = 0;
+    public static readonly int colorStartLevel = 1;
     public static readonly int colorMaxLevel = 10;
 
     public static float GetCritChance(int level) {

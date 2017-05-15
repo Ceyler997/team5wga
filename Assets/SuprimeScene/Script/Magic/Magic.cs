@@ -32,6 +32,8 @@ public abstract class Magic : MonoBehaviour {
         IsSettedUp = true;
     }
 
+    abstract public void Setup(Suprime caster);
+
     private void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();

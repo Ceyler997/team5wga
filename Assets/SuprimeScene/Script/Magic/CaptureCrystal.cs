@@ -1,7 +1,7 @@
 ﻿
 public class CaptureCrystal : SuprimeMagic {
 
-    public void Setup(Suprime caster) {
+    override public void Setup(Suprime caster) {
         base.Setup(caster, GameConf.crystalCaptureEnergyCost, GameConf.crystalCaptureCastTime);
     }
 
