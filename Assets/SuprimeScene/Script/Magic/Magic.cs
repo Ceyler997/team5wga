@@ -45,7 +45,7 @@ public abstract class Magic : MonoBehaviour {
     }
 
     //подготовка перед кастом, проверка всех условий, расширяется в потомках, общие действия в базе
-    virtual protected void TryCast() {
+    virtual public void TryCast() {
         //Остановка мага
         Caster.MoveSystem.Stop();
     }

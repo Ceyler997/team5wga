@@ -76,6 +76,9 @@ static class GameConf {
     // Захват кристалла
     public static readonly float crystalCaptureCastTime = 10.0f;
     public static readonly float crystalCaptureEnergyCost = 50.0f;
+    // Улучшение кристалла
+    public static readonly float lvlUpCastTime = 2.0f;
+    public static readonly float lvlUpEnergyCost = 50.0f;
 
     #region Group Magic
 

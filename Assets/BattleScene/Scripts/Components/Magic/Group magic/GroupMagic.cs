@@ -31,7 +31,7 @@ abstract public class GroupMagic : Magic {
         IsActive = true;
     }
 
-    new public void TryCast() {
+    override public void TryCast() {
         base.TryCast();
         if (!Caster.Magic.IsCasting
             && !IsActive

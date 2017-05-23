@@ -6,7 +6,7 @@ public class Teleport : SuprimeMagic {
         base.Setup(caster, GameConf.teleportEnergyCost, GameConf.teleportCastTime);
     }
 
-    new public void TryCast() {
+    override public void TryCast() {
         base.TryCast();
         int lenght = Caster.ControllingPlayer.Crystals.Count;
         // если мы уже кастуем, то ничего не меняем

@@ -8,6 +8,7 @@ public class MagicManager : MonoBehaviour {
     public RedMagic Red { get; private set; }
     public WhiteMagic White { get; private set; }
     public BlackMagic Black { get; private set; }
+    public LevelUpCrystal LvlUpCrys { get; private set; }
 
     public bool IsCasting { get; set; } // Кастует ли супрайм в данный момент
     public bool IsActive { get; set; }  // Активен ли какой-то эффект в данный момент
@@ -31,5 +32,8 @@ public class MagicManager : MonoBehaviour {
 
         Black = GetComponentInChildren<BlackMagic>();
         Black.Setup(caster);
+
+        LvlUpCrys = GetComponentInChildren<LevelUpCrystal>();
+        LvlUpCrys.Setup(caster);
     }
 }

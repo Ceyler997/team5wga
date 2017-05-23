@@ -26,10 +26,10 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         set {energySystem = value;}
     }
 
-    private Level LevelSystem {
+    public Level LevelSystem {
         get {return levelSystem;}
 
-        set {levelSystem = value;}
+        private set {levelSystem = value;}
     }
     #endregion
 
