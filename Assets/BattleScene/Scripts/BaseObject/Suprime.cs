@@ -85,7 +85,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         }
 
         if (Input.GetKeyDown("space")) {
-            Magic.Red.TryCast();
+            Magic.CaptureCrystal.TryCast();
         }
     }
 

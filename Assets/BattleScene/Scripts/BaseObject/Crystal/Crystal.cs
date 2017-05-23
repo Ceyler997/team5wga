@@ -60,8 +60,27 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         }
     }
 
+    public bool TransferEnergyToSuprime(Suprime suprime) {
+        float energyToTransfer;
+        if(Vector3.Distance(Position, suprime.Position) < DetectRadius.RadiusValue) {
+            energyToTransfer = GameConf.crysMaxTransferSpeed;
+        } else {
+            energyToTransfer = GameConf.crysMinTransferSpeed;
+        }
+
+        energyToTransfer *= Time.deltaTime;
+
+        if(EnergySystem.CurrentEnergy < energyToTransfer) {
+            return false;
+        } else {
+            suprime.EnergySystem.changeEnergy(energyToTransfer);
+            EnergySystem.changeEnergy(-energyToTransfer);
+            return true;
+        }
+    }
+
     #region MonoBehaviours methods
-    
+
     new void Update() {
         base.Update();
         // Если кто-нибудь владеет кристалом то вырабатываем энергию

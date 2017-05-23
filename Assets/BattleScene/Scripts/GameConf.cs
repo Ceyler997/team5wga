@@ -43,6 +43,8 @@ static class GameConf {
     public static readonly int crysMaxLevel = 3;
     public static readonly float crysAlarmRadius = 10.0f;
     public static readonly float crysDetectRadius = 20.0f;
+    public static readonly float crysMaxTransferSpeed = 5;
+    public static readonly float crysMinTransferSpeed = 1;
 
 
 

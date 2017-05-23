@@ -42,6 +42,35 @@ public class Player : Photon.PunBehaviour {
     }
     #endregion
 
+    #region MonoBehaviour methods
+
+    private void Update() {
+        if(Crystals.Count > 0) {
+            foreach(Suprime suprime in Suprimes) {
+                if(suprime.CurrentCrystal != null 
+                    && suprime.CurrentCrystal.ControllingPlayer == this) {
+                    if (suprime.CurrentCrystal.TransferEnergyToSuprime(suprime)) {
+                        continue; // переходим к следующему suprime
+                    }
+                }
+
+                Crystals.Sort((fCrys, sCrys) => {
+                    return Vector3.Distance(fCrys.Position, suprime.Position)
+                    .CompareTo(Vector3.Distance(sCrys.Position, suprime.Position));
+                });
+
+                foreach(Crystal crystal in Crystals) {
+                    if (crystal.TransferEnergyToSuprime(suprime)) {
+                        break; // выходим из цикла кристаллов, передав энергию
+                    }
+                }
+            }
+        } else {
+            //Debug.LogWarning(PlayerName + " lose cause have no crystals");
+        }
+    }
+    #endregion
+
     #region public methods
 
     //Добавляет ВС в массив suprimes
