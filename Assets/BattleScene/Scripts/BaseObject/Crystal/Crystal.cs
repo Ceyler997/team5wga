@@ -26,10 +26,10 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         set {energySystem = value;}
     }
 
-    private Level LevelSystem {
+    public Level LevelSystem {
         get {return levelSystem;}
 
-        set {levelSystem = value;}
+        private set {levelSystem = value;}
     }
     #endregion
 
@@ -46,7 +46,7 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         LevelSystem.setupSystem(GameConf.crysStartLevel,
             GameConf.crysMaxLevel);
 
-        RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
+        RegenSpeed = GameConf.GetCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
 
     // Метод для смены владельца, вызывается на стороне нового владельца
@@ -60,8 +60,27 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         }
     }
 
+    public bool TransferEnergyToSuprime(Suprime suprime) {
+        float energyToTransfer;
+        if(Vector3.Distance(Position, suprime.Position) < DetectRadius.RadiusValue) {
+            energyToTransfer = GameConf.crysMaxTransferSpeed;
+        } else {
+            energyToTransfer = GameConf.crysMinTransferSpeed;
+        }
+
+        energyToTransfer *= Time.deltaTime;
+
+        if(EnergySystem.CurrentEnergy < energyToTransfer) {
+            return false;
+        } else {
+            suprime.EnergySystem.changeEnergy(energyToTransfer);
+            EnergySystem.changeEnergy(-energyToTransfer);
+            return true;
+        }
+    }
+
     #region MonoBehaviours methods
-    
+
     new void Update() {
         base.Update();
         // Если кто-нибудь владеет кристалом то вырабатываем энергию
@@ -72,9 +91,9 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
 
     #region ILevelable implementation
 
-    public void levelUp() {
+    public void LevelUp() {
         LevelSystem.levelUp();
-        RegenSpeed = GameConf.getCrysRegenSpeed(LevelSystem.CurrentLevel);
+        RegenSpeed = GameConf.GetCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
     #endregion
 

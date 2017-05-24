@@ -44,6 +44,10 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
         set { owner = value; }
     }
 
+    public float RadiusValue {
+        get { return radiusCollider.radius; }
+    }
+
     private List<IRadiusObserver> RadiusObservers { get; set; }
     #endregion
 
@@ -57,11 +61,11 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
 
     void OnTriggerEnter(Collider other) {
         // столкновение с радиусом другого объекта
-        if (other.GetType() == radiusCollider.GetType()) { 
+        if (other.GetType() == radiusCollider.GetType()) {
             return;
         }
         // ищем объект
-        TryToAddObject(other.GetComponentInParent<BaseObject>()); 
+        TryToAddObject(other.GetComponentInParent<BaseObject>());
     }
 
     void OnTriggerExit(Collider other) {
@@ -70,7 +74,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
             return;
         }
         // ищем объект в родителе 
-        TryToRemoveObject(other.GetComponentInParent<BaseObject>()); 
+        TryToRemoveObject(other.GetComponentInParent<BaseObject>());
 
     }
     #endregion
@@ -83,7 +87,7 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
         if (enteredObject != null) {
             ObjectsInside.Add(enteredObject);
             // подписываемся на смерть объекта если он смертный
-            if (enteredObject is IDeathSubject) { 
+            if (enteredObject is IDeathSubject) {
                 ((IDeathSubject) enteredObject).DeathAttach(this);
             }
             // рассылаем уведомления
@@ -99,11 +103,11 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
             ObjectsInside.Remove(exitedObject);
 
             // отписываемся от смерти объекта, если он смертный
-            if (exitedObject is IDeathSubject) { 
+            if (exitedObject is IDeathSubject) {
                 ((IDeathSubject) exitedObject).DeathDetach(this);
             }
 
-            foreach(IRadiusObserver observer in RadiusObservers) {
+            foreach (IRadiusObserver observer in RadiusObservers) {
                 observer.OnObjectExit(exitedObject);
             }
         }
@@ -125,8 +129,8 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
     }
 
     public bool HasEnemies() {
-        foreach(BaseObject objectInside in ObjectsInside) {
-            if(objectInside.ControllingPlayer != Owner) {
+        foreach (BaseObject objectInside in ObjectsInside) {
+            if (objectInside.ControllingPlayer != Owner) {
                 return true;
             }
         }
@@ -167,4 +171,3 @@ public class Radius : MonoBehaviour, IDeathObserver, IRadiusSubject {
     }
     #endregion
 }
-
