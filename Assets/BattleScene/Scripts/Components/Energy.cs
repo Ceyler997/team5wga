@@ -13,12 +13,12 @@ public class Energy : MonoBehaviour, IPunObservable {
 
     public float CurrentEnergy {
         get { return currentEnergy; }
-        set { currentEnergy = value; }
+        private set { currentEnergy = value; }
     }
 
-    private float MaxEnergy {
+    public float MaxEnergy {
         get { return maxEnergy; }
-        set { maxEnergy = value; }
+        private set { maxEnergy = value; }
     }
 
     private bool IsSettedUp {

@@ -36,17 +36,15 @@ static class GameConf {
     public static readonly float suprimeDetectRadius = 20.0f;
     #endregion
 
-    #region Crystall Properties
+    #region Crystal Properties
     public static readonly float crysStartEnergy = 0.0f;
     public static readonly float crysMaxEnergy = 100.0f;
     public static readonly int crysStartLevel = 1;
     public static readonly int crysMaxLevel = 3;
     public static readonly float crysAlarmRadius = 10.0f;
     public static readonly float crysDetectRadius = 20.0f;
-    public static readonly float crysMaxTransferSpeed = 5;
+    public static readonly float crysMaxTransferSpeed = 4;
     public static readonly float crysMinTransferSpeed = 1;
-
-
 
     public static float GetCrysRegenSpeed(int curentLevel) {
         switch (curentLevel) {
@@ -64,7 +62,7 @@ static class GameConf {
 
     #region Player Properties
 
-    public static readonly int maxSuprimeAmount = 9;
+    public static readonly int maxSuprimeAmount = 3;
     #endregion
 
     #region Magic Properties
@@ -74,11 +72,13 @@ static class GameConf {
     public static readonly float teleportEnergyCost = 10.0f;
     public static readonly float teleportSpawnRadius = 10.0f;
     // Захват кристалла
-    public static readonly float crystalCaptureCastTime = 10.0f;
+    public static readonly float crystalCaptureCastTime = 3.0f;
     public static readonly float crystalCaptureEnergyCost = 50.0f;
     // Улучшение кристалла
     public static readonly float lvlUpCastTime = 2.0f;
-    public static readonly float lvlUpEnergyCost = 50.0f;
+    // Призыв suprime
+    public static readonly float suprimeSummonCastTime = 2.0f;
+    public static readonly float suprimeSummonEnergyCost = 50.0f;
 
     #region Group Magic
 

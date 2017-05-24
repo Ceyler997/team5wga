@@ -15,7 +15,7 @@ public class Player : Photon.PunBehaviour {
 
     //возвращает имя игрока
     public string PlayerName {
-        get {return playerName; }
+        get { return playerName; }
         set { playerName = value; }
     }
 
@@ -45,23 +45,26 @@ public class Player : Photon.PunBehaviour {
     #region MonoBehaviour methods
 
     private void Update() {
-        if(Crystals.Count > 0) {
-            foreach(Suprime suprime in Suprimes) {
-                if(suprime.CurrentCrystal != null 
-                    && suprime.CurrentCrystal.ControllingPlayer == this) {
-                    if (suprime.CurrentCrystal.TransferEnergyToSuprime(suprime)) {
-                        continue; // переходим к следующему suprime
+        if (Crystals.Count > 0) {
+            foreach (Suprime suprime in Suprimes) {
+                if (suprime.EnergySystem.CurrentEnergy < suprime.EnergySystem.MaxEnergy) {
+
+                    if (suprime.CurrentCrystal != null
+                        && suprime.CurrentCrystal.ControllingPlayer == this) {
+                        if (suprime.CurrentCrystal.TransferEnergyToSuprime(suprime)) {
+                            continue; // переходим к следующему suprime
+                        }
                     }
-                }
 
-                Crystals.Sort((fCrys, sCrys) => {
-                    return Vector3.Distance(fCrys.Position, suprime.Position)
-                    .CompareTo(Vector3.Distance(sCrys.Position, suprime.Position));
-                });
+                    Crystals.Sort((fCrys, sCrys) => {
+                        return Vector3.Distance(fCrys.Position, suprime.Position)
+                        .CompareTo(Vector3.Distance(sCrys.Position, suprime.Position));
+                    });
 
-                foreach(Crystal crystal in Crystals) {
-                    if (crystal.TransferEnergyToSuprime(suprime)) {
-                        break; // выходим из цикла кристаллов, передав энергию
+                    foreach (Crystal crystal in Crystals) {
+                        if (crystal.TransferEnergyToSuprime(suprime)) {
+                            break; // выходим из цикла кристаллов, передав энергию
+                        }
                     }
                 }
             }
@@ -75,7 +78,7 @@ public class Player : Photon.PunBehaviour {
 
     //Добавляет ВС в массив suprimes
     public void AddSuprime(Vector3 position) {
-        if (Suprimes.Count < GameConf.maxSuprimeAmount) {
+        if (!IsSuprimesCountMax()) {
 
             if (PhotonNetwork.connected) {
                 PhotonNetwork.Instantiate("SuprimePrefab",
@@ -83,8 +86,8 @@ public class Player : Photon.PunBehaviour {
                     Quaternion.identity,
                     0);
             } else {
-                Suprime newSuprime = Instantiate(((OfflineGameManager) GameManager.Instance).suprimePrefab, 
-                    position, 
+                Suprime newSuprime = Instantiate(((OfflineGameManager) GameManager.Instance).suprimePrefab,
+                    position,
                     Quaternion.identity).GetComponent<Suprime>();
                 newSuprime.SetupSuprime(this);
             }
@@ -92,6 +95,10 @@ public class Player : Photon.PunBehaviour {
         } else {
             throw new TooMuchSuprimesException();
         }
+    }
+
+    public bool IsSuprimesCountMax() {
+        return Suprimes.Count >= GameConf.maxSuprimeAmount;
     }
 
     // Тут немного несостыковка получается. Мы юзаем AddSuprime и AddUnit для того, чтобы создать новый объект на позиции

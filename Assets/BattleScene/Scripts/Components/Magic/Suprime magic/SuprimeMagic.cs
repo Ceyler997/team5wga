@@ -11,4 +11,9 @@ public abstract class SuprimeMagic : Magic {
         // Если суприм побежал, то сбрасываем каст
         return !Caster.MoveSystem.IsFinishedMovement;
     }
+
+    protected override void ApplyMagic() {
+        base.ApplyMagic();
+        Caster.EnergySystem.changeEnergy(-EnergyCost);
+    }
 }

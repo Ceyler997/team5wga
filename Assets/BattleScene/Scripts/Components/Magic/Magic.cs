@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -7,7 +8,7 @@ public abstract class Magic : MonoBehaviour {
     private bool isCasting; // локальный флаг каста
 
     public Suprime Caster { get; private set; }
-    public float EnergyCost { get; private set; }
+    public float EnergyCost { get; set; }
     public float CastTime { get; private set; }
     public float CurrentCastTime { get; private set; }
     private bool IsCasting {
@@ -59,20 +60,21 @@ public abstract class Magic : MonoBehaviour {
 
     // Задержка перед выполнением заклинания
     private void CastDelay() {
-        if (!IsAbleToCast())
+        if (!IsAbleToCast()) {
             CancelCast();
+            return;
+        }
 
         CurrentCastTime -= Time.deltaTime;
         if (CurrentCastTime <= 0) {
             ApplyMagic();
         }
 
-        Debug.Log(CurrentCastTime);
+        Debug.Log(Math.Round(CurrentCastTime, 2));
     }
 
     // итоговый результат выполнения магии, для каждой магии своя реализация, общие действия в базе
     virtual protected void ApplyMagic() {
-        Caster.EnergySystem.changeEnergy(-EnergyCost);
         IsCasting = false;
     }
 
