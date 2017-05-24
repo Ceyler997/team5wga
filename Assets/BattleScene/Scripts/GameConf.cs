@@ -47,22 +47,13 @@ static class GameConf {
     public static readonly float crysMinTransferSpeed = 1;
 
     public static float GetCrysRegenSpeed(int curentLevel) {
-        switch (curentLevel) {
-            case 1:
-                return 5.0f;
-            case 2:
-                return 10.0f;
-            case 3:
-                return 15.0f;
-            default:
-                return 5.0f;
-        }
+        return curentLevel * 5.0f;
     }
     #endregion
 
     #region Player Properties
 
-    public static readonly int maxSuprimeAmount = 3;
+    public static readonly int maxSuprimeAmount = 9;
     #endregion
 
     #region Magic Properties
@@ -79,6 +70,14 @@ static class GameConf {
     // Призыв suprime
     public static readonly float suprimeSummonCastTime = 2.0f;
     public static readonly float suprimeSummonEnergyCost = 50.0f;
+    // Призыв юнитов
+    public static readonly float unitsSummonCastTime = 2.0f;
+    public static readonly float unitsSummonEnergyCost = 50.0f;
+    public static readonly float unitsSummonDelay = 1.0f;
+
+    public static int GetUnitsAmount(int level) {
+        return level + 4;
+    }
 
     #region Group Magic
 

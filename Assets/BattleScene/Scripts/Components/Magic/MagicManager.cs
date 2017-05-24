@@ -10,6 +10,7 @@ public class MagicManager : MonoBehaviour {
     public BlackMagic Black { get; private set; }
     public LevelUpCrystal LvlUpCrys { get; private set; }
     public SummonSuprime SmnSuprime { get; private set; }
+    public SummonUnits SmnUnits { get; private set; }
 
     public bool IsCasting { get; set; } // Кастует ли супрайм в данный момент
     public bool IsActive { get; set; }  // Активен ли какой-то эффект в данный момент
@@ -39,5 +40,8 @@ public class MagicManager : MonoBehaviour {
 
         SmnSuprime = GetComponentInChildren<SummonSuprime>();
         SmnSuprime.Setup(caster);
+
+        SmnUnits = GetComponentInChildren<SummonUnits>();
+        SmnUnits.Setup(caster);
     }
 }
