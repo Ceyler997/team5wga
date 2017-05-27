@@ -6,7 +6,7 @@ public class Player : Photon.PunBehaviour {
 
     #region private fields
 
-    public string playerName; //Имя игрока
+    private string playerName; //Имя игрока
     private List<Suprime> suprimes; // ВС, которыми владеет игрок
     private List<Crystal> crystals; // Кристалы, которыми владеет игрок
     #endregion
@@ -42,8 +42,8 @@ public class Player : Photon.PunBehaviour {
         Crystal startCrystal 
             = PhotonView.Find((int) photonView.instantiationData [0])
             .GetComponent<Crystal>();
-        AddCrystal(startCrystal);
-        startCrystal.ChangeOwner(this);
+
+        GameManager.Instance.SwapCrystals(this, startCrystal);
     }
     #endregion
 

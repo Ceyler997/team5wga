@@ -83,11 +83,6 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         if (ControllingPlayer == null) {
             throw new SuprimeHaveNoPlayerException();
         }
-
-        if (Input.GetKeyDown("space")) {
-            Magic.CaptureCrystal.TryCast();
-            Magic.SmnUnits.TryCast();
-        }
     }
 
     public void OnDestroy() {

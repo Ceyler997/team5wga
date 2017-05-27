@@ -42,7 +42,7 @@ public class LauncherManager : Photon.PunBehaviour {
 
         progressMessage = progressPanel.transform.FindChild("MessagesLabel").GetComponent<Text>();
         popUpMessage = popUp.transform.FindChild("MessagesLabel").GetComponent<Text>();
-        Debug.Log("GameManager is awoken");
+        Debug.Log("Launcher Manager is awoken");
     }
 
     private void Start() {

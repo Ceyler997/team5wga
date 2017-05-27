@@ -16,14 +16,16 @@ public class GameManager : Photon.PunBehaviour{
 
     [Tooltip("Все кристаллы на карте")]
     public Crystal[] crystals; //Все кристаллы на карте (при добавлении нового кристалла, обязательно добавить его сюда)
+    [Tooltip("Интерфейс для информирования о результате игры")]
+    public InfoPanel endOfGameUI;
     #endregion
 
     #region properties
 
     public static GameManager Instance {
-        get {return instance;}
+        get { return instance; }
         set {
-            if(instance == null) {
+            if (instance == null) {
                 instance = value;
             } else {
                 throw new AttemptToManagerReassignmentException();
@@ -45,7 +47,11 @@ public class GameManager : Photon.PunBehaviour{
     #region MonoBehaviour methods
 
     public void Start() {
-        Instance = this; // singletone
+        Instance = this; // partly singletone
+
+        if(endOfGameUI != null) {
+            endOfGameUI.gameObject.SetActive(false);
+        }
 
         StartPosition [] startPositions = GetComponentsInChildren<StartPosition>(); // получаем все стартовые позиции
         
@@ -68,6 +74,12 @@ public class GameManager : Photon.PunBehaviour{
             print("Esc pressed");
             PhotonNetwork.LeaveRoom();
         }
+
+        foreach(Player player in Players.Values) {
+            if(player.Suprimes.Count == 0) {
+                EndOfGame(player);
+            }
+        }
     }
     #endregion
 
@@ -80,12 +92,12 @@ public class GameManager : Photon.PunBehaviour{
 
     public override void OnDisconnectedFromPhoton() {
         print("Diconnection, loading login sceen");
-        LoadLoginScreen();
+        LeaveGame();
     }
 
     public override void OnLeftRoom() {
         print("Room left, loading login screen");
-        LoadLoginScreen();
+        LeaveGame();
     }
     #endregion
 
@@ -104,8 +116,18 @@ public class GameManager : Photon.PunBehaviour{
         crystal.ChangeOwner(player);
     }
 
-    private void LoadLoginScreen() {
+    public void LeaveGame() {
+        PhotonNetwork.LeaveRoom();
         PhotonNetwork.LoadLevel(0); // go to load screen
+    }
+
+    private void EndOfGame(Player player) {
+        if(endOfGameUI != null) {
+            endOfGameUI.gameObject.SetActive(true);
+            endOfGameUI.SetText("End of game for " + player.PlayerName);
+        } else {
+            LeaveGame();
+        }
     }
 }
 

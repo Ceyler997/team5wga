@@ -32,5 +32,12 @@ public class OfflineGameManager : GameManager {
         }
     }
     #endregion
+
+    #region PhotonMessages overriding
+
+    public override void OnPhotonPlayerDisconnected(PhotonPlayer otherPlayer) { }
+    public override void OnDisconnectedFromPhoton() { }
+    public override void OnLeftRoom() { }
+    #endregion
 }
 

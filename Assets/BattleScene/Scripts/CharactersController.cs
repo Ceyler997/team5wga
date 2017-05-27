@@ -2,8 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class CharactersController : MonoBehaviour
-{
+public class CharactersController : MonoBehaviour {
 
     public static CharactersController Instance;
 
@@ -28,11 +27,11 @@ public class CharactersController : MonoBehaviour
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
             if (Physics.Raycast(ray, out hit)) {
-			
-				if (SelectedUnit != null) {
-					SelectedUnit.deselectUnit();
-					SelectedUnit = null;
-				}
+
+                if (SelectedUnit != null) {
+                    SelectedUnit.deselectUnit();
+                    SelectedUnit = null;
+                }
 
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
                 if (unit != null && (unit.photonView.isMine || !PhotonNetwork.connected)) {
@@ -60,11 +59,4 @@ public class CharactersController : MonoBehaviour
     //    else return false;
 
     //}
-
-	public void SpawnUnit() {
-		if(SelectedUnit != null){
-			Suprime selectedSuprime = SelectedUnit.GetComponent<Suprime>();
-			selectedSuprime.AddUnit(selectedSuprime.transform.position + 3 * Vector3.left);
-		}
-	}
 }
