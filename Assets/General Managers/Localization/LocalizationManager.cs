@@ -17,7 +17,7 @@ public class LocalizationManager: MonoBehaviour {//TODO: move to static whole cl
 
     #region MonoBehaviour Methods
     private void Awake() {
-        DontDestroyOnLoad(this);
+        // DontDestroyOnLoad(this);
 
         LoadLocilizedText(localizationFileName);
     }

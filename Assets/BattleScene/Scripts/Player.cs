@@ -39,6 +39,11 @@ public class Player : Photon.PunBehaviour {
         GameManager.Instance.Players.Add(info.sender.ID, this);
         SetupPlayer(info.sender.NickName);
         ID = info.sender.ID;
+        Crystal startCrystal 
+            = PhotonView.Find((int) photonView.instantiationData [0])
+            .GetComponent<Crystal>();
+        AddCrystal(startCrystal);
+        startCrystal.ChangeOwner(this);
     }
     #endregion
 

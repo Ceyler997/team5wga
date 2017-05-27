@@ -49,14 +49,18 @@ public class GameManager : Photon.PunBehaviour{
 
         StartPosition [] startPositions = GetComponentsInChildren<StartPosition>(); // получаем все стартовые позиции
         
-        PhotonNetwork.Instantiate("PlayerPrefab",
-            startPositions [PhotonNetwork.player.ID - 1].Position, // позиция, соответвующая игроку (отсчёт ID начинается с мастера - 1)
-            Quaternion.identity,
-            0);
-
         foreach (Crystal crystal in crystals) {
             crystal.SetupCrystal(null);
         }
+
+        PhotonNetwork.Instantiate("PlayerPrefab",
+            startPositions [PhotonNetwork.player.ID - 1].Position, // позиция, соответвующая игроку (отсчёт ID начинается с мастера - 1)
+            Quaternion.identity,
+            0,
+            new object [] {
+                startPositions [PhotonNetwork.player.ID - 1].startCrystal.photonView.viewID
+            });
+
     }
 
     public void Update() {

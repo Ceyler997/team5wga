@@ -291,7 +291,7 @@ MonoBehaviour:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1965722152260672}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8a9974d6d6cdd1940b3853ba0a516b84, type: 3}
   m_Name: 
@@ -307,7 +307,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e4c5c30b95a24aa4abc0d4c8dd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentEnergy: 0
 --- !u!114 &114103824784075780
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -346,7 +345,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 00d1fa61f430a154cb994e0a46b6bfb5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  owner: {fileID: 0}
 --- !u!114 &114406567849272230
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -482,7 +480,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 70c52e51514f0b64ebb61c5176f4c616, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectsInside: []
 --- !u!114 &114867179571369968
 MonoBehaviour:
   m_ObjectHideFlags: 1
