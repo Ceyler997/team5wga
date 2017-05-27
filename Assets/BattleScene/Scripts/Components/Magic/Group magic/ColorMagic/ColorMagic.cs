@@ -14,7 +14,7 @@ abstract public class ColorMagic : GroupMagic {
 
         Color = color;
         LevelSystem = GetComponent<Level>();
-        LevelSystem.setupSystem(GameConf.colorStartLevel,
+        LevelSystem.SetupSystem(GameConf.colorStartLevel,
             GameConf.colorMaxLevel);
     }
 

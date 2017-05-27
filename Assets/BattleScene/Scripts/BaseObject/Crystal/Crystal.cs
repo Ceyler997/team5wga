@@ -43,7 +43,7 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
             GameConf.crysMaxEnergy);
 
         LevelSystem = GetComponent<Level>();
-        LevelSystem.setupSystem(GameConf.crysStartLevel,
+        LevelSystem.SetupSystem(GameConf.crysStartLevel,
             GameConf.crysMaxLevel);
 
         RegenSpeed = GameConf.GetCrysRegenSpeed(LevelSystem.CurrentLevel);
@@ -92,7 +92,7 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
     #region ILevelable implementation
 
     public void LevelUp() {
-        LevelSystem.levelUp();
+        LevelSystem.LevelUp();
         RegenSpeed = GameConf.GetCrysRegenSpeed(LevelSystem.CurrentLevel);
     }
     #endregion

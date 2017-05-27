@@ -140,7 +140,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             GameConf.suprimeAttackSpeed);
 
         LevelSystem = GetComponent<Level>();
-        LevelSystem.setupSystem(GameConf.suprimeStartLevel, GameConf.suprimeMaxLevel);
+        LevelSystem.SetupSystem(GameConf.suprimeStartLevel, GameConf.suprimeMaxLevel);
 
         MoveSystem = GetComponent<Movement>();
         MoveSystem.SetupSystem(GameConf.suprimeMoveSpeed);

@@ -7,39 +7,23 @@ public interface ILeveable {
 //Скрипт реализует прокачку уровня для ВС, Магии и Кристалла
 public class Level : MonoBehaviour, IPunObservable {
 
-    #region private fields
-
-    private int currentLevel; //Текущий уровень
-    private int maxLevel; //Максимальный уровень
-    private bool isSettedUp;
-    #endregion
-
     #region getters and setters
 
-    public int CurrentLevel {
-        get { return currentLevel; }
-        set { currentLevel = value; }
-    }
+    public int CurrentLevel { get; private set; } // Текущий уровень
 
-    public int MaxLevel {
-        get { return maxLevel; }
-        set { maxLevel = value; }
-    }
+    public int MaxLevel { get; private set; } // Максимальный уровень
 
-    public bool IsSettedUp {
-        get { return isSettedUp; }
-        set { isSettedUp = value; }
-    }
+    private bool IsSettedUp { get; set; }
     #endregion
 
     #region public methods
 
-    public void levelUp(){
+    public void LevelUp() {
         if (CurrentLevel < MaxLevel)
             CurrentLevel += 1;
     }
 
-    public void setupSystem(int startLevel, int maxLevel) {
+    public void SetupSystem(int startLevel, int maxLevel) {
         CurrentLevel = startLevel;
         MaxLevel = maxLevel;
         IsSettedUp = true;
