@@ -44,7 +44,8 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
 
         LevelSystem = GetComponent<Level>();
         LevelSystem.SetupSystem(GameConf.crysStartLevel,
-            GameConf.crysMaxLevel);
+            GameConf.crysMaxLevel, 
+            0.0f);
 
         RegenSpeed = GameConf.GetCrysRegenSpeed(LevelSystem.CurrentLevel);
     }

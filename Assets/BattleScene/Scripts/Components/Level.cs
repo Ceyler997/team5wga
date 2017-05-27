@@ -13,19 +13,32 @@ public class Level : MonoBehaviour, IPunObservable {
 
     public int MaxLevel { get; private set; } // Максимальный уровень
 
+    public float CurrentExp { get; private set; } // Текущее количество опыта
+
+    public float ExpToLevelUp { get; private set; } // Опыта для прокачки уровня
+
     private bool IsSettedUp { get; set; }
     #endregion
 
     #region public methods
+
+    public void AddExp(float ExpAmount) {
+        CurrentExp += ExpAmount;
+        while(CurrentExp >= ExpToLevelUp) {
+            LevelUp();
+            CurrentExp -= ExpToLevelUp;
+        }
+    }
 
     public void LevelUp() {
         if (CurrentLevel < MaxLevel)
             CurrentLevel += 1;
     }
 
-    public void SetupSystem(int startLevel, int maxLevel) {
+    public void SetupSystem(int startLevel, int maxLevel, float expToLevelUp) {
         CurrentLevel = startLevel;
         MaxLevel = maxLevel;
+        ExpToLevelUp = expToLevelUp;
         IsSettedUp = true;
     }
     #endregion

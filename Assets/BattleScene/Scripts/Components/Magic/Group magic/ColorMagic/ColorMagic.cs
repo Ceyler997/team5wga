@@ -15,11 +15,13 @@ abstract public class ColorMagic : GroupMagic {
         Color = color;
         LevelSystem = GetComponent<Level>();
         LevelSystem.SetupSystem(GameConf.colorStartLevel,
-            GameConf.colorMaxLevel);
+            GameConf.colorMaxLevel, 
+            GameConf.colorEnergyCost);
     }
 
     override protected void ApplyMagic() {
         base.ApplyMagic();
+        LevelSystem.AddExp(EnergyCost);
         OldCritChance = Units [0].CombatSys.CritChance;
 
         foreach (Unit unit in Units) {

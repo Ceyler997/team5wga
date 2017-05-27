@@ -76,6 +76,7 @@ public abstract class Magic : MonoBehaviour {
     // итоговый результат выполнения магии, для каждой магии своя реализация, общие действия в базе
     virtual protected void ApplyMagic() {
         IsCasting = false;
+        Caster.LevelSystem.AddExp(EnergyCost);
     }
 
     virtual protected void CancelCast() {

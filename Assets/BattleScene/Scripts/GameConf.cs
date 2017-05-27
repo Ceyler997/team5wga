@@ -26,7 +26,7 @@ static class GameConf {
     public static readonly float suprimeStartEnergy = 100.0f;
     public static readonly float suprimeMaxEnergy = 100.0f;
     public static readonly int suprimeStartLevel = 1;
-    public static readonly int suprimeMaxLevel = 10;
+    public static readonly int suprimeMaxLevel = 5;
     public static readonly float suprimeDamage = 20.0f;
     public static readonly float suprimeCritDamage = 5.0f;
     public static readonly float suprimeAttackRadius = 5.0f;
@@ -34,6 +34,7 @@ static class GameConf {
     public static readonly float suprimeMoveSpeed = 5.0f;
     public static readonly float suprimeReactRadius = 10.0f;
     public static readonly float suprimeDetectRadius = 20.0f;
+    internal static readonly float suprimeLevelUpExp = 100.0f;
     #endregion
 
     #region Crystal Properties
