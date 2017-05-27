@@ -4,6 +4,15 @@ using UnityEngine;
 
 abstract public class GroupMagic : Magic {
 
+    public override bool IsAbleToStartCast {
+        get {
+            return !Caster.Magic.IsCasting
+            && !IsActive
+            && Caster.EnergySystem.CurrentEnergy >= EnergyCost
+            && Caster.Units.Count > 0;
+        }
+    }
+
     protected bool IsActive {
         get {
             return Caster.Magic.IsActive;
@@ -30,16 +39,6 @@ abstract public class GroupMagic : Magic {
         base.ApplyMagic();
         Caster.EnergySystem.changeEnergy(-EnergyCost);
         IsActive = true;
-    }
-
-    override public void TryCast() {
-        base.TryCast();
-        if (!Caster.Magic.IsCasting
-            && !IsActive
-            && Caster.EnergySystem.CurrentEnergy >= EnergyCost
-            && Caster.Units.Count > 0) {
-            base.StartCasting();
-        }
     }
 
     protected IEnumerator WaitForEffect() {

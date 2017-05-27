@@ -4,6 +4,16 @@ using UnityEngine;
 
 public class SummonUnits : CrystalMagic {
 
+    public override bool IsAbleToStartCast {
+        get {
+            return !Caster.Magic.IsCasting
+            && Caster.CurrentCrystal != null
+            && Caster.CurrentCrystal.ControllingPlayer == Caster.ControllingPlayer
+            && Caster.CurrentCrystal.EnergySystem.CurrentEnergy >= EnergyCost
+            && Caster.Units.Count == 0;
+        }
+    }
+
     public override void Setup(Suprime caster) {
         base.Setup(caster,
             GameConf.unitsSummonEnergyCost,
@@ -28,19 +38,6 @@ public class SummonUnits : CrystalMagic {
             Caster.AddUnit(Caster.CurrentCrystal.Position
             + new Vector3(shift.x, 0, shift.y));
             yield return new WaitForSeconds(GameConf.unitsSummonDelay);
-        }
-    }
-
-    public override void TryCast() {
-        base.TryCast();
-
-        if(!Caster.Magic.IsCasting
-            && Caster.CurrentCrystal != null
-            && Caster.CurrentCrystal.ControllingPlayer == Caster.ControllingPlayer
-            && Caster.CurrentCrystal.EnergySystem.CurrentEnergy >= EnergyCost
-            && Caster.Units.Count == 0) {
-
-            base.StartCasting();
         }
     }
 }

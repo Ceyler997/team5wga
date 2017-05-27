@@ -43,6 +43,8 @@ public class ControllableUnit : Photon.PunBehaviour {
         get { return isHighlighted; }
         set { isHighlighted = value; }
     }
+
+    public Suprime Subject { get; set; }
     #endregion
 
     #region MonoBehaviour methods
@@ -52,6 +54,7 @@ public class ControllableUnit : Photon.PunBehaviour {
         UnitMoveSystem = GetComponent<Movement>();
         MRenderers = GetComponentsInChildren<Renderer>();
         Highlight = Camera.main.GetComponent<HighlightsFX>();
+        Subject = GetComponent<Suprime>();
     }
 
     private void OnMouseEnter() {

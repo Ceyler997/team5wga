@@ -18,6 +18,7 @@ public abstract class Magic : MonoBehaviour {
             Caster.Magic.IsCasting = value;
         }
     }
+    public abstract bool IsAbleToStartCast { get; }
 
     private bool IsSettedUp { get; set; }
 
@@ -49,6 +50,9 @@ public abstract class Magic : MonoBehaviour {
     virtual public void TryCast() {
         //Остановка мага
         Caster.MoveSystem.Stop();
+        if (IsAbleToStartCast) {
+            StartCasting();
+        }
     }
 
     virtual protected void StartCasting() {

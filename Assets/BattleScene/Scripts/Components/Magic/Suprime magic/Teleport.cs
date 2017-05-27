@@ -2,18 +2,17 @@
 
 public class Teleport : SuprimeMagic {
 
-    override public void Setup(Suprime caster) {
-        base.Setup(caster, GameConf.teleportEnergyCost, GameConf.teleportCastTime);
+    public override bool IsAbleToStartCast {
+        get {
+            Crystal crys = Caster.CurrentCrystal;
+            return !Caster.Magic.IsCasting
+            && Caster.EnergySystem.CurrentEnergy >= EnergyCost
+            && Caster.ControllingPlayer.Crystals.Count > 0;
+        }
     }
 
-    override public void TryCast() {
-        base.TryCast();
-        int lenght = Caster.ControllingPlayer.Crystals.Count;
-        // если мы уже кастуем, то ничего не меняем
-        if (!IsCasting)
-            if (Caster.EnergySystem.CurrentEnergy >= EnergyCost && lenght > 0) {
-                base.StartCasting();
-            }
+    override public void Setup(Suprime caster) {
+        base.Setup(caster, GameConf.teleportEnergyCost, GameConf.teleportCastTime);
     }
 
     protected override bool IsAbleToCast() {
