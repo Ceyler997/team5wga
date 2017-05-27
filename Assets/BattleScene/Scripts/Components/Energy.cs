@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Energy : MonoBehaviour, IPunObservable {
 
@@ -7,6 +9,11 @@ public class Energy : MonoBehaviour, IPunObservable {
     private float currentEnergy; //Текущее кол-во энергии
     private float maxEnergy; //Максимальное кол-во энергии
     private bool isSettedUp;
+    #endregion
+
+    #region UI fields
+
+    public Text energyOut;
     #endregion
 
     #region getters and setters
@@ -45,6 +52,10 @@ public class Energy : MonoBehaviour, IPunObservable {
     private void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
+        }
+
+        if(energyOut != null) {
+            energyOut.text = Math.Round(CurrentEnergy, 2).ToString() + "/" + Math.Round(MaxEnergy, 2).ToString();
         }
     }
     #endregion

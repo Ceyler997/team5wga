@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
+using UnityEngine.UI;
 
 public class Health : MonoBehaviour, IPunObservable {
 
@@ -9,6 +11,11 @@ public class Health : MonoBehaviour, IPunObservable {
     private float regenSpeed; //Скорость востановления здоровья
     private IDeathSubject subject; // Объект, за здоровье которого компоненто отвечает
     private bool isSettedUp;
+    #endregion
+
+    #region UI fields
+
+    public Text healthOut;
     #endregion
 
     #region getters and setters
@@ -44,6 +51,10 @@ public class Health : MonoBehaviour, IPunObservable {
     public void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
+        }
+
+        if(healthOut != null) {
+            healthOut.text = Math.Round(CurrentHealth, 2).ToString() + "/" + Math.Round(MaxHealth, 2).ToString();
         }
 
         regen();
