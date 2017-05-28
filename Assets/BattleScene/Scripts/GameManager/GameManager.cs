@@ -46,7 +46,7 @@ public class GameManager : Photon.PunBehaviour{
 
     #region MonoBehaviour methods
 
-    public void Awake() {
+    public void Start() {
         Instance = this; // partly singletone
 
         if(endOfGameUI != null) {
@@ -114,15 +114,6 @@ public class GameManager : Photon.PunBehaviour{
 
         //Захватываем кристалл
         crystal.ChangeOwner(player);
-    }
-
-    public Player GetLocalPlayer() {
-        foreach (Player player in Players.Values) {
-            if (player.photonView.isMine) {
-                return player;
-            }
-        }
-        return null;
     }
 
     public void LeaveGame() {
