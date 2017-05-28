@@ -1,13 +1,16 @@
 ﻿
 public class SmnSuprimeUI : SpellUI {
+    public Crystal crystal;
+
     protected override void Update() {
         ControllableUnit unit = CharactersController.Instance.SelectedUnit;
+        Spell = null;
 
         if (unit != null) {
             Suprime suprime = unit.Subject;
-            Spell = suprime.Magic.SmnSuprime;
-        } else {
-            Spell = null;
+            if (suprime.CurrentCrystal == crystal) {
+                Spell = suprime.Magic.SmnSuprime;
+            }
         }
 
         base.Update();

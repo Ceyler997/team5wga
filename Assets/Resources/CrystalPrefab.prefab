@@ -111,6 +111,7 @@ GameObject:
   - component: {fileID: 114971687224327446}
   - component: {fileID: 114561402549001936}
   - component: {fileID: 114879220534056704}
+  - component: {fileID: 114801063950155180}
   m_Layer: 13
   m_Name: Image
   m_TagString: Untagged
@@ -402,7 +403,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9558824, g: 0.9558824, b: 0.9558824, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 1, g: 1, b: 1, a: 1}
+    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -493,6 +494,22 @@ MonoBehaviour:
   Pivot: {fileID: 224362445039482276}
   mTransform: {fileID: 0}
   mCollider: {fileID: 65093619677629798}
+--- !u!114 &114801063950155180
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1576245628678528}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: da8285f0f5c3bb54fb546e8805757356, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeSprite: {fileID: 21300000, guid: 7d633226d9f4c004caeebe010daa9e18, type: 3}
+  unactiveSprite: {fileID: 0}
+  crystal: {fileID: 114157920703967430}
+  captureSprite: {fileID: 21300000, guid: 7d633226d9f4c004caeebe010daa9e18, type: 3}
+  lvlUpSprite: {fileID: 21300000, guid: 243e0e54c41b8b34c94ddb3f98d34499, type: 3}
 --- !u!114 &114841417025798104
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -624,6 +641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   activeSprite: {fileID: 21300000, guid: a380c6c9e22cf704c85a959d51163996, type: 3}
   unactiveSprite: {fileID: 21300000, guid: e172955a50a6df34399dc8a24743562f, type: 3}
+  crystal: {fileID: 114157920703967430}
 --- !u!208 &208061607556176886
 NavMeshObstacle:
   m_ObjectHideFlags: 1

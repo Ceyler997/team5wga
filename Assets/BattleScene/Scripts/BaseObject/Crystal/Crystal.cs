@@ -55,7 +55,7 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         if (ControllingPlayer != newOwner) {
             ControllingPlayer = newOwner;
 
-            if (PhotonNetwork.connected) {
+            if (PhotonNetwork.connected && newOwner.photonView.isMine) {
                 photonView.RequestOwnership();
             }
         }

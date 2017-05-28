@@ -8,8 +8,8 @@ abstract public class SpellUI : MonoBehaviour {
     public Sprite unactiveSprite;
 
     protected Magic Spell { get; set; }
-    private Button SpellButton { get; set; }
-    private Image SpellImage { get; set; }
+    protected Button SpellButton { get; private set; }
+    protected Image SpellImage { get; private set; }
 
     private void Start() {
         SpellButton = GetComponent<Button>();

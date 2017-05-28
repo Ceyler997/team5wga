@@ -8,7 +8,7 @@ public class MagicManager : MonoBehaviour {
     public RedMagic Red { get; private set; }
     public WhiteMagic White { get; private set; }
     public BlackMagic Black { get; private set; }
-    public LevelUpCrystal LvlUpCrys { get; private set; }
+    public LevelUpCrystal LvlUpCrystal { get; private set; }
     public SummonSuprime SmnSuprime { get; private set; }
     public SummonUnits SmnUnits { get; private set; }
 
@@ -35,8 +35,8 @@ public class MagicManager : MonoBehaviour {
         Black = GetComponentInChildren<BlackMagic>();
         Black.Setup(caster);
 
-        LvlUpCrys = GetComponentInChildren<LevelUpCrystal>();
-        LvlUpCrys.Setup(caster);
+        LvlUpCrystal = GetComponentInChildren<LevelUpCrystal>();
+        LvlUpCrystal.Setup(caster);
 
         SmnSuprime = GetComponentInChildren<SummonSuprime>();
         SmnSuprime.Setup(caster);
