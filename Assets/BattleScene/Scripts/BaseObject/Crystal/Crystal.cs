@@ -31,6 +31,8 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
 
         private set {levelSystem = value;}
     }
+
+    private Material material;
     #endregion
 
     public void SetupCrystal(Player owner) {
@@ -48,6 +50,8 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
             0.0f);
 
         RegenSpeed = GameConf.GetCrysRegenSpeed(LevelSystem.CurrentLevel);
+
+        material = GetComponent<Renderer>().material;
     }
 
     // Метод для смены владельца, вызывается на стороне нового владельца
@@ -87,6 +91,11 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         // Если кто-нибудь владеет кристалом то вырабатываем энергию
         if (ControllingPlayer != null)
             EnergySystem.changeEnergy(RegenSpeed * Time.deltaTime);
+
+        if (material != null) {
+            float energyLevel = 2.0f * EnergySystem.CurrentEnergy / EnergySystem.MaxEnergy;
+            material.SetColor("_EmissionColor", new Color(energyLevel, energyLevel, energyLevel));
+        }
     }
     #endregion
 
