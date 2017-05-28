@@ -28,15 +28,21 @@ public class CharactersController : MonoBehaviour {
 
             if (Physics.Raycast(ray, out hit)) {
 
-                if (SelectedUnit != null) {
-                    SelectedUnit.deselectUnit();
-                    SelectedUnit = null;
-                }
+                
 
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
                 if (unit != null && (unit.photonView.isMine || !PhotonNetwork.connected)) {
+                    if (SelectedUnit != null) {
+                        SelectedUnit.deselectUnit();
+                    }
+
                     unit.selectUnit();
                     SelectedUnit = unit;
+                }
+            } else {
+                if (SelectedUnit != null) {
+                    SelectedUnit.deselectUnit();
+                    SelectedUnit = null;
                 }
             }
         }

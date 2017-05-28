@@ -60,6 +60,7 @@ GameObject:
   - component: {fileID: 114103824784075780}
   - component: {fileID: 114666641441471484}
   - component: {fileID: 114417419238978632}
+  - component: {fileID: 114989221100002602}
   m_Layer: 13
   m_Name: Image
   m_TagString: Untagged
@@ -610,6 +611,19 @@ MonoBehaviour:
   m_FillAmount: 1
   m_FillClockwise: 1
   m_FillOrigin: 0
+--- !u!114 &114989221100002602
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1218328319038160}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61ce475e1d51b0747a6ba83dc86596f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  activeSprite: {fileID: 21300000, guid: a380c6c9e22cf704c85a959d51163996, type: 3}
+  unactiveSprite: {fileID: 21300000, guid: e172955a50a6df34399dc8a24743562f, type: 3}
 --- !u!208 &208061607556176886
 NavMeshObstacle:
   m_ObjectHideFlags: 1
