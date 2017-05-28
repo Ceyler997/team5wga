@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 //systems
@@ -24,6 +26,9 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
 
     private List<IDeathObserver> deathObservers; //список наблюдателей
     #endregion
+
+    public Animator animator;
+    public float waitAfterDeath = 2.0f;
 
     #region getters and setters
 
@@ -82,6 +87,11 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         base.Update();
         if (ControllingPlayer == null) {
             throw new SuprimeHaveNoPlayerException();
+        }
+
+        animator.SetBool("isWalking", !MoveSystem.IsFinishedMovement);
+        if (magicManager.IsCasting) {
+            animator.SetTrigger("casting");
         }
     }
 
@@ -211,6 +221,12 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             }
         }
 
+        StartCoroutine(PlayDeath());
+    }
+
+    private IEnumerator PlayDeath() {
+        animator.SetBool("alive", false);
+        yield return new WaitForSeconds(waitAfterDeath);
         PhotonNetwork.Destroy(gameObject);
     }
 

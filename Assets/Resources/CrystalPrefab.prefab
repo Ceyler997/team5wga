@@ -98,7 +98,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!1 &1576245628678528
 GameObject:
   m_ObjectHideFlags: 1
@@ -183,6 +183,7 @@ GameObject:
   - component: {fileID: 114843248764585776}
   - component: {fileID: 114841417025798104}
   - component: {fileID: 114082497328066314}
+  - component: {fileID: 135586191278126650}
   m_Layer: 13
   m_Name: CrystalPrefab
   m_TagString: Untagged
@@ -197,7 +198,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1965722152260672}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 5, y: 21.8, z: 2}
+  m_LocalPosition: {x: 65.5, y: -69, z: 2}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4518676487051470}
@@ -212,8 +213,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1507275061624422}
   m_LocalRotation: {x: 0, y: 0, z: 0.38268343, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: -0, z: 2.77}
-  m_LocalScale: {x: 40, y: 40, z: 1}
+  m_LocalPosition: {x: 0, y: -0, z: 20}
+  m_LocalScale: {x: 80, y: 80, z: 1}
   m_Children: []
   m_Father: {fileID: 4469040705909866}
   m_RootOrder: 0
@@ -231,7 +232,7 @@ MeshRenderer:
   m_LightProbeUsage: 1
   m_ReflectionProbeUsage: 1
   m_Materials:
-  - {fileID: 2100000, guid: d0131f581a13e7b4098d4879e44d97d2, type: 2}
+  - {fileID: 0}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -346,7 +347,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 21300000, guid: a380c6c9e22cf704c85a959d51163996, type: 3}
+  m_Sprite: {fileID: 21300000, guid: e172955a50a6df34399dc8a24743562f, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -415,7 +416,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 114103824784075780}
   m_OnClick:
     m_PersistentCalls:
@@ -434,7 +435,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pivot: {fileID: 224123579025530830}
-  mTransform: {fileID: 0}
+  mTransform: {fileID: 224461813618102486}
   mCollider: {fileID: 65093619677629798}
 --- !u!114 &114580701272162184
 MonoBehaviour:
@@ -479,7 +480,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: ENERGY
+  m_Text: 100/100
 --- !u!114 &114666641441471484
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -492,7 +493,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Pivot: {fileID: 224362445039482276}
-  mTransform: {fileID: 0}
+  mTransform: {fileID: 224096084217819412}
   mCollider: {fileID: 65093619677629798}
 --- !u!114 &114801063950155180
 MonoBehaviour:
@@ -523,7 +524,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerId: 0
   group: 0
-  OwnerShipWasTransfered: 0
+  OwnerShipWasTransfered: 1
   prefixBackup: -1
   synchronization: 3
   onSerializeTransformOption: 3
@@ -594,7 +595,7 @@ MonoBehaviour:
     m_HighlightedTrigger: Highlighted
     m_PressedTrigger: Pressed
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 114971687224327446}
   m_OnClick:
     m_PersistentCalls:
@@ -620,7 +621,7 @@ MonoBehaviour:
       m_Calls: []
     m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
-  m_Sprite: {fileID: 10913, guid: 0000000000000000f000000000000000, type: 0}
+  m_Sprite: {fileID: 21300000, guid: 7d633226d9f4c004caeebe010daa9e18, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -642,6 +643,18 @@ MonoBehaviour:
   activeSprite: {fileID: 21300000, guid: a380c6c9e22cf704c85a959d51163996, type: 3}
   unactiveSprite: {fileID: 21300000, guid: e172955a50a6df34399dc8a24743562f, type: 3}
   crystal: {fileID: 114157920703967430}
+--- !u!135 &135586191278126650
+SphereCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1965722152260672}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 20
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!208 &208061607556176886
 NavMeshObstacle:
   m_ObjectHideFlags: 1
@@ -860,7 +873,7 @@ RectTransform:
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1027712347288128}
-  m_LocalRotation: {x: 0.7071068, y: 0, z: 0, w: 0.7071068}
+  m_LocalRotation: {x: -0.27895275, y: 0.649758, z: 0.649758, w: -0.27895275}
   m_LocalPosition: {x: 0, y: 0, z: 1.991}
   m_LocalScale: {x: 1, y: 0.9999999, z: 0.9999999}
   m_Children:

@@ -40,7 +40,7 @@ GameObject:
   serializedVersion: 5
   m_Component:
   - component: {fileID: 4926279088850038}
-  - component: {fileID: 114921589455490942}
+  - component: {fileID: 114062849256333022}
   m_Layer: 0
   m_Name: CameraGroup
   m_TagString: Untagged
@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1719504876910768}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -40}
+  m_LocalPosition: {x: 0, y: 0, z: -45}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4926279088850038}
@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1947689534871930}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 1.0000002, y: 1.0744388, z: 1.0000005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4693319887993712}
@@ -99,12 +99,14 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 4294965247
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
   m_TargetEye: 3
   m_HDR: 0
+  m_AllowMSAA: 1
+  m_ForceIntoRT: 0
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
@@ -123,6 +125,27 @@ Behaviour:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1719504876910768}
   m_Enabled: 1
+--- !u!114 &114062849256333022
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1947689534871930}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e2444566f91d81e488b4f9dbcb3e108a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ScrollZone: 30
+  ScrollSpeed: 100
+  xMax: 100
+  xMin: -100
+  zMax: 100
+  zMin: -100
+  ZoomMin: -50
+  ZoomMax: -10
+  bUseKeyboard: 1
+  bUseMouse: 0
 --- !u!114 &114130385687944442
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -157,27 +180,6 @@ MonoBehaviour:
   blurIterations: 1
   blurType: 0
   blurShader: {fileID: 4800000, guid: f9d5fa183cd6b45eeb1491f74863cd91, type: 3}
---- !u!114 &114921589455490942
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1947689534871930}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2444566f91d81e488b4f9dbcb3e108a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ScrollZone: 30
-  ScrollSpeed: 100
-  xMax: 50
-  xMin: -50
-  zMax: 50
-  zMin: -50
-  ZoomMin: -50
-  ZoomMax: -10
-  bUseKeyboard: 1
-  bUseMouse: 0
 --- !u!124 &124747451087669022
 Behaviour:
   m_ObjectHideFlags: 1
