@@ -1068,7 +1068,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1480251106586050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 17.93, y: -0.5, z: -16.338985}
+  m_LocalPosition: {x: 21.61, y: -0.5, z: -7.4}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224430711325788356}
@@ -1875,6 +1875,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed1d9de839cb3be409ac093a47c06afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effect: {fileID: 198088736783042232, guid: 0d7f9a8d0f9426b489323e361a52f056, type: 2}
+  effectTime: 5
 --- !u!114 &114110483362973262
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2044,6 +2046,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0250f1eae8f5a468f506c6f0113553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effect: {fileID: 198134472018353588, guid: 25ddcc1603728e84b92bb66ce2df97a5, type: 2}
+  effectTime: 5
 --- !u!114 &114555388047080476
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2055,6 +2059,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d05e00b6bcc622b4fac048b72a1b744f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  effect: {fileID: 198036995403383876, guid: e18abd24014e2dc4f950a2e64f3bb02e, type: 2}
+  effectTime: 5
 --- !u!114 &114561100372873796
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2236,6 +2242,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6ce7c461342ba334a93da0c099b02762, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  controllingPlayer: {fileID: 0}
   animator: {fileID: 95177597296256484}
   waitAfterDeath: 2
 --- !u!114 &114978623349125634
@@ -2249,6 +2256,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a06e4c5c30b95a24aa4abc0d4c8dd198, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentEnergy: 0
   energyOut: {fileID: 114849942351337910}
 --- !u!114 &114989866226692916
 MonoBehaviour:

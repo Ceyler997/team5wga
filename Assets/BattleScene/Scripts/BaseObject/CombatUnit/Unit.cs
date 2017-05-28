@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
@@ -125,8 +126,9 @@ public class Unit : BaseObject, IFightable {
         HealthSystem = GetComponent<Health>();
         HealthSystem.setupSystem(GameConf.unitStartHealth,
             GameConf.unitMaxHealth,
-            GameConf.unitBasicRegenSpeed,
+            0.0f,
             this);
+        StartCoroutine(StartRegenDelay());
 
         CombatSys = GetComponent<CombatSystem>();
         CombatSys.SetupSystem(this,
@@ -149,6 +151,13 @@ public class Unit : BaseObject, IFightable {
 
         DeathAttach(master); // подписываем мастера на свою смерть
         master.Units.Add(this); // добавляемся в список юнитов
+    }
+
+    private IEnumerator StartRegenDelay() {
+        yield return new WaitForSeconds(GameConf.regenDelay);
+
+        yield return new WaitUntil(() => HealthSystem.RegenSpeed == 0.0f);
+        HealthSystem.RegenSpeed = GameConf.unitBasicRegenSpeed;
     }
     #endregion
 
