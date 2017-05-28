@@ -14,7 +14,7 @@ public class CrystalInteractUI : SpellUI {
             if (suprime.CurrentCrystal == crystal) {
                 Magic newSpell;
 
-                if (crystal.photonView.isMine) {
+                if (crystal.ControllingPlayer == suprime.ControllingPlayer) {
                     newSpell = suprime.Magic.LvlUpCrystal;
                     activeSprite = lvlUpSprite;
                 } else {

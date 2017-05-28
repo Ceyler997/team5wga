@@ -7,10 +7,10 @@ using UnityEngine.AI;
 public class ControllableUnit : Photon.PunBehaviour {
 
     #region private fields
-    
+
     private Movement unitMoveSystem;
     public Projector selectionProjector;
-    
+
     private bool isHighlighted = false;
 
     private Renderer [] mRenderers;
@@ -45,6 +45,7 @@ public class ControllableUnit : Photon.PunBehaviour {
     }
 
     public Suprime Subject { get; set; }
+    public BehaviourStates UnitsState { get; set; }
     #endregion
 
     #region MonoBehaviour methods
