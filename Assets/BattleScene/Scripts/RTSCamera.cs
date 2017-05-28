@@ -1,6 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
+﻿using UnityEngine;
 
 public class RTSCamera : MonoBehaviour {
 
@@ -21,7 +19,10 @@ public class RTSCamera : MonoBehaviour {
     private Vector3 desiredPosition;
     private Transform cameraTransform;
 
+    public static RTSCamera Instance { get; set; }
+
     void Start () {
+        Instance = this;
         desiredPosition = transform.position;
         cameraTransform = transform.GetChild(0).GetComponent<Transform>();
 	}
@@ -87,5 +88,10 @@ public class RTSCamera : MonoBehaviour {
         move.z = Mathf.Clamp(move.z, zMin, zMax);
         desiredPosition = move;
         transform.position = Vector3.Lerp(transform.position, desiredPosition, 0.2f);
+    }
+
+    public void MoveCameraTo(Vector3 point) {
+        transform.position = point;
+        desiredPosition = point;
     }
 }

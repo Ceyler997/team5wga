@@ -26,9 +26,7 @@ public class CharactersController : MonoBehaviour {
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit)) {
-
-                
+            if (Physics.Raycast(ray, out hit)) {                
 
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
                 if (unit != null && (unit.photonView.isMine || !PhotonNetwork.connected)) {
@@ -55,6 +53,15 @@ public class CharactersController : MonoBehaviour {
                 SelectedUnit.UnitMoveSystem.MoveTo(hit.point);
             }
         }
+    }
+
+    public void SelectUnit(ControllableUnit unit) {
+        if (SelectedUnit != null) {
+            SelectedUnit.deselectUnit();
+        }
+
+        SelectedUnit = unit;
+        unit.selectUnit();
     }
 
     //public static bool UnitInsideDrag(Vector2 UnitInScreenPos)
