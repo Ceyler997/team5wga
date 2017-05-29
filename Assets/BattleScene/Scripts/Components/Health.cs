@@ -11,6 +11,7 @@ public class Health : MonoBehaviour, IPunObservable {
     private float regenSpeed; //Скорость востановления здоровья
     private IDeathSubject subject; // Объект, за здоровье которого компоненто отвечает
     private bool isSettedUp;
+    private bool isDead;
     #endregion
 
     #region UI fields
@@ -57,27 +58,29 @@ public class Health : MonoBehaviour, IPunObservable {
             healthOut.text = Math.Round(CurrentHealth, 2).ToString() + "/" + Math.Round(MaxHealth, 2).ToString();
         }
 
-        regen();
+        Regen();
+
+        if (CurrentHealth <= 0 && !isDead)
+            Die();
     }
     #endregion
 
     #region public methods
 
     // Функция для настройки системы после инициализации
-    public void setupSystem(float health, float maxHealth, float regenSpeed, IDeathSubject deathSubject) {
+    public void SetupSystem(float health, float maxHealth, float regenSpeed, IDeathSubject deathSubject) {
         CurrentHealth = health;
         MaxHealth = maxHealth;
         RegenSpeed = regenSpeed;
-        IsSettedUp = true;
         Subject = deathSubject;
+        isDead = false;
+        IsSettedUp = true;
     }
 
     //Получение урона
-    public void getDamage(float damage) {
+    public void GetDamage(float damage) {
         if (CurrentHealth > 0) {
             CurrentHealth -= damage;
-            if (CurrentHealth <= 0)
-                die();
         }
     }
     #endregion
@@ -85,12 +88,13 @@ public class Health : MonoBehaviour, IPunObservable {
     #region private methods
 
     //Смерть юнита
-    private void die() {
+    private void Die() {
         Subject.SubjectDeath();
+        isDead = true;
     }
 
     //Востановление жизней (запускать в апдейте)
-    private void regen() {
+    private void Regen() {
         CurrentHealth += RegenSpeed * Time.deltaTime;
         CurrentHealth = Mathf.Min(CurrentHealth, MaxHealth);
     }

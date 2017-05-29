@@ -124,7 +124,7 @@ public class Unit : BaseObject, IFightable {
         MovementAgent.SetupSystem(GameConf.unitMoveSpeed);
 
         HealthSystem = GetComponent<Health>();
-        HealthSystem.setupSystem(GameConf.unitStartHealth,
+        HealthSystem.SetupSystem(GameConf.unitStartHealth,
             GameConf.unitMaxHealth,
             0.0f,
             this);
@@ -172,6 +172,10 @@ public class Unit : BaseObject, IFightable {
     }
 
     public void SubjectDeath() {
+        if (!photonView.isMine) {
+            return;
+        }
+
         PhotonNetwork.Destroy(gameObject);
     }
     #endregion

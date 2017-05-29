@@ -127,7 +127,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
         controller.Suprimes.Add(this);
 
         HealthSystem = GetComponent<Health>();
-        HealthSystem.setupSystem(GameConf.suprimeStartHealth,
+        HealthSystem.SetupSystem(GameConf.suprimeStartHealth,
             GameConf.suprimeMaxHealth,
             GameConf.suprimeBasicRegenSpeed,
             this);
@@ -192,6 +192,10 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
     // Если у игрока есть кристаллы, то юниты отправляются защищать ближайший к умершему суприму
     // Если кристаллов нет - юниты умирают
     public void SubjectDeath() {
+        if (!photonView.isMine) {
+            return;
+        }
+
         if (Units.Count > 0) {
             if (ControllingPlayer.Crystals.Count > 0) {
                 List<Crystal>.Enumerator enumerator = ControllingPlayer.Crystals.GetEnumerator();

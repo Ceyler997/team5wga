@@ -116,7 +116,7 @@ public class CombatSystem : MonoBehaviour, IDeathObserver, IPunObservable {
     }
 
     private void DealDamage(float damage) {
-        Target.HealthSystem.getDamage(damage);
+        Target.HealthSystem.GetDamage(damage);
         Target.CombatSys.Attacked(Subject);
     }
     #endregion

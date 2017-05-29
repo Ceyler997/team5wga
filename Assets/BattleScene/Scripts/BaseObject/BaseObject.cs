@@ -6,7 +6,7 @@ public class BaseObject : Photon.PunBehaviour {
 
     #region private fields
 
-    private Player controllingPlayer; // игрок, который является владельцем объекта
+    public  Player controllingPlayer; // игрок, который является владельцем объекта
     private float reactDistance; // на этом расстоянии происходит взаимодействие с объектом
     private Radius detectRadius; // радиус вокруг объекта, в котором будут видны объекты
     private bool isSettedUp; // для предотвращения использования ненастроенного объекта
