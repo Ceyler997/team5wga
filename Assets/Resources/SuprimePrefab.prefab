@@ -899,6 +899,7 @@ GameObject:
   - component: {fileID: 95177597296256484}
   - component: {fileID: 114046729897289558}
   - component: {fileID: 114823380892559398}
+  - component: {fileID: 136414426207605596}
   m_Layer: 0
   m_Name: vs_unity
   m_TagString: Untagged
@@ -2286,6 +2287,19 @@ Projector:
   m_IgnoreLayers:
     serializedVersion: 2
     m_Bits: 12288
+--- !u!136 &136414426207605596
+CapsuleCollider:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1911148245280230}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.5
+  m_Height: 2
+  m_Direction: 1
+  m_Center: {x: 0, y: 1, z: 0}
 --- !u!137 &137948630122224534
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1

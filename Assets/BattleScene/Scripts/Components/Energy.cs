@@ -6,7 +6,7 @@ public class Energy : MonoBehaviour, IPunObservable {
 
     #region private fields
 
-    public float currentEnergy; //Текущее кол-во энергии
+    private float currentEnergy; //Текущее кол-во энергии
     private float maxEnergy; //Максимальное кол-во энергии
     private bool isSettedUp;
     #endregion
