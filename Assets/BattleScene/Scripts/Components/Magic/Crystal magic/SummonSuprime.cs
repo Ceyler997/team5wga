@@ -24,7 +24,7 @@ public class SummonSuprime : CrystalMagic {
 
     protected override void ApplyMagic() {
         base.ApplyMagic();
-        Vector2 shift = Random.insideUnitCircle * Caster.CurrentCrystal.DetectRadius.RadiusValue;
+        Vector2 shift = Random.insideUnitCircle * GameConf.suprimeSummonRadius;
         Caster.ControllingPlayer.AddSuprime(Caster.CurrentCrystal.Position 
             + new Vector3(shift.x, 0, shift.y));
     }

@@ -34,7 +34,7 @@ public class SummonUnits : CrystalMagic {
         int unitsAmount = GameConf.GetUnitsAmount(Caster.LevelSystem.CurrentLevel);
 
         while (unitsAmount-- > 0) {
-            Vector2 shift = Random.insideUnitCircle * Caster.CurrentCrystal.DetectRadius.RadiusValue;
+            Vector2 shift = Random.insideUnitCircle * GameConf.unitsSummonRadius;
             Caster.AddUnit(Caster.CurrentCrystal.Position
             + new Vector3(shift.x, 0, shift.y));
             yield return new WaitForSeconds(GameConf.unitsSummonDelay);

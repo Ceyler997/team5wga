@@ -73,9 +73,11 @@ static class GameConf {
     // Призыв suprime
     public static readonly float suprimeSummonCastTime = 2.0f;
     public static readonly float suprimeSummonEnergyCost = 50.0f;
+    public static readonly float suprimeSummonRadius = 10.0f;
     // Призыв юнитов
     public static readonly float unitsSummonCastTime = 2.0f;
     public static readonly float unitsSummonEnergyCost = 50.0f;
+    public static readonly float unitsSummonRadius = 10.0f;
     public static readonly float unitsSummonDelay = 1.0f;
 
     public static int GetUnitsAmount(int level) {
