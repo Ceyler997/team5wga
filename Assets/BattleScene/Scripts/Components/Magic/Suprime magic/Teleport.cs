@@ -25,15 +25,15 @@ public class Teleport : SuprimeMagic {
         if (lenght > 0) {
             int randIndex = (int) Random.Range(0, lenght);
             Crystal crystal = Caster.ControllingPlayer.Crystals [randIndex];
-            // Отниманем энергию за использование нашей услуги доставки ВС к кристаллу
-            // отнимается в базе
-            //Чтобы не бежал к последней точке после телепорта
-            // Останавливается при касте OwnerSuprime.MoveSystem.Stop();
 
             // Место телепортации
             Vector2 shift = Random.insideUnitCircle * GameConf.teleportSpawnRadius;
+            Vector3 newPositon = new Vector3(crystal.transform.position.x + shift.x,
+                Caster.transform.position.y,
+                crystal.transform.position.z + shift.y);
+            
             // Телепортация ВС
-            Caster.transform.position = crystal.transform.position + new Vector3(shift.x, shift.y);
+            Caster.transform.position = newPositon;
         }
     }
 }
