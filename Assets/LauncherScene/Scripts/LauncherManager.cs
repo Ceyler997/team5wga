@@ -96,7 +96,7 @@ public class LauncherManager : Photon.PunBehaviour {
         if (PhotonNetwork.isMasterClient) { // if we are first in room
             progressMessage.text = LocalizationManager.getTextByKey("waitingPlayer");
         } else { // if not, master will load level
-            progressMessage.text = LocalizationManager.getTextByKey("ready");
+            progressMessage.text = LocalizationManager.getTextByKey("ready") + " " + PhotonNetwork.masterClient.NickName;
         }
     }
     
@@ -132,7 +132,7 @@ public class LauncherManager : Photon.PunBehaviour {
     public override void OnPhotonPlayerConnected(PhotonPlayer newPlayer) {//new player entered the room
         Debug.Log("Player " + newPlayer.NickName + " connected");
 
-        progressMessage.text = LocalizationManager.getTextByKey("ready");
+        progressMessage.text = LocalizationManager.getTextByKey("ready") + " " + newPlayer.NickName;
         PhotonNetwork.LoadLevel(battleSceneName);
     }
 

@@ -98,7 +98,7 @@ static class GameConf {
     public static readonly float colorCastTime = 1.0f;
     public static readonly float colorDuration = 20.0f;
     public static readonly int colorStartLevel = 1;
-    public static readonly int colorMaxLevel = 10;
+    public static readonly int colorMaxLevel = 8;
 
     public static float GetCritChance(int level) {
         return (0.1f + ((float) level / (colorMaxLevel - colorStartLevel)) * 0.4f);
