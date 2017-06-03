@@ -29,7 +29,12 @@ abstract public class GroupMagic : Magic {
     protected Level LevelSystem { get; set; } // уровень заклинания (уровень мага или уровень заклинания для боевых)
     private float Duration { get; set; } // продолжительность эффекта
 
-     virtual protected void Setup(Suprime caster, float energyCost, float castTime, float durationTime) {
+    public Color ModelColor;
+    private Color OldModelColor;
+    public Color ParticleColor;
+    private Color OldParticleColor;
+
+    virtual protected void Setup(Suprime caster, float energyCost, float castTime, float durationTime) {
         base.Setup(caster, energyCost, castTime);
         Units = caster.Units;
         Duration = durationTime;
@@ -37,6 +42,15 @@ abstract public class GroupMagic : Magic {
 
     override protected void ApplyMagic() {
         base.ApplyMagic();
+
+        foreach(Unit unit in Units) {
+            OldModelColor = unit.UnitModelMaterial.color;
+            unit.UnitModelMaterial.color = ModelColor;
+            
+            OldParticleColor = unit.UnitParticleMaterial.GetColor("_TintColor");
+            unit.UnitParticleMaterial.SetColor("_TintColor", ParticleColor);
+        }
+
         Caster.EnergySystem.ChangeEnergy(-EnergyCost);
         IsActive = true;
     }
@@ -48,6 +62,10 @@ abstract public class GroupMagic : Magic {
 
     virtual protected void CancelMagic() {
         IsActive = false;
+        foreach (Unit unit in Units) {
+            unit.UnitModelMaterial.color = OldModelColor;
+            unit.UnitParticleMaterial.SetColor("_TintColor", OldParticleColor);
+        }
     }
 
     // возвращает true, если маг может кастовать (не в движении, хватает маны и есть юниты)

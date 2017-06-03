@@ -1940,6 +1940,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ed1d9de839cb3be409ac093a47c06afb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ModelColor: {r: 1, g: 1, b: 1, a: 1}
+  ParticleColor: {r: 1, g: 0, b: 0, a: 1}
   effect: {fileID: 198088736783042232, guid: 0d7f9a8d0f9426b489323e361a52f056, type: 2}
   effectTime: 5
 --- !u!114 &114110483362973262
@@ -2172,6 +2174,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6e821b699288eb443905bc27b68933ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ModelColor: {r: 1, g: 1, b: 1, a: 1}
+  ParticleColor: {r: 0, g: 1, b: 0, a: 1}
 --- !u!114 &114476039737208916
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -2183,6 +2187,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ff0250f1eae8f5a468f506c6f0113553, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ModelColor: {r: 0, g: 0, b: 0, a: 1}
+  ParticleColor: {r: 0.32941177, g: 0.32941177, b: 0.32941177, a: 1}
   effect: {fileID: 198134472018353588, guid: 25ddcc1603728e84b92bb66ce2df97a5, type: 2}
   effectTime: 5
 --- !u!114 &114555388047080476
@@ -2196,6 +2202,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d05e00b6bcc622b4fac048b72a1b744f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ModelColor: {r: 1, g: 1, b: 1, a: 1}
+  ParticleColor: {r: 1, g: 1, b: 1, a: 1}
   effect: {fileID: 198036995403383876, guid: e18abd24014e2dc4f950a2e64f3bb02e, type: 2}
   effectTime: 5
 --- !u!114 &114572196835570758

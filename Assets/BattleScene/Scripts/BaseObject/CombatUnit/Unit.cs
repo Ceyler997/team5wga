@@ -74,6 +74,10 @@ public class Unit : BaseObject, IFightable {
 
     // Дистанция, на которой юнит будет следовать за целью
     public float FollowDistance { get; set; }
+
+    public Material UnitModelMaterial { get; private set; }
+
+    public Material UnitParticleMaterial { get; private set; }
     #endregion
 
     #region PunBehaviour methods
@@ -148,6 +152,9 @@ public class Unit : BaseObject, IFightable {
         Behaviour = new UnitProtectiveBehaviour(this, master);
 
         FollowDistance = GameConf.unitFollowDistance;
+
+        UnitModelMaterial = GetComponentInChildren<MeshRenderer>().material;
+        UnitParticleMaterial = GetComponentInChildren<ParticleSystem>().GetComponent<Renderer>().material;
 
         DeathAttach(master); // подписываем мастера на свою смерть
         master.Units.Add(this); // добавляемся в список юнитов
