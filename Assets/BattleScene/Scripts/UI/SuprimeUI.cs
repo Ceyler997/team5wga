@@ -41,8 +41,10 @@ public class SuprimeUI : MonoBehaviour {
         SuprimeImage = GetComponent<Image>();
         SuprimeLevelText = GetComponentInChildren<Text>();
 
-        Subject = null;
-	}
+        SuprimeImage.sprite = noSuprimeImage;
+        SuprimeLevelText.text = "";
+        SuprimeButton.interactable = false;
+    }
 
     private void Update() {
         if(subject != null) {

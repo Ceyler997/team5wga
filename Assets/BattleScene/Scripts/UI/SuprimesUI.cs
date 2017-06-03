@@ -16,7 +16,6 @@ public class SuprimesUI : MonoBehaviour {
         if(Owner == null) {
             Player owner;
             GameManager.Instance.Players.TryGetValue(PhotonNetwork.player.ID, out owner);
-            print(owner);
             Owner = owner;
             return;
         }
@@ -27,8 +26,8 @@ public class SuprimesUI : MonoBehaviour {
             SuprimeUIs [SuprimeUIs.Count - (unusedUI--)].Subject = suprime;
         }
 
-        while(unusedUI-- > 1) {
-            SuprimeUIs [SuprimeUIs.Count - (unusedUI)].Subject = null;
+        while(unusedUI > 1) {
+            SuprimeUIs [SuprimeUIs.Count - (unusedUI--)].Subject = null;
         }
 	}
 }
