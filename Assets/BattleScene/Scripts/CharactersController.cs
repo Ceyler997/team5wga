@@ -23,11 +23,11 @@ public class CharactersController : MonoBehaviour {
     // Update is called once per frame
     void Update() {
 
-        if (Input.GetMouseButtonDown(0)) {
+        if (Input.GetMouseButtonDown(0)) { // Left button
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-            if (Physics.Raycast(ray, out hit)) {                
+            if (Physics.Raycast(ray, out hit)) {
 
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
                 if (unit != null && (unit.photonView.isMine || !PhotonNetwork.connected)) {
@@ -46,7 +46,7 @@ public class CharactersController : MonoBehaviour {
             }
         }
 
-        if (Input.GetMouseButtonDown(1)) {
+        if (Input.GetMouseButtonDown(1)) { // Roght button
             RaycastHit hit;
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
@@ -73,7 +73,6 @@ public class CharactersController : MonoBehaviour {
         }
 
         Vector3 moveDelta = SelectedUnit.transform.position - RTSCamera.Instance.Position;
-        Debug.Log(moveDelta);
         RTSCamera.Instance.MoveCamera(moveDelta);
     }
 
