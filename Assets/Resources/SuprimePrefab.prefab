@@ -113,6 +113,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4139924055094392}
   - component: {fileID: 212398050905713320}
+  - component: {fileID: 114748105062282814}
   m_Layer: 11
   m_Name: MinimapToken
   m_TagString: Untagged
@@ -1069,7 +1070,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1480251106586050}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 10.269148, y: -9.158631, z: 2.649999}
+  m_LocalPosition: {x: 4.1, y: 0, z: 35.7}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 224430711325788356}
@@ -2128,6 +2129,21 @@ MonoBehaviour:
     m_VerticalOverflow: 0
     m_LineSpacing: 1
   m_Text: HEALTH
+--- !u!114 &114748105062282814
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1093568552513134}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a517717a6b51a46a4e63483514f595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 114912943346800456}
+  friendColor: {r: 0, g: 0, b: 1, a: 1}
+  neutralColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  enemyColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!114 &114795350775810538
 MonoBehaviour:
   m_ObjectHideFlags: 1

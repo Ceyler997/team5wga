@@ -68,7 +68,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1947689534871930}
   m_LocalRotation: {x: 0.38268343, y: 0, z: 0, w: 0.92387956}
-  m_LocalPosition: {x: 1.0000002, y: 1.0744388, z: 1.0000005}
+  m_LocalPosition: {x: -1, y: 5.3, z: -2.9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4693319887993712}
@@ -136,7 +136,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e2444566f91d81e488b4f9dbcb3e108a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ScrollZone: 30
+  ScrollZone: 10
   ScrollSpeed: 100
   xMax: 100
   xMin: -100
@@ -145,7 +145,7 @@ MonoBehaviour:
   ZoomMin: -50
   ZoomMax: -10
   bUseKeyboard: 1
-  bUseMouse: 0
+  bUseMouse: 1
 --- !u!114 &114130385687944442
 MonoBehaviour:
   m_ObjectHideFlags: 1

@@ -109,6 +109,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4518676487051470}
   - component: {fileID: 212467164223603304}
+  - component: {fileID: 114995495220776540}
   m_Layer: 11
   m_Name: MinimapToken
   m_TagString: Untagged
@@ -739,6 +740,21 @@ MonoBehaviour:
   activeSprite: {fileID: 21300000, guid: a380c6c9e22cf704c85a959d51163996, type: 3}
   unactiveSprite: {fileID: 21300000, guid: e172955a50a6df34399dc8a24743562f, type: 3}
   crystal: {fileID: 114157920703967430}
+--- !u!114 &114995495220776540
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1507275061624422}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5a517717a6b51a46a4e63483514f595, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 114157920703967430}
+  friendColor: {r: 0, g: 0, b: 1, a: 1}
+  neutralColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
+  enemyColor: {r: 1, g: 0, b: 0, a: 1}
 --- !u!198 &198186924187908910
 ParticleSystem:
   m_ObjectHideFlags: 1
@@ -3836,7 +3852,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 10911, guid: 0000000000000000f000000000000000, type: 0}
-  m_Color: {r: 0, g: 0.7931032, b: 1, a: 1}
+  m_Color: {r: 0.6862745, g: 0.6862745, b: 0.6862745, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
