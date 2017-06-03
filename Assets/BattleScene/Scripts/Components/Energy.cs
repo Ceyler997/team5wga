@@ -36,7 +36,7 @@ public class Energy : MonoBehaviour, IPunObservable {
 
     #region public methods
 
-    public void changeEnergy(float deltaEnergy) {
+    public void ChangeEnergy(float deltaEnergy) {
         CurrentEnergy += deltaEnergy;
         CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, MaxEnergy);
     }
@@ -55,7 +55,7 @@ public class Energy : MonoBehaviour, IPunObservable {
         }
 
         if(energyOut != null) {
-            energyOut.text = Math.Round(CurrentEnergy, 2).ToString() + "/" + Math.Round(MaxEnergy, 2).ToString();
+            energyOut.text = Math.Round(CurrentEnergy, 0).ToString() + "/" + Math.Round(MaxEnergy, 2).ToString();
         }
     }
     #endregion

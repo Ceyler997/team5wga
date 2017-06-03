@@ -14,6 +14,6 @@ public abstract class SuprimeMagic : Magic {
 
     protected override void ApplyMagic() {
         base.ApplyMagic();
-        Caster.EnergySystem.changeEnergy(-EnergyCost);
+        Caster.EnergySystem.ChangeEnergy(-EnergyCost);
     }
 }

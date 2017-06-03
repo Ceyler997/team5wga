@@ -2,7 +2,7 @@
 abstract public class CrystalMagic : Magic {
 
     protected override void ApplyMagic() {
-        Caster.CurrentCrystal.EnergySystem.changeEnergy(-EnergyCost);
+        Caster.CurrentCrystal.EnergySystem.ChangeEnergy(-EnergyCost);
         base.ApplyMagic();
     }
 

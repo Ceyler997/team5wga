@@ -37,7 +37,7 @@ abstract public class GroupMagic : Magic {
 
     override protected void ApplyMagic() {
         base.ApplyMagic();
-        Caster.EnergySystem.changeEnergy(-EnergyCost);
+        Caster.EnergySystem.ChangeEnergy(-EnergyCost);
         IsActive = true;
     }
 

@@ -78,8 +78,8 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         if(EnergySystem.CurrentEnergy < energyToTransfer) {
             return false;
         } else {
-            suprime.EnergySystem.changeEnergy(energyToTransfer);
-            EnergySystem.changeEnergy(-energyToTransfer);
+            suprime.EnergySystem.ChangeEnergy(energyToTransfer);
+            EnergySystem.ChangeEnergy(-energyToTransfer);
             return true;
         }
     }
@@ -90,7 +90,7 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
         base.Update();
         // Если кто-нибудь владеет кристалом то вырабатываем энергию
         if (ControllingPlayer != null)
-            EnergySystem.changeEnergy(RegenSpeed * Time.deltaTime);
+            EnergySystem.ChangeEnergy(RegenSpeed * Time.deltaTime);
 
         if (material != null) {
             float energyLevel = 2.0f * EnergySystem.CurrentEnergy / EnergySystem.MaxEnergy;

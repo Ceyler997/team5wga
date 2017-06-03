@@ -55,7 +55,7 @@ public class Health : MonoBehaviour, IPunObservable {
         }
 
         if(healthOut != null) {
-            healthOut.text = Math.Round(CurrentHealth, 2).ToString() + "/" + Math.Round(MaxHealth, 2).ToString();
+            healthOut.text = Math.Round(CurrentHealth, 0).ToString() + "/" + Math.Round(MaxHealth, 2).ToString();
         }
 
         Regen();

@@ -18,7 +18,7 @@ public class LauncherManager : Photon.PunBehaviour {
     public PhotonLogLevel logLevel;
 
     [Tooltip("Game version")]
-    public string gameVersion = "0";
+    public string gameVersion = "DEBUG";
 
     [Tooltip("Name of scene for load to battle")]
     public string battleSceneName = "SuprimeScene";
