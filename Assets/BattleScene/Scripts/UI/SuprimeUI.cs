@@ -69,7 +69,6 @@ public class SuprimeUI : MonoBehaviour {
     public void Select() {
         if (Subject != null) {
             CharactersController.Instance.SelectUnit(Subject.GetComponent<ControllableUnit>());
-            RTSCamera.Instance.MoveCameraTo(Subject.Position);
         }
     }
 }

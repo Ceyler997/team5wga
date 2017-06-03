@@ -12,6 +12,7 @@ public class CharactersController : MonoBehaviour {
     public bool FinishedDragOnThisFrame;
     public bool UserIsDragging;
 
+    private bool IsFollowing;
 
     // Use this for initialization
     void Awake() {
@@ -53,6 +54,27 @@ public class CharactersController : MonoBehaviour {
                 SelectedUnit.UnitMoveSystem.MoveTo(hit.point);
             }
         }
+
+        CameraFollowSelectedUnit();
+    }
+
+    // Следование камеры за выбранным юнитом
+    private void CameraFollowSelectedUnit() {
+        if (IsFollowing == false) {
+            return;
+        }
+        if (SelectedUnit == null) {
+            IsFollowing = false;
+            return;
+        }
+        if (RTSCamera.Instance.IsMoved) {
+            IsFollowing = false;
+            return;
+        }
+
+        Vector3 moveDelta = SelectedUnit.transform.position - RTSCamera.Instance.Position;
+        Debug.Log(moveDelta);
+        RTSCamera.Instance.MoveCamera(moveDelta);
     }
 
     public void SelectUnit(ControllableUnit unit) {
@@ -62,6 +84,8 @@ public class CharactersController : MonoBehaviour {
 
         SelectedUnit = unit;
         unit.selectUnit();
+
+        IsFollowing = true;
     }
 
     //public static bool UnitInsideDrag(Vector2 UnitInScreenPos)

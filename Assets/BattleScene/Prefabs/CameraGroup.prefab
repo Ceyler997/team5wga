@@ -138,14 +138,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ScrollZone: 10
   ScrollSpeed: 100
+  RotateSpeed: 3
   xMax: 100
   xMin: -100
   zMax: 100
   zMin: -100
   ZoomMin: -50
   ZoomMax: -10
-  bUseKeyboard: 1
-  bUseMouse: 1
+  keyboardAllowed: 1
+  mouseAllowed: 1
 --- !u!114 &114130385687944442
 MonoBehaviour:
   m_ObjectHideFlags: 1
