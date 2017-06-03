@@ -1,48 +1,17 @@
-﻿using System.Collections;
-using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.AI;
+﻿using UnityEngine;
 
 [RequireComponent(typeof(Movement))]
 public class ControllableUnit : Photon.PunBehaviour {
 
-    #region private fields
+    #region fields
 
-    private Movement unitMoveSystem;
     public Projector selectionProjector;
-
-    private bool isHighlighted = false;
-
-    private Renderer [] mRenderers;
-    private HighlightsFX highlight;
+    public Material FriendProjector;
+    public Material EnemyProjector;
     #endregion
 
     #region getters and setters
-
-    private Projector SelectionProjector {
-        get { return selectionProjector; }
-        set { selectionProjector = value; }
-    }
-
-    private Renderer [] MRenderers {
-        get { return mRenderers; }
-        set { mRenderers = value; }
-    }
-
-    private HighlightsFX Highlight {
-        get { return highlight; }
-        set { highlight = value; }
-    }
-
-    public Movement UnitMoveSystem {
-        get { return unitMoveSystem; }
-        set { unitMoveSystem = value; }
-    }
-
-    private bool IsHighlighted {
-        get { return isHighlighted; }
-        set { isHighlighted = value; }
-    }
+    public Movement UnitMoveSystem { get; private set; }
 
     public Suprime Subject { get; set; }
     public BehaviourStates UnitsState { get; set; }
@@ -53,50 +22,30 @@ public class ControllableUnit : Photon.PunBehaviour {
     // Use this for initialization
     void Start() {
         UnitMoveSystem = GetComponent<Movement>();
-        MRenderers = GetComponentsInChildren<Renderer>();
-        Highlight = Camera.main.GetComponent<HighlightsFX>();
         Subject = GetComponent<Suprime>();
-    }
 
-    private void OnMouseEnter() {
-        if (photonView.isMine) {
-            HighLight(true);
+        if(selectionProjector == null) {
+            throw new SystemIsNotSettedUpException();
         }
-    }
 
-    private void OnMouseExit() {
-        HighLight(false);
+        if (photonView.isMine) {
+            selectionProjector.material = FriendProjector;
+            DeselectUnit();
+        } else {
+            selectionProjector.material = EnemyProjector;
+            SelectUnit();
+        }
     }
     #endregion
 
     #region public methods
 
-    public void selectUnit() {
-        SelectionProjector.enabled = true;
+    public void SelectUnit() {
+        selectionProjector.enabled = true;
     }
 
-    public void deselectUnit() {
-        SelectionProjector.enabled = false;
-    }
-    #endregion
-
-    #region private methods
-
-    private void HighLight(bool state) {
-        if (state) {
-            if (IsHighlighted)
-                return;
-
-            foreach (Renderer rend in MRenderers)
-                Highlight.ObjectRenderers.Add(rend);
-
-            IsHighlighted = true;
-        } else {
-            Highlight.ObjectRenderers.Clear();
-            IsHighlighted = false;
-        }
-
+    public void DeselectUnit() {
+        selectionProjector.enabled = false;
     }
     #endregion
-
 }

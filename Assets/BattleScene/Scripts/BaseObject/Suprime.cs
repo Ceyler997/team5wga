@@ -133,7 +133,7 @@ public class Suprime : BaseObject, IFightable, IDeathObserver, IRadiusObserver {
             this);
 
         EnergySystem = GetComponent<Energy>();
-        EnergySystem.setupSystem(GameConf.suprimeStartEnergy,
+        EnergySystem.SetupSystem(GameConf.suprimeStartEnergy,
             GameConf.suprimeMaxEnergy);
 
         CombatSys = GetComponent<CombatSystem>();

@@ -14,21 +14,16 @@ public class Health : MonoBehaviour, IPunObservable {
     private bool isDead;
     #endregion
 
-    #region UI fields
-
-    public Text healthOut;
-    #endregion
-
     #region getters and setters
 
-    private float CurrentHealth {
+    public float CurrentHealth {
         get { return curHealth; }
-        set { curHealth = value; }
+        private set { curHealth = value; }
     }
 
-    private float MaxHealth {
+    public float MaxHealth {
         get { return maxHealth; }
-        set { maxHealth = value; }
+        private set { maxHealth = value; }
     }
 
     public float RegenSpeed {
@@ -52,10 +47,6 @@ public class Health : MonoBehaviour, IPunObservable {
     public void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
-        }
-
-        if(healthOut != null) {
-            healthOut.text = Math.Round(CurrentHealth, 0).ToString() + "/" + Math.Round(MaxHealth, 2).ToString();
         }
 
         Regen();

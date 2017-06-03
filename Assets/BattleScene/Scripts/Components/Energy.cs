@@ -11,11 +11,6 @@ public class Energy : MonoBehaviour, IPunObservable {
     private bool isSettedUp;
     #endregion
 
-    #region UI fields
-
-    public Text energyOut;
-    #endregion
-
     #region getters and setters
 
     public float CurrentEnergy {
@@ -41,7 +36,7 @@ public class Energy : MonoBehaviour, IPunObservable {
         CurrentEnergy = Mathf.Clamp(CurrentEnergy, 0, MaxEnergy);
     }
 
-    public void setupSystem(float curentEnergy, float maxEnergy) {
+    public void SetupSystem(float curentEnergy, float maxEnergy) {
         IsSettedUp = true;
         CurrentEnergy = curentEnergy;
         MaxEnergy = maxEnergy;
@@ -52,10 +47,6 @@ public class Energy : MonoBehaviour, IPunObservable {
     private void Update() {
         if (!IsSettedUp) {
             throw new SystemIsNotSettedUpException();
-        }
-
-        if(energyOut != null) {
-            energyOut.text = Math.Round(CurrentEnergy, 0).ToString() + "/" + Math.Round(MaxEnergy, 2).ToString();
         }
     }
     #endregion

@@ -32,15 +32,15 @@ public class CharactersController : MonoBehaviour {
                 ControllableUnit unit = hit.transform.GetComponentInParent<ControllableUnit>();
                 if (unit != null && (unit.photonView.isMine || !PhotonNetwork.connected)) {
                     if (SelectedUnit != null) {
-                        SelectedUnit.deselectUnit();
+                        SelectedUnit.DeselectUnit();
                     }
 
-                    unit.selectUnit();
+                    unit.SelectUnit();
                     SelectedUnit = unit;
                 }
             } else {
                 if (SelectedUnit != null) {
-                    SelectedUnit.deselectUnit();
+                    SelectedUnit.DeselectUnit();
                     SelectedUnit = null;
                 }
             }
@@ -78,11 +78,11 @@ public class CharactersController : MonoBehaviour {
 
     public void SelectUnit(ControllableUnit unit) {
         if (SelectedUnit != null) {
-            SelectedUnit.deselectUnit();
+            SelectedUnit.DeselectUnit();
         }
 
         SelectedUnit = unit;
-        unit.selectUnit();
+        unit.SelectUnit();
 
         IsFollowing = true;
     }

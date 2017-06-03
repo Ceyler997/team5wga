@@ -41,7 +41,7 @@ public class Crystal : BaseObject, ILeveable, IPunObservable {
             GameConf.crysDetectRadius);
 
         EnergySystem = GetComponent<Energy>();
-        EnergySystem.setupSystem(GameConf.crysStartEnergy,
+        EnergySystem.SetupSystem(GameConf.crysStartEnergy,
             GameConf.crysMaxEnergy);
 
         LevelSystem = GetComponent<Level>();
