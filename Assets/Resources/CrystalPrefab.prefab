@@ -27,7 +27,7 @@ GameObject:
   - component: {fileID: 222746722762266138}
   - component: {fileID: 65093619677629798}
   m_Layer: 13
-  m_Name: ButtonsCanvas
+  m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -111,7 +111,7 @@ GameObject:
   - component: {fileID: 114417419238978632}
   - component: {fileID: 114989221100002602}
   m_Layer: 13
-  m_Name: Image
+  m_Name: SmnSuprime
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -180,7 +180,7 @@ GameObject:
   - component: {fileID: 114879220534056704}
   - component: {fileID: 114801063950155180}
   m_Layer: 13
-  m_Name: Image
+  m_Name: Capture/Up
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -825,9 +825,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   target: {fileID: 114157920703967430}
-  friendColor: {r: 0, g: 0, b: 1, a: 1}
-  neutralColor: {r: 0.7, g: 0.7, b: 0.7, a: 1}
-  enemyColor: {r: 1, g: 0, b: 0, a: 1}
+  friendColor: {r: 0, g: 0.37168133, b: 0.8235294, a: 1}
+  neutralColor: {r: 0.44852942, g: 0.44852942, b: 0.44852942, a: 1}
+  enemyColor: {r: 0.83823526, g: 0.11710641, b: 0.11710641, a: 1}
 --- !u!198 &198186924187908910
 ParticleSystem:
   m_ObjectHideFlags: 1

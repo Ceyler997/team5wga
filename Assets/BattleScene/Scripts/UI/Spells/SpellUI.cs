@@ -11,9 +11,10 @@ abstract public class SpellUI : MonoBehaviour {
     protected Button SpellButton { get; private set; }
     protected Image SpellImage { get; private set; }
 
-    private void Start() {
+    protected virtual void Start() {
         SpellButton = GetComponent<Button>();
         SpellButton.onClick.AddListener(Cast);
+        Debug.Log(SpellButton, this);
 
         SpellImage = GetComponent<Image>();
 

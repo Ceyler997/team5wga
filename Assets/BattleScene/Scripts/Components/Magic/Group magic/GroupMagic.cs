@@ -26,7 +26,7 @@ abstract public class GroupMagic : Magic {
     }
 
     protected List<Unit> Units { get; private set; } // Юниты, к которым применяется эффект
-    protected Level LevelSystem { get; set; } // уровень заклинания (уровень мага или уровень заклинания для боевых)
+    public Level LevelSystem { get; protected set; } // уровень заклинания (уровень мага или уровень заклинания для боевых)
     private float Duration { get; set; } // продолжительность эффекта
 
     public Color ModelColor;
