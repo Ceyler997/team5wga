@@ -1061,7 +1061,7 @@ MonoBehaviour:
   progressPanel: {fileID: 1502133998}
   popUp: {fileID: 1918680962}
   logLevel: 0
-  gameVersion: DEBUG
+  gameVersion: 1.1
   battleSceneName: BattleScene
 --- !u!1 &821504152
 GameObject:
@@ -1486,7 +1486,7 @@ MonoBehaviour:
   m_LineType: 0
   m_HideMobileInput: 0
   m_CharacterValidation: 0
-  m_CharacterLimit: 0
+  m_CharacterLimit: 100
   m_OnEndEdit:
     m_PersistentCalls:
       m_Calls:

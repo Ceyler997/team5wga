@@ -80,7 +80,7 @@ public class RTSCamera : MonoBehaviour {
     Vector3 KeyboardInput(float speed) {
         float x = Input.GetAxis("Horizontal") * speed;
         float z = Input.GetAxis("Vertical") * speed;
-        return new Vector3(x, 0, z);
+        return RotateByScreen(new Vector3(x, 0, z));
     }
 
     // Перемещение камеры с помощью мыши
@@ -95,9 +95,13 @@ public class RTSCamera : MonoBehaviour {
             z -= speed;
         else if (Input.mousePosition.y > Screen.height - ScrollZone)
             z += speed;
- 
-        
-        return new Vector3(x, 0, z);
+
+
+        return RotateByScreen(new Vector3(x, 0, z));
+    }
+
+    private Vector3 RotateByScreen(Vector3 moveDelta) {
+        return transform.rotation * moveDelta;
     }
     #endregion
 

@@ -23,7 +23,6 @@ GameObject:
   - component: {fileID: 92212694396110402}
   - component: {fileID: 124747451087669022}
   - component: {fileID: 81438720798153300}
-  - component: {fileID: 114130385687944442}
   - component: {fileID: 114793895970670994}
   m_Layer: 0
   m_Name: Main Camera
@@ -139,6 +138,7 @@ MonoBehaviour:
   ScrollZone: 10
   ScrollSpeed: 100
   RotateSpeed: 3
+  MoveSpeed: 10
   xMax: 100
   xMin: -100
   zMax: 100
@@ -147,24 +147,6 @@ MonoBehaviour:
   ZoomMax: -10
   keyboardAllowed: 1
   mouseAllowed: 1
---- !u!114 &114130385687944442
-MonoBehaviour:
-  m_ObjectHideFlags: 1
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1719504876910768}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 296a1de81b60e451a9b96e4407e7c413, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  ObjectRenderers: []
-  m_selectionType: 0
-  m_sortingType: 4
-  m_fillType: 1
-  m_resolution: 1
-  m_occludersTag: Occluder
-  m_highlightColor: {r: 0.4068966, g: 1, b: 0, a: 0.922}
 --- !u!114 &114793895970670994
 MonoBehaviour:
   m_ObjectHideFlags: 1
