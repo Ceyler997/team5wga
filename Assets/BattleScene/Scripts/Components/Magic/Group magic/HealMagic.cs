@@ -3,7 +3,7 @@
     private float OldRegen { get; set; }
 
     override public void Setup(Suprime caster) {
-        
+        ID = 1;
         base.Setup(caster,
             GameConf.healEnergyCost,
             GameConf.healCastTime,

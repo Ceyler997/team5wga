@@ -1061,7 +1061,7 @@ MonoBehaviour:
   progressPanel: {fileID: 1502133998}
   popUp: {fileID: 1918680962}
   logLevel: 0
-  gameVersion: 1.1
+  gameVersion: DEBUG
   battleSceneName: BattleScene
 --- !u!1 &821504152
 GameObject:

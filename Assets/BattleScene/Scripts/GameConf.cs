@@ -1,4 +1,5 @@
 ﻿using System;
+using UnityEngine;
 
 static class GameConf {
 
@@ -104,5 +105,36 @@ static class GameConf {
         return (0.1f + ((float) level / (colorMaxLevel - colorStartLevel)) * 0.4f);
     }
     #endregion
+
+    #region MagicColors
+    public static Color GetModelColorByID(int id) {
+        switch (id) {
+            case (3): // black
+                return Color.black;
+            case (0): // common
+            case (1): // heal
+            case (2): // white
+            case (4): // red
+            default:
+                return Color.white;
+        }
+    }
+
+    public static Color GetParticlesColorByID(int id) {
+        switch (id) {
+            case (1): // heal
+                return Color.green;
+            case (2): // white
+                return Color.white;
+            case (4): // red
+                return Color.red;
+            case (0): // common
+            case (3): // black
+            default:
+                return new Color(0.33f, 0.33f, 0.33f);
+        }
+    }
+    #endregion
+
     #endregion
 }

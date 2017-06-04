@@ -73,8 +73,6 @@ public abstract class Magic : MonoBehaviour {
         if (CurrentCastTime <= 0) {
             ApplyMagic();
         }
-
-        Debug.Log(Math.Round(CurrentCastTime, 2));
     }
 
     // итоговый результат выполнения магии, для каждой магии своя реализация, общие действия в базе

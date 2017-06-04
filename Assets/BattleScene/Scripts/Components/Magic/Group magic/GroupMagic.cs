@@ -28,11 +28,7 @@ abstract public class GroupMagic : Magic {
     protected List<Unit> Units { get; private set; } // Юниты, к которым применяется эффект
     public Level LevelSystem { get; protected set; } // уровень заклинания (уровень мага или уровень заклинания для боевых)
     private float Duration { get; set; } // продолжительность эффекта
-
-    public Color ModelColor;
-    private Color OldModelColor;
-    public Color ParticleColor;
-    private Color OldParticleColor;
+    public int ID { get; set; }
 
     virtual protected void Setup(Suprime caster, float energyCost, float castTime, float durationTime) {
         base.Setup(caster, energyCost, castTime);
@@ -44,11 +40,8 @@ abstract public class GroupMagic : Magic {
         base.ApplyMagic();
 
         foreach(Unit unit in Units) {
-            OldModelColor = unit.UnitModelMaterial.color;
-            unit.UnitModelMaterial.color = ModelColor;
-            
-            OldParticleColor = unit.UnitParticleMaterial.GetColor("_TintColor");
-            unit.UnitParticleMaterial.SetColor("_TintColor", ParticleColor);
+            unit.UnitModelMaterial.color = GameConf.GetModelColorByID(ID);
+            unit.UnitParticleMaterial.SetColor("_TintColor", GameConf.GetParticlesColorByID(ID));
         }
 
         Caster.EnergySystem.ChangeEnergy(-EnergyCost);
@@ -63,8 +56,8 @@ abstract public class GroupMagic : Magic {
     virtual protected void CancelMagic() {
         IsActive = false;
         foreach (Unit unit in Units) {
-            unit.UnitModelMaterial.color = OldModelColor;
-            unit.UnitParticleMaterial.SetColor("_TintColor", OldParticleColor);
+            unit.UnitModelMaterial.color = GameConf.GetModelColorByID(0);
+            unit.UnitParticleMaterial.SetColor("_TintColor", GameConf.GetParticlesColorByID(0));
         }
     }
 
