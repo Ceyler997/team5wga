@@ -40,6 +40,7 @@ abstract public class GroupMagic : Magic {
         base.ApplyMagic();
 
         foreach(Unit unit in Units) {
+            unit.SpellID = ID;
             unit.UnitModelMaterial.color = GameConf.GetModelColorByID(ID);
             unit.UnitParticleMaterial.SetColor("_TintColor", GameConf.GetParticlesColorByID(ID));
         }
@@ -56,6 +57,7 @@ abstract public class GroupMagic : Magic {
     virtual protected void CancelMagic() {
         IsActive = false;
         foreach (Unit unit in Units) {
+            unit.SpellID = 0;
             unit.UnitModelMaterial.color = GameConf.GetModelColorByID(0);
             unit.UnitParticleMaterial.SetColor("_TintColor", GameConf.GetParticlesColorByID(0));
         }

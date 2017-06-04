@@ -5,7 +5,7 @@ using UnityEngine;
 [RequireComponent(typeof(Movement))]
 [RequireComponent(typeof(Health))]
 [RequireComponent(typeof(CombatSystem))]
-public class Unit : BaseObject, IFightable {
+public class Unit : BaseObject, IFightable, IPunObservable {
 
     #region private fields
 
@@ -78,6 +78,8 @@ public class Unit : BaseObject, IFightable {
     public Material UnitModelMaterial { get; private set; }
 
     public Material UnitParticleMaterial { get; private set; }
+
+    public int SpellID { get; set; }
     #endregion
 
     #region PunBehaviour methods
@@ -186,4 +188,21 @@ public class Unit : BaseObject, IFightable {
         PhotonNetwork.Destroy(gameObject);
     }
     #endregion
+
+    #region IPunObservable implememntation
+
+    public void OnPhotonSerializeView(PhotonStream stream, PhotonMessageInfo info) {
+        if (stream.isWriting) {
+            stream.SendNext(SpellID);
+        } else {
+            int receivedID = (int) stream.ReceiveNext();
+            if(receivedID != SpellID) {
+                SpellID = receivedID;
+                UnitModelMaterial.color = GameConf.GetModelColorByID(SpellID);
+                UnitParticleMaterial.SetColor("_TintColor", GameConf.GetParticlesColorByID(SpellID));
+            }
+        }
+    }
+    #endregion
+
 }
