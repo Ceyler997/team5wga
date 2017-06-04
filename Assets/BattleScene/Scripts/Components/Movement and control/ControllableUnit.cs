@@ -14,7 +14,7 @@ public class ControllableUnit : Photon.PunBehaviour {
     public Movement UnitMoveSystem { get; private set; }
 
     public Suprime Subject { get; set; }
-    public BehaviourStates UnitsState { get; set; }
+    public BehaviourStates UnitsState { get; private set; }
     #endregion
 
     #region MonoBehaviour methods
@@ -34,6 +34,26 @@ public class ControllableUnit : Photon.PunBehaviour {
         } else {
             selectionProjector.material = EnemyProjector;
             SelectUnit();
+        }
+    }
+
+    private void Update() {
+        if(Subject.Units.Count > 0) {
+            UnitAIBehaviour behaviour = Subject.Units [0].Behaviour;
+            if(behaviour is UnitAgressiveBehaviour) {
+                UnitsState = BehaviourStates.ATTACK;
+            } else if (behaviour is UnitProtectiveBehaviour) {
+                if((behaviour as UnitProtectiveBehaviour).ProtectTarget is Crystal) {
+                    UnitsState = BehaviourStates.CRYSTAL_PROTECT;
+                } else {
+                    UnitsState = BehaviourStates.SUPRIME_PROTECT;
+                }
+            } else {
+                UnitsState = BehaviourStates.NO_UNITS;
+                throw new UnitHaveNoBehaviourException();
+            }
+        } else {
+            UnitsState = BehaviourStates.NO_UNITS;
         }
     }
     #endregion

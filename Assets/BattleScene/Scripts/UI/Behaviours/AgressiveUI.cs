@@ -7,13 +7,11 @@ public class AgressiveUI : BehaviourUI {
                 unit.Behaviour = new UnitAgressiveBehaviour(unit);
             }
         }
-
-        CharactersController.Instance.SelectedUnit.UnitsState = BehaviourStates.ATTACK;
     }
 
     protected override bool IsEnable() {
         return CharactersController.Instance.SelectedUnit != null
-            && CharactersController.Instance.SelectedUnit.Subject.Units.Count > 0
+            && CharactersController.Instance.SelectedUnit.UnitsState != BehaviourStates.NO_UNITS
             && CharactersController.Instance.SelectedUnit.UnitsState != BehaviourStates.ATTACK;
     }
 }

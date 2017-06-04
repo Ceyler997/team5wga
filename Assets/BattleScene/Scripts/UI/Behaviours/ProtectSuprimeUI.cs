@@ -7,13 +7,11 @@ public class ProtectSuprimeUI : BehaviourUI {
                 unit.Behaviour = new UnitProtectiveBehaviour(unit, suprime);
             }
         }
-
-        CharactersController.Instance.SelectedUnit.UnitsState = BehaviourStates.SUPRIME_PROTECT;
     }
 
     protected override bool IsEnable() {
         return CharactersController.Instance.SelectedUnit != null
-            && CharactersController.Instance.SelectedUnit.Subject.Units.Count > 0
+            && CharactersController.Instance.SelectedUnit.UnitsState != BehaviourStates.NO_UNITS
             && CharactersController.Instance.SelectedUnit.UnitsState != BehaviourStates.SUPRIME_PROTECT;
     }
 }

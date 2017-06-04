@@ -17,7 +17,7 @@ public class UnitProtectiveBehaviour : UnitAIBehaviour {
     #region properties
 
     private UnitState CurrentUnitState { get; set; } // текущее состояние юнита, перечисление в конце файла
-    private BaseObject ProtectTarget { get; set; } // цель защиты
+    public BaseObject ProtectTarget { get; private set; } // цель защиты
     #endregion
     #region public methods
 

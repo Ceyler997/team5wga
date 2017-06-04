@@ -24,5 +24,6 @@ abstract public class BehaviourUI : MonoBehaviour {
 public enum BehaviourStates {
     SUPRIME_PROTECT,
     ATTACK, 
-    CRYSTAL_PROTECT
+    CRYSTAL_PROTECT,
+    NO_UNITS
 }

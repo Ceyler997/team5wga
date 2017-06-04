@@ -17,14 +17,12 @@ public class ProtectCrystalUI : BehaviourUI {
             foreach (Unit unit in suprime.Units) {
                 unit.Behaviour = new UnitProtectiveBehaviour(unit, closestCrystal);
             }
-
-            CharactersController.Instance.SelectedUnit.UnitsState = BehaviourStates.CRYSTAL_PROTECT;
         }
     }
 
     protected override bool IsEnable() {
         return CharactersController.Instance.SelectedUnit != null
-            && CharactersController.Instance.SelectedUnit.Subject.Units.Count > 0
+            && CharactersController.Instance.SelectedUnit.UnitsState != BehaviourStates.NO_UNITS
             && CharactersController.Instance.SelectedUnit.UnitsState != BehaviourStates.CRYSTAL_PROTECT;
     }
 }
